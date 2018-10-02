@@ -2,7 +2,6 @@
 # Project ignore files
 #
 assets/js/
-assets/js/app.js.map
 
 # Mac
 .DS_Store
