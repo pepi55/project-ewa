@@ -1,0 +1,9 @@
+{
+    "name": "typescript-test",
+    "version": "1.0.0",
+    "description": "TypeScript Test",
+    "license": "MIT",
+    "devDependencies": {},
+    "dependencies": {},
+    "repository": {}
+}
