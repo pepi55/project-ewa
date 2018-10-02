@@ -1,4 +1,13 @@
 #
+# Project ignore files
+#
+assets/js/
+assets/js/app.js.map
+
+# Mac
+.DS_Store
+
+#
 # Standard Maven .gitignore
 #
 target/
@@ -25,7 +34,6 @@ buildNumber.properties
 .classpath
 .project
 .vscode/
-.DS_Store
 
 ### VisualStudio ###
 ## Ignore Visual Studio temporary files, build results, and
