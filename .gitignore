@@ -2,6 +2,7 @@
 # Project ignore files
 #
 assets/js/
+*.code-workspace
 
 # Mac
 .DS_Store
