@@ -3,6 +3,7 @@
 #
 assets/js/
 *.code-workspace
+*.bak
 
 # Mac
 .DS_Store
