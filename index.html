@@ -11,49 +11,29 @@
     <script src="/assets//vendors/popper-js/popper.min.js"></script>
     <script src="/assets/vendors/almond/almond.js"></script>
 
-    <link src="/assets/css/default.css" rel="stylesheet" />
+    <link href="/assets/css/default.css" rel="stylesheet" />
 
     <script src="/assets/js/app.js"></script>
-    <style>
-        #login {
-            margin-top: 10%;
-            text-align: center;
-        }
-
-        .loginLabel {
-            float: left;
-        }
-    </style>
 </head>
 
 <body>
     <div class="container">
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--2-col"></div>
-            <div class="mdl-cell mdl-cell--8-col">
-                <h1>Login</h1>
-                <p>
-                    Please fill in username and password
-                </p>
-                <div class="mdl-cell mdl-cell--6-col loginLabel">
-                    <form action="#">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="text" id="username">
-                            <label class="mdl-textfield__label" for="username">Username</label>
-                        </div>
-                    </form>
+            <div class="mdl-cell mdl-cell--3-col"></div>
+            <div class="mdl-cell mdl-cell--6-col login">
+                <div id="window"></div>
+                <div>
+                    <div class="login_buttons" style="display: inline-block;">
+                        <p id="login-button" style="margin-bottom: 50px; float:left;"></p>
+                        <p id="errorbox" style="float:left; margin-left:20px; margin-top:3px; color:red;"></p>
+                    </div>
+                    <div>
+                        <p id="signup-button" style="float: left;"></p>
+                        <p id="back-button" style="float: right; display: hidden;"></p>
+                    </div>
                 </div>
-                <div class="mdl-cell mdl-cell--6-col loginLabel">
-                    <form action="#">
-                        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                            <input class="mdl-textfield__input" type="password" id="password">
-                            <label class="mdl-textfield__label" for="password">Password</label>
-                        </div>
-                    </form>
-                </div>
-                <p id="test-button"></p>
             </div>
-            <div class="mdl-cell mdl-cell--2-col"></div>
+            <div class="mdl-cell mdl-cell--3-col"></div>
         </div>
     </div>
     <script>
