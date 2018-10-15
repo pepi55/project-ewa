@@ -138,7 +138,7 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
                     $("#login").css("display", "none");
                     $(".login_buttons").css("display", "none");
                     $("#signup").css("display", "block");
-                    $("#back_button").css("display", "block");
+                    $("#back-button").css("display", "block");
                 }
                 else {
                     if (document.getElementById("signup_password").value == document.getElementById("signup_repassword").value) {
@@ -149,7 +149,7 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
                 $("#login").css("display", "block");
                 $(".login_buttons").css("display", "inline-block");
                 $("#signup").css("display", "none");
-                $("#back_button").css("display", "none");
+                $("#back-button").css("display", "none");
             });
             $("#login-button").append(loginButton.getView());
             $("#signup-button").append(signupButton.getView());
