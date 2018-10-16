@@ -1,9 +1,5 @@
-.login {
-    margin-top: 7%;
-    background-color: white;
-    padding: 20px;
-    border-radius: 7px;
-    box-shadow: 0 0 50px -10px;
+#login{
+    margin-top: 10%;
 }
 
 td{
@@ -13,7 +9,6 @@ td{
     background-color: lightgray;
     text-align: center;
     vertical-align: center;
-    width: 25%;
     
 }
 table{

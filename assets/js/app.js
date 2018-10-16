@@ -56,21 +56,21 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
             var resultsButton = new button_1.Button("Results");
             var usersButton = new button_1.Button("Users");
             var profileButton = new button_1.Button("Profile");
-            var retakeTestButton = new button_1.Button("Retake test");
+            var takeTestButton = new button_1.Button("Take test");
             var logOutButton = new button_1.Button("Log out");
             myCoursesButton.setOnClick(function (e) {
-                window.location.href = "courses.html";
+                window.location.href = "#";
             });
             resultsButton.setOnClick(function (e) {
-                window.location.href = "results.html";
+                window.location.href = "#";
             });
             usersButton.setOnClick(function (e) {
-                window.location.href = "users.html";
+                window.location.href = "#";
             });
             profileButton.setOnClick(function (e) {
-                window.location.href = "profile.html";
+                window.location.href = "#";
             });
-            retakeTestButton.setOnClick(function (e) {
+            takeTestButton.setOnClick(function (e) {
                 window.location.href = "testpage.html";
             });
             logOutButton.setOnClick(function (e) {
@@ -80,7 +80,7 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
             $("#results-button").append(resultsButton.getView());
             $("#profile-button").append(profileButton.getView());
             $("#users-button").append(usersButton.getView());
-            $("#retaketest-button").append(retakeTestButton.getView());
+            $("#taketest-button").append(takeTestButton.getView());
             $("#logout-button").append(logOutButton.getView());
         };
         return MainController;

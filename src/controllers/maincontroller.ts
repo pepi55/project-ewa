@@ -9,22 +9,22 @@ export class MainController extends Controller {
             let resultsButton: Button = new Button("Results");
             let usersButton: Button = new Button("Users");
             let profileButton: Button = new Button("Profile");
-            let retakeTestButton: Button = new Button("Retake test");
+            let takeTestButton: Button = new Button("Take test");
             let logOutButton: Button = new Button("Log out");
 
             myCoursesButton.setOnClick((e: any) =>{
-                window.location.href = "courses.html";
+                window.location.href = "#";
             })
             resultsButton.setOnClick((e: any) => {
-                window.location.href = "results.html";
+                window.location.href = "#";
             })
             usersButton.setOnClick((e: any) => {
-                window.location.href = "users.html";
+                window.location.href = "#";
             })
             profileButton.setOnClick((e: any) => {
-                window.location.href = "profile.html";
+                window.location.href = "#";
             })
-            retakeTestButton.setOnClick((e: any) => {
+            takeTestButton.setOnClick((e: any) => {
                 window.location.href = "testpage.html";
             })
     
@@ -36,7 +36,7 @@ export class MainController extends Controller {
             $("#results-button").append(resultsButton.getView());
             $("#profile-button").append(profileButton.getView());
             $("#users-button").append(usersButton.getView());
-            $("#retaketest-button").append(retakeTestButton.getView());
+            $("#taketest-button").append(takeTestButton.getView());
             $("#logout-button").append(logOutButton.getView());
         }
         
