@@ -1,4 +1,3 @@
-
 -- Get signed up users --
 SELECT u.`username`,
     (
