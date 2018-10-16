@@ -22,20 +22,6 @@ define("controllers/controller", ["require", "exports"], function (require, expo
     }());
     exports.Controller = Controller;
 });
-define("controllers/maincontroller", ["require", "exports", "controllers/controller"], function (require, exports, controller_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var MainController = (function (_super) {
-        __extends(MainController, _super);
-        function MainController() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        MainController.prototype.setup = function () {
-        };
-        return MainController;
-    }(controller_1.Controller));
-    exports.MainController = MainController;
-});
 define("components/button/button", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -56,7 +42,52 @@ define("components/button/button", ["require", "exports"], function (require, ex
     }());
     exports.Button = Button;
 });
-define("components/user", ["require", "exports"], function (require, exports) {
+define("controllers/maincontroller", ["require", "exports", "controllers/controller", "components/button/button"], function (require, exports, controller_1, button_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var MainController = (function (_super) {
+        __extends(MainController, _super);
+        function MainController() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        MainController.prototype.setup = function () {
+            $("#window").append();
+            var myCoursesButton = new button_1.Button("My courses");
+            var resultsButton = new button_1.Button("Results");
+            var usersButton = new button_1.Button("Users");
+            var profileButton = new button_1.Button("Profile");
+            var retakeTestButton = new button_1.Button("Retake test");
+            var logOutButton = new button_1.Button("Log out");
+            myCoursesButton.setOnClick(function (e) {
+                window.location.href = "courses.html";
+            });
+            resultsButton.setOnClick(function (e) {
+                window.location.href = "results.html";
+            });
+            usersButton.setOnClick(function (e) {
+                window.location.href = "users.html";
+            });
+            profileButton.setOnClick(function (e) {
+                window.location.href = "profile.html";
+            });
+            retakeTestButton.setOnClick(function (e) {
+                window.location.href = "testpage.html";
+            });
+            logOutButton.setOnClick(function (e) {
+                window.location.href = "login.html";
+            });
+            $("#mycourses-button").append(myCoursesButton.getView());
+            $("#results-button").append(resultsButton.getView());
+            $("#profile-button").append(profileButton.getView());
+            $("#users-button").append(usersButton.getView());
+            $("#retaketest-button").append(retakeTestButton.getView());
+            $("#logout-button").append(logOutButton.getView());
+        };
+        return MainController;
+    }(controller_1.Controller));
+    exports.MainController = MainController;
+});
+define("controllers/logincontroller", ["require", "exports", "controllers/controller"], function (require, exports, controller_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var User = (function () {
@@ -159,7 +190,180 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
     }(controller_2.Controller));
     exports.LoginController = LoginController;
 });
-define("app", ["require", "exports", "controllers/maincontroller", "controllers/logincontroller"], function (require, exports, maincontroller_1, logincontroller_1) {
+define("components/question", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Question = (function () {
+        function Question(question, type, answer) {
+            this.answer = new Array();
+            this.question = question;
+            this.answer = answer;
+            this.type = type;
+        }
+        Question.prototype.getQuestion = function () {
+            return this.question;
+        };
+        Question.prototype.getType = function () {
+            return this.type;
+        };
+        Question.prototype.getAmountOfAnswers = function () {
+            return this.answer.length;
+        };
+        Question.prototype.getAnswer = function (index) {
+            return this.answer[index];
+        };
+        return Question;
+    }());
+    exports.Question = Question;
+});
+define("components/radiobutton/radiobuttons", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var RadioButtons = (function () {
+        function RadioButtons(name, id) {
+            this.name = name;
+            this.id = id;
+        }
+        RadioButtons.prototype.getView = function () {
+            var template = "<input type=\"radio\" class=\"mdl-radio__button\" name=\"" + this.name + "\" value=\"" + this.id + "\">";
+            return template;
+        };
+        return RadioButtons;
+    }());
+    exports.RadioButtons = RadioButtons;
+});
+define("components/radiobutton/checkbox", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var CheckBox = (function () {
+        function CheckBox(name, id) {
+            this.name = name;
+            this.id = id;
+        }
+        CheckBox.prototype.getView = function () {
+            var template = "<input type=\"checkbox\" class=\"mdl-radio__button\" name=\"" + this.name + "\" value=\"" + this.id + "\">";
+            return template;
+        };
+        return CheckBox;
+    }());
+    exports.CheckBox = CheckBox;
+});
+define("models/JsonSubQuestion", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var JsonSubQuestion = (function () {
+        function JsonSubQuestion() {
+        }
+        return JsonSubQuestion;
+    }());
+    exports.JsonSubQuestion = JsonSubQuestion;
+});
+define("models/JsonMainQuestion", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var JsonMainQuestion = (function () {
+        function JsonMainQuestion() {
+        }
+        return JsonMainQuestion;
+    }());
+    exports.JsonMainQuestion = JsonMainQuestion;
+});
+define("components/questions/questions", ["require", "exports", "components/radiobutton/radiobuttons", "components/radiobutton/checkbox"], function (require, exports, radiobuttons_1, checkbox_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var Questions = (function () {
+        function Questions(questions) {
+            this.questions = questions;
+        }
+        Questions.prototype.getView = function () {
+            var div = $("<div>");
+            for (var i = 0; i < this.questions.length; i++) {
+                var table = $("<table>");
+                var question = this.questions[i];
+                var header = $("<tr>");
+                header.append($("<td>")
+                    .attr("colspan", question.answers.length + 1)
+                    .html(question.mainQuestion));
+                table.append(header);
+                var answers = $("<tr>");
+                answers.append($("<td>"));
+                for (var i2 = 0; i2 < question.answers.length; i2++) {
+                    var answer = question.answers[i2];
+                    answers.append($("<td>").html(answer));
+                }
+                table.append(answers);
+                for (var i2 = 0; i2 < question.subQuestions.length; i2++) {
+                    var uniqueName = "subQuestion_" + i + "_" + i2;
+                    var subQuestion = question.subQuestions[i2];
+                    var row = $("<tr>");
+                    row.append($("<td>").html(subQuestion.question));
+                    for (var i3 = 0; i3 < question.answers.length; i3++) {
+                        var controlView;
+                        switch (subQuestion.type) {
+                            case "radio":
+                                var radiobutton = new radiobuttons_1.RadioButtons(uniqueName, i3);
+                                controlView = radiobutton.getView();
+                                break;
+                            case "checkbox":
+                                var checkbox = new checkbox_1.CheckBox(uniqueName, i3);
+                                controlView = checkbox.getView();
+                                break;
+                            default:
+                                controlView = "Unknown";
+                                break;
+                        }
+                        row.append($("<td>").html(controlView));
+                    }
+                    table.append(row);
+                }
+                div.append(table);
+            }
+            return $(div).html();
+        };
+        return Questions;
+    }());
+    exports.Questions = Questions;
+});
+define("components/questionhandler", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var QuestionHandler = (function () {
+        function QuestionHandler(callBack) {
+            $.ajax({
+                url: "/assets/json/questions.json",
+            }).done(function (result) {
+                this.mainQuestions = result;
+                callBack();
+            }.bind(this));
+        }
+        QuestionHandler.prototype.getMainQuestions = function () {
+            return this.mainQuestions;
+        };
+        return QuestionHandler;
+    }());
+    exports.QuestionHandler = QuestionHandler;
+});
+define("controllers/testcontroller", ["require", "exports", "controllers/controller", "components/questions/questions", "components/questionhandler"], function (require, exports, controller_3, questions_1, questionhandler_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var TestController = (function (_super) {
+        __extends(TestController, _super);
+        function TestController() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TestController.prototype.setup = function () {
+            var self = this;
+            this.questions = new questionhandler_1.QuestionHandler(function () {
+                var retrievedQuestions = self.questions.getMainQuestions();
+                var question = new questions_1.Questions(retrievedQuestions);
+                $("#testid").html(question.getView());
+            });
+        };
+        return TestController;
+    }(controller_3.Controller));
+    exports.TestController = TestController;
+});
+define("app", ["require", "exports", "controllers/maincontroller", "controllers/logincontroller", "controllers/testcontroller"], function (require, exports, maincontroller_1, logincontroller_1, testcontroller_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var App = (function () {
@@ -173,9 +377,37 @@ define("app", ["require", "exports", "controllers/maincontroller", "controllers/
             else if (type == "login") {
                 var controller = new logincontroller_1.LoginController();
             }
+            else if (type == "test") {
+                console.log("i");
+                var controller = new testcontroller_1.TestController();
+            }
         };
         return App;
     }());
     exports.App = App;
+});
+define("components/radiobutton/radioarrays", ["require", "exports", "components/radiobutton/radiobuttons", "components/radiobutton/checkbox"], function (require, exports, radiobuttons_2, checkbox_2) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var RadioArrays = (function () {
+        function RadioArrays(name, type) {
+            this.name = name;
+            this.type = type;
+        }
+        RadioArrays.prototype.getView = function (index) {
+            var template = "";
+            for (var i = 1; i <= index; i++) {
+                if (this.type == "radio") {
+                    template += "<td>" + new radiobuttons_2.RadioButtons(this.name, i).getView() + "</td>";
+                }
+                else {
+                    template += "<td>" + new checkbox_2.CheckBox(this.name, i).getView() + "</td>";
+                }
+            }
+            return template;
+        };
+        return RadioArrays;
+    }());
+    exports.RadioArrays = RadioArrays;
 });
 //# sourceMappingURL=app.js.map
