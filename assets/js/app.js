@@ -74,7 +74,7 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
                 window.location.href = "testpage.html";
             });
             logOutButton.setOnClick(function (e) {
-                window.location.href = "login.html";
+                window.location.href = "/index.html";
             });
             $("#mycourses-button").append(myCoursesButton.getView());
             $("#results-button").append(resultsButton.getView());
@@ -87,7 +87,7 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
     }(controller_1.Controller));
     exports.MainController = MainController;
 });
-define("controllers/logincontroller", ["require", "exports", "controllers/controller"], function (require, exports, controller_2) {
+define("components/user", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var User = (function () {
@@ -133,7 +133,7 @@ define("components/userhandler", ["require", "exports", "components/user"], func
     }());
     exports.UserHandler = UserHandler;
 });
-define("controllers/logincontroller", ["require", "exports", "controllers/controller", "components/button/button", "components/userhandler"], function (require, exports, controller_2, button_1, userhandler_1) {
+define("controllers/logincontroller", ["require", "exports", "controllers/controller", "components/button/button", "components/userhandler"], function (require, exports, controller_2, button_2, userhandler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LoginController = (function (_super) {
@@ -151,13 +151,13 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
             $.get("/views/signup.html").done(function (data) {
                 $("#window").append(data);
             });
-            var loginButton = new button_1.Button("Login");
-            var signupButton = new button_1.Button("Sign up");
-            var backButton = new button_1.Button("Back");
+            var loginButton = new button_2.Button("Login");
+            var signupButton = new button_2.Button("Sign up");
+            var backButton = new button_2.Button("Back");
             loginButton.setOnClick(function (e) {
                 _this.userHandler.getPasswordByUsername("test");
                 if (_this.userHandler.getPasswordByUsername(document.getElementById("username").value) == document.getElementById("password").value) {
-                    window.location.href = "menu.html";
+                    window.location.href = "views/main.html";
                 }
                 else {
                     $("#errorbox").html("Username and password don't match. Please try again.");

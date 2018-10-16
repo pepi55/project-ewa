@@ -29,7 +29,7 @@ export class MainController extends Controller {
             })
     
             logOutButton.setOnClick((e: any) => {
-                window.location.href = "login.html";
+                window.location.href = "/index.html";
             })
 
             $("#mycourses-button").append(myCoursesButton.getView());
