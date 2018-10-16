@@ -46,11 +46,11 @@ VALUES ([value-1]);
 
 
 -- JOINS FOR THE TEST --
-SELECT  `B.question`, `A.answer`, `C.type`
-FROM `answer A`
-INNER JOIN `question B` ON `B.idquestion` = `A.idquestion`
-INNER JOIN `competency C` ON `A.idcompetency` = `C.idcompetency` 
-ORDER BY `B.question`;
+SELECT  B.`question`, A.`answer`, C.`type`
+FROM `answer` A
+INNER JOIN `question` B ON B.`idquestion` = A.`idquestion`
+INNER JOIN `competency` C ON A.`idcompetency` = C.`idcompetency` 
+ORDER BY B.`question`;
 
 
 
