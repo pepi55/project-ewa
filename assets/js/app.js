@@ -82,13 +82,17 @@ define("components/userhandler", ["require", "exports", "components/user"], func
         function UserHandler() {
             this.users = new Array();
             $.ajax({
-                url: "assets/json/users.json"
-            }).done(function (result) {
-                for (var _i = 0, _a = result["users"]; _i < _a.length; _i++) {
-                    var user = _a[_i];
-                    this.users.push(new user_1.User(user["email"], user["username"], user["password"]));
+                url: "assets/json/users.json",
+                success: function (result) {
+                    for (var _i = 0, _a = result["users"]; _i < _a.length; _i++) {
+                        var user = _a[_i];
+                        this.users.push(new user_1.User(user["email"], user["username"], user["password"]));
+                    }
+                }.bind(this),
+                fail: function (xhr, textStatus, errorThrown) {
+                    console.log('request failed');
                 }
-            }.bind(this));
+            });
         }
         UserHandler.prototype.getPasswordByUsername = function (username) {
             for (var _i = 0, _a = this.users; _i < _a.length; _i++) {
@@ -114,6 +118,16 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
         }
         LoginController.prototype.setup = function () {
             var _this = this;
+            console.log("pop2");
+            $.ajax({
+                url: "http://127.0.0.1:8080/servlet/QuestionsAPIServlet",
+                success: function (result) {
+                    console.log(result + "pop");
+                }.bind(this),
+                fail: function (xhr, textStatus, errorThrown) {
+                    console.log('request failed');
+                }
+            });
             $.get("/views/login.html").done(function (data) {
                 $("#window").append(data);
             });
