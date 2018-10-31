@@ -46,6 +46,18 @@ public class QuestionsAPIServlet extends HttpServlet {
         writer.print(questions);
     }
 
+    // @Override
+    // protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    //     super.doOptions(req, resp);
+    //     setAccessControlHeaders(resp);
+    //     resp.setStatus(HttpServletResponse.SC_OK);
+    // }
+
+    // private void setAccessControlHeaders(HttpServletResponse resp) {
+    //     resp.addHeader("Access-Control-Allow-Origin", "*");
+    //     resp.addHeader("Access-Control-Allow-Methods", "GET");
+    // }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *

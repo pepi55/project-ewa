@@ -120,6 +120,16 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
         }
         LoginController.prototype.setup = function () {
             var _this = this;
+            console.log("pop2");
+            $.ajax({
+                url: "http://127.0.0.1:8080/servlet/QuestionsAPIServlet",
+                success: function (result) {
+                    console.log(result + "pop");
+                }.bind(this),
+                fail: function (xhr, textStatus, errorThrown) {
+                    console.log('request failed');
+                }
+            });
             $.get("/views/login.html").done(function (data) {
                 $("#window").append(data);
             });
