@@ -1,7 +1,8 @@
-package com.ewa.servlet;
+package com.ent3.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,15 +10,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.gson.Gson;
+
 /**
  * Week 3 EWA workshop.
  *
  * @author Peter Dimitrov (500790230)
  */
-@WebServlet(name = "QuestionsAPIServlet", urlPatterns = {"/QuestionsAPIServlet"})
+@WebServlet(name = "QuestionsAPIServlet", urlPatterns = { "/QuestionsAPIServlet" })
 public class QuestionsAPIServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
+    private Gson gson = new Gson();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -29,10 +33,16 @@ public class QuestionsAPIServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String questions = "[ { \"id\": 1, \"setId\": 1, \"title\": \"Part 1\", \"question\": \"What?\", \"answers\": [ { \"text\": \"Yes\", \"correct\": false }, { \"text\": \"No\", \"correct\": false }, { \"text\": \"Yesn\\'t\", \"correct\": true } ] }, { \"id\": 2, \"setId\": 1, \"title\": \"Part 2\", \"question\": \"Who?\", \"answers\": [ { \"text\": \"You\", \"correct\": false }, { \"text\": \"Me\", \"correct\": false }, { \"text\": \"Thanos\", \"correct\": false }, { \"text\": \"ThanosCar\", \"correct\": true } ] } ]";
-        
-        response.setContentType("application/json");
+        ArrayList<User> users = new ArrayList<>();
+        users.add(new User("admin", "admin", "admin", "admin"));
+        users.add(new User("peter", "dimitrov", "jemoer", "jemoer"));
+        String questions = gson.toJson(users);
         PrintWriter writer = response.getWriter();
+        response.addHeader("Origin", "http://127.0.0.1:8080/servlet/QuestionsAPIServlet");
+        response.addHeader("Access-Control-Allow-Origin", "*");
+        response.addHeader("Access-Control-Allow-Methods", "GET");
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
         writer.print(questions);
     }
 

@@ -6,17 +6,6 @@ export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
 
     protected setup(): void {
-        console.log("pop2")
-        $.ajax({
-            url: "http://127.0.0.1:8080/servlet/QuestionsAPIServlet",
-            success: function (result: any) {
-                console.log(result + "pop");
-            }.bind(this),
-            fail: function(xhr: any, textStatus: any, errorThrown: any){
-                console.log('request failed');
-            }
-        });
-
         $.get("/views/login.html").done(function (data: any) {
             $("#window").append(data);
         });

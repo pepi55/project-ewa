@@ -1,4 +1,4 @@
-package com.ewa.servlet;
+package com.ent3.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

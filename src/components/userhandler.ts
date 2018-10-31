@@ -5,10 +5,11 @@ export class UserHandler {
 
     public constructor() {
         $.ajax({
-            url: "assets/json/users.json",
+            url: "http://127.0.0.1:8080/servlet/QuestionsAPIServlet",
             success: function (result: any) {
-                for (let user of result["users"]){
-                    this.users.push(new User(user["email"],user["username"],user["password"]));
+                console.log(result)
+                for (let user of result){
+                    this.users.push(new User(user["firstName"], user["lastName"],user["username"],user["password"]));
                 }
             }.bind(this),
             fail: function(xhr: any, textStatus: any, errorThrown: any){
