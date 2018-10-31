@@ -5,12 +5,16 @@ export class UserHandler {
 
     public constructor() {
         $.ajax({
-            url: "assets/json/users.json"
-        }).done(function (result: any) {
-            for (let user of result["users"]){
-                this.users.push(new User(user["email"],user["username"],user["password"]));
+            url: "assets/json/users.json",
+            success: function (result: any) {
+                for (let user of result["users"]){
+                    this.users.push(new User(user["email"],user["username"],user["password"]));
+                }
+            }.bind(this),
+            fail: function(xhr: any, textStatus: any, errorThrown: any){
+                console.log('request failed');
             }
-        }.bind(this));
+        })
     }
 
     public getPasswordByUsername(username: string) {
