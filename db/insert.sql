@@ -1,3 +1,5 @@
+USE `ent3`;
+
 -- USERS --
 INSERT INTO `user`(`username`, `password`, `name`, `surname`) VALUES ("user2","userpassword2","peterpan2","deachterrnaam2");
 INSERT INTO `user`(`username`, `password`, `name`, `surname`) VALUES ("user3","userpassword3","peterpan3","deachterrnaam3");
