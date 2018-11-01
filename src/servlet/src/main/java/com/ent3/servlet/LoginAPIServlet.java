@@ -10,12 +10,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.ent3.servlet.model.User;
 import com.google.gson.Gson;
 
 /**
  * Week 3 EWA workshop.
  *
- * @author Peter Dimitrov (500790230)
+ * @author Peter Dimitrov
  */
 @WebServlet(name = "LoginAPIServlet", urlPatterns = { "/LoginAPIServlet" })
 public class LoginAPIServlet extends HttpServlet {

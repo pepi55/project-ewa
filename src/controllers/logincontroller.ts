@@ -8,7 +8,7 @@ export class LoginController extends Controller {
     protected setup(): void {
         console.log("pop2")
         $.ajax({
-            url: "http://127.0.0.1:8080/servlet/QuestionsAPIServlet",
+            url: "http://127.0.0.1:8080/servlet/services/rest/users",
             success: function (result: any) {
                 console.log(result + "pop");
             }.bind(this),
