@@ -17,8 +17,8 @@ import com.google.gson.Gson;
  *
  * @author Peter Dimitrov (500790230)
  */
-@WebServlet(name = "QuestionsAPIServlet", urlPatterns = { "/QuestionsAPIServlet" })
-public class QuestionsAPIServlet extends HttpServlet {
+@WebServlet(name = "LoginAPIServlet", urlPatterns = { "/LoginAPIServlet" })
+public class LoginAPIServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
     private Gson gson = new Gson();
@@ -36,27 +36,15 @@ public class QuestionsAPIServlet extends HttpServlet {
         ArrayList<User> users = new ArrayList<>();
         users.add(new User("admin", "admin", "admin", "admin"));
         users.add(new User("peter", "dimitrov", "jemoer", "jemoer"));
-        String questions = gson.toJson(users);
+        String userString = gson.toJson(users);
         PrintWriter writer = response.getWriter();
-        response.addHeader("Origin", "http://127.0.0.1:8080/servlet/QuestionsAPIServlet");
+        response.addHeader("Origin", "http://127.0.0.1:8080/");
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        writer.print(questions);
+        writer.print(userString);
     }
-
-    // @Override
-    // protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-    //     super.doOptions(req, resp);
-    //     setAccessControlHeaders(resp);
-    //     resp.setStatus(HttpServletResponse.SC_OK);
-    // }
-
-    // private void setAccessControlHeaders(HttpServletResponse resp) {
-    //     resp.addHeader("Access-Control-Allow-Origin", "*");
-    //     resp.addHeader("Access-Control-Allow-Methods", "GET");
-    // }
 
     /**
      * Handles the HTTP <code>POST</code> method.
