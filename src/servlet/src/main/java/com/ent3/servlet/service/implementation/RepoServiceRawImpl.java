@@ -35,8 +35,8 @@ public class RepoServiceRawImpl implements RepositoryService {
      * Generate raw dummy data.
      */
     private void loadData() {
-        elements.put(1, new User("admin", "admin", "admin", "admin"));
-        elements.put(2, new User("peter", "dimitrov", "peter", "password"));
+        elements.put(1, new User("admin", "admin", "admin", "admin",3));
+        elements.put(2, new User("peter", "dimitrov", "peter", "password",1));
     }
 
     @Override

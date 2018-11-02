@@ -3,9 +3,10 @@
     "version": "1.0.0",
     "description": "TypeScript Test",
     "license": "MIT",
-    "devDependencies": {},
+    "devDependencies": {
+        "live-server": "^1.2.0"
+    },
     "dependencies": {
-        "live-server": "^1.2.0",
         "typescript": "^3.1.5"
     },
     "repository": {}

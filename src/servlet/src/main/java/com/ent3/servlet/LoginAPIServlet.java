@@ -35,15 +35,18 @@ public class LoginAPIServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("admin", "admin", "admin", "admin"));
-        users.add(new User("peter", "dimitrov", "jemoer", "jemoer"));
+        users.add(new User("admin", "admin", "admin", "admin", 3));
+        users.add(new User("peter", "dimitrov", "jemoer", "jemoer", 1));
         String userString = gson.toJson(users);
         PrintWriter writer = response.getWriter();
+
+        // prevent "no Acces-Control-Allow-Orogin"
         response.addHeader("Origin", "http://127.0.0.1:8080/");
         response.addHeader("Access-Control-Allow-Origin", "*");
         response.addHeader("Access-Control-Allow-Methods", "GET");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
         writer.print(userString);
     }
 
