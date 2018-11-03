@@ -11,18 +11,18 @@ import javax.ws.rs.core.Response;
 
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.rest.model.ClientError;
-import com.ent3.servlet.service.RepositoryService;
-import com.ent3.servlet.service.implementation.RepoServiceRawImpl;
+import com.ent3.servlet.service.UserRepository;
+import com.ent3.servlet.service.implementation.RawRepoImplementation;
 
 /**
  * UserResource
  */
 @Path("users")
 public class UserResource {
-    private RepositoryService service;
+    private UserRepository service;
 
     public UserResource() {
-        service = RepoServiceRawImpl.getInstance();
+        service = RawRepoImplementation.getInstance();
     }
 
     @GET
