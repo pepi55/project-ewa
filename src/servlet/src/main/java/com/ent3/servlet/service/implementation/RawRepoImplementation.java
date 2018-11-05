@@ -70,6 +70,7 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
 
     @Override
     public boolean addCompetency(Area area, Competency competency) {
+        // TODO: Proper comparison.
         boolean doesNotContain = !area.getCompetencies().contains(competency);
 
         if (doesNotContain) {
