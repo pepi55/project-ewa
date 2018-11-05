@@ -19,6 +19,8 @@ import com.ent3.servlet.service.implementation.RawRepoImplementation;
 
 /**
  * UserResource
+ *
+ * @author Peter Dimitrov
  */
 @Path("users")
 public class UserResource {

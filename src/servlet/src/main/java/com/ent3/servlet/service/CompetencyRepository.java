@@ -6,11 +6,15 @@ import com.ent3.servlet.model.Competency;
 
 /**
  * CompetencyRepository
+ *
+ * @author Peter Dimitrov
  */
 public interface CompetencyRepository {
 
     /**
      * Get all competencies.
+     *
+     * @return List of all competencies.
      */
     public List<Competency> getAllCompetencies();
 

@@ -2,35 +2,25 @@ package com.ent3.servlet.model;
 
 /**
  * Competency
+ *
+ * @author Peter Dimitrov
  */
 public class Competency {
-    public enum Type {
-        IDEAS_OPPORTUNITIES (1),
-        RESOURCES (2),
-        INTO_ACTION (3);
+    private String name;
 
-        private int id;
-
-        private Type(int id) {
-            this.id = id;
-        }
-
-        public int id() {
-            return this.id;
-        }
+    public Competency() {
+        name = "";
     }
 
-    private Type competencyType;
-
-    public Competency(Type type) {
-        this.competencyType = type;
+    public Competency(String name) {
+        this.name = name;
     }
 
-    public Type getCompetencyType() {
-        return this.competencyType;
+    public String getName() {
+        return this.name;
     }
 
-    public int getCompetencyTypeId() {
-        return this.competencyType.id();
+    public void setName(String name) {
+        this.name = name;
     }
 }

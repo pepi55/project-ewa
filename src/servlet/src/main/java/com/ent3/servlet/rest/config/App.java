@@ -5,6 +5,8 @@ import javax.ws.rs.ApplicationPath;
 
 /**
  * App config
+ *
+ * @author Peter Dimitrov
  */
 @ApplicationPath("services/rest")
 public class App extends ResourceConfig {

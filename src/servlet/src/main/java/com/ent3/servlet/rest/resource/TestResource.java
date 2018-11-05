@@ -7,6 +7,8 @@ import javax.ws.rs.core.MediaType;
 
 /**
  * TestResource
+ *
+ * @author Peter Dimitrov
  */
 @Path("test")
 public class TestResource {
