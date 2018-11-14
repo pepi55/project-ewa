@@ -22,20 +22,6 @@ define("controllers/controller", ["require", "exports"], function (require, expo
     }());
     exports.Controller = Controller;
 });
-define("controllers/maincontroller", ["require", "exports", "controllers/controller"], function (require, exports, controller_1) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var MainController = (function (_super) {
-        __extends(MainController, _super);
-        function MainController() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        MainController.prototype.setup = function () {
-        };
-        return MainController;
-    }(controller_1.Controller));
-    exports.MainController = MainController;
-});
 define("components/button/button", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
@@ -55,6 +41,46 @@ define("components/button/button", ["require", "exports"], function (require, ex
         return Button;
     }());
     exports.Button = Button;
+});
+define("controllers/maincontroller", ["require", "exports", "controllers/controller", "components/button/button"], function (require, exports, controller_1, button_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var MainController = (function (_super) {
+        __extends(MainController, _super);
+        function MainController() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        MainController.prototype.setup = function () {
+            $("#window").append();
+            var profileButton = new button_1.Button("Profile");
+            var takeTestButton = new button_1.Button("Take test");
+            var resultsButton = new button_1.Button("Results");
+            var courseButton = new button_1.Button("My courses");
+            var logoutButton = new button_1.Button("Log out");
+            profileButton.setOnClick(function (e) {
+                window.location.href = "#";
+            });
+            takeTestButton.setOnClick(function (e) {
+                window.location.href = "#";
+            });
+            resultsButton.setOnClick(function (e) {
+                window.location.href = "#";
+            });
+            courseButton.setOnClick(function (e) {
+                window.location.href = "#";
+            });
+            logoutButton.setOnClick(function (e) {
+                window.location.href = "../index.html";
+            });
+            $("#profile-button").append(profileButton.getView());
+            $("#takeTest-button").append(takeTestButton.getView());
+            $("#results-button").append(resultsButton.getView());
+            $("#course-button").append(courseButton.getView());
+            $("#logout-button").append(logoutButton.getView());
+        };
+        return MainController;
+    }(controller_1.Controller));
+    exports.MainController = MainController;
 });
 define("components/user", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -106,7 +132,7 @@ define("components/userhandler", ["require", "exports", "components/user"], func
     }());
     exports.UserHandler = UserHandler;
 });
-define("controllers/logincontroller", ["require", "exports", "controllers/controller", "components/button/button", "components/userhandler"], function (require, exports, controller_2, button_1, userhandler_1) {
+define("controllers/logincontroller", ["require", "exports", "controllers/controller", "components/button/button", "components/userhandler"], function (require, exports, controller_2, button_2, userhandler_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var LoginController = (function (_super) {
@@ -118,19 +144,29 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
         }
         LoginController.prototype.setup = function () {
             var _this = this;
+            console.log("pop2");
+            $.ajax({
+                url: "http://127.0.0.1:8080/servlet/services/rest/users",
+                success: function (result) {
+                    console.log(result + "pop");
+                }.bind(this),
+                fail: function (xhr, textStatus, errorThrown) {
+                    console.log('request failed');
+                }
+            });
             $.get("/views/login.html").done(function (data) {
                 $("#window").append(data);
             });
             $.get("/views/signup.html").done(function (data) {
                 $("#window").append(data);
             });
-            var loginButton = new button_1.Button("Login");
-            var signupButton = new button_1.Button("Sign up");
-            var backButton = new button_1.Button("Back");
+            var loginButton = new button_2.Button("Login");
+            var signupButton = new button_2.Button("Sign up");
+            var backButton = new button_2.Button("Back");
             loginButton.setOnClick(function (e) {
                 _this.userHandler.getPasswordByUsername("test");
                 if (_this.userHandler.getPasswordByUsername(document.getElementById("username").value) == document.getElementById("password").value) {
-                    window.location.href = "menu.html";
+                    window.location.href = "views/main.html";
                 }
                 else {
                     $("#errorbox").html("Username and password don't match. Please try again.");
