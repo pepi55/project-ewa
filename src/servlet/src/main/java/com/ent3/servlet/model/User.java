@@ -7,7 +7,7 @@ public class User {
     private String password;
     private int role;
 
-    public User(String firstName, String lastName, String username, String password, int role){
+    public User(String firstName, String lastName, String username, String password, int role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -45,5 +45,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getRole() {
+        return this.role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 }
