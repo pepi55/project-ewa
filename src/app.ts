@@ -1,5 +1,6 @@
 import { MainController } from "controllers/maincontroller";
 import { LoginController } from "./controllers/logincontroller";
+import { TestController } from "./controllers/testcontroller";
 
 export class App {
     
@@ -9,6 +10,10 @@ export class App {
             let controller: MainController = new MainController();
         } else if (type == "login") {
             let controller: LoginController = new LoginController();
+        }
+        else if (type == "test") {
+            console.log("i")
+            let controller: TestController = new TestController();
         }
     }
 }
