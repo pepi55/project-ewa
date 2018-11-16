@@ -25,5 +25,6 @@ import com.ent3.servlet.service.implementation.RawRepoImplementation;
 
  @Path("Question")
  public class QuestionResource{
-     
+     private 
+
  }
