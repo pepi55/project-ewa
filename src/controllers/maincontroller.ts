@@ -14,7 +14,7 @@ export class MainController extends Controller {
                 window.location.href = "#";
         })
         takeTestButton.setOnClick((e: any) => {
-            window.location.href = "../views/testpage.html";
+            window.location.href = "/views/testpage.html";
         })
         resultsButton.setOnClick((e: any) => {
             window.location.href = "#";
