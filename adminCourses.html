@@ -1,0 +1,96 @@
+<html>
+<head>
+  <title>courses</title>
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+  <script src="./assets/vendors/jquery/jquery-3.3.1.min.js"></script>
+  <script src="./assets/js/bundle.js"></script>
+</head>
+<style>
+    .demo-card-wide.mdl-card {
+      width: 290px;
+      min-height: 304;
+    }
+    .demo-card-wide > .mdl-card__title {
+      color: #fff;
+      height: 176px;
+      background: url('../assets/demos/welcome_card.jpg') center / cover;
+    }
+    .demo-card-wide > .mdl-card__menu {
+      color: #fff;
+    }
+
+    @media only screen and (min-width: 480px) {
+    .demo-card-wide.mdl-card {
+        width: 290px;
+        min-height: 304;
+    }
+
+}
+
+@media only screen and (min-width: 1080px) {
+    .demo-card-wide.mdl-card {
+        min-height: 304;
+        width: 390px;
+    }
+
+}
+    </style>
+    <body>
+      <!--<div class="mdl-layout-spacer"></div>-->
+
+      
+    </div>  
+    <div class="container" id="menuButton">
+      <div class="mdl-grid" id="cardsContainer">
+          <div class="mdl-cell mdl-cell--4-col" >
+              <table class="mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp dataTable">
+                  <thead>
+                    <tr id="selectedCardsTableHead">
+                      <th class="mdl-data-table__cell--non-numeric">Course</th>
+                      <th>Viewers</th>
+                      <th>Done(clicked card)</th>
+                    </tr>
+                  </thead>
+                  <tbody id="selectedCardsTable">
+                    <tr>
+                      <td class="mdl-data-table__cell--non-numeric">Titsdfsfsdfle1</td>
+                      <td>25</td>
+                      <td>$2.90</td>
+                    </tr>
+                    <tr>
+                      <td class="mdl-data-table__cell--non-numeric">Titlsdfsdfe2</td>
+                      <td>50</td>
+                      <td>$1.25</td>
+                    </tr>
+                    <tr>
+                      <td class="mdl-data-table__cell--non-numeric">Titdgsdfgsdtle3</td>
+                      <td>10</td>
+                      <td>$2.35</td>
+                    </tr>
+                    <tr>
+                        <td class="mdl-data-table__cell--non-numeric">Tiadrhagtdrfgtle3</td>
+                        <td>10</td>
+                        <td>$2.35</td>
+                      </tr>
+                      <tr>
+                          <td class="mdl-data-table__cell--non-numeric">Titleadrgfadgf3</td>
+                          <td>10</td>
+                          <td>$2.35</td>
+                        </tr>
+                  </tbody>
+                </table>
+                </div>
+
+
+      </div>
+    </div>
+    <script>
+      window.onload = function(e){
+          app("adminCourses");
+        }
+  </script>
+    </body>
+    </html>

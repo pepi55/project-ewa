@@ -5,6 +5,8 @@ assets/js/
 *.code-workspace
 *.bak
 
+node_modules
+
 # Mac
 .DS_Store
 

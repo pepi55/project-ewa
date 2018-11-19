@@ -7,20 +7,24 @@ import java.util.Map;
 
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
+import com.ent3.servlet.model.Course;
+import com.ent3.servlet.model.Courses;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.UserRepository;
+import com.ent3.servlet.service.CoursesRepository;
 
 /**
  * RepoServiceRawImpl
  *
  * @author Peter Dimitrov
  */
-public class RawRepoImplementation implements UserRepository, AreaRepository {
+public class RawRepoImplementation implements UserRepository, AreaRepository, CoursesRepository {
     private static RawRepoImplementation instance;
 
     private Map<Integer, User> users;
     private Map<Integer, Area> areas;
+    private Map<Integer, Courses> courses;
 
     static {
         instance = new RawRepoImplementation();
@@ -30,6 +34,7 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
     private RawRepoImplementation() {
         users = new HashMap<>();
         areas = new HashMap<>();
+        courses = new HashMap<>();
     }
 
     public static RawRepoImplementation getInstance() {
@@ -67,6 +72,29 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
     public Area getAreaById(int id) {
         return areas.get(id);
     }
+
+    @Override
+    public List<Courses> getAllCourses() {
+        return new ArrayList<>(courses.values());
+    }
+
+    @Override
+    public Courses getCoursesListById(int id) {
+        return courses.get(id);
+    }
+
+    @Override
+    public boolean addCourse(Courses coursesList, Course course) {
+        // TODO: check if exists.
+        // boolean doesNotContain = !coursesList.getCourses().contains(course);
+        // if (doesNotContain) {
+        //     coursesList.addCourse(course);
+        // }
+
+        coursesList.addCourse(course);
+        return true;
+    }
+
 
     @Override
     public boolean addCompetency(Area area, Competency competency) {
@@ -118,5 +146,17 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
         areas.put(1, ideas);
         areas.put(2, resources);
         areas.put(3, action);
+
+        // Course course1 = new Course(1, "rekenen met zn tweeen", "description1", "image1","linkje1");
+        // Course course2 = new Course(2, "leren schrijven", "description2", "image2","linkje2");
+        // Course course3 = new Course(3, "optellen", "description3", "image3","linkje3");
+        // Course course4 = new Course(4, "aftrekken", "description4", "image4","linkje4");
+
+        Courses CoursesList = new Courses("firstCourseList");
+        // CoursesList.addCourse(course1);
+        // CoursesList.addCourse(course2);
+        // CoursesList.addCourse(course3);
+        // CoursesList.addCourse(course4);
+        courses.put(1, CoursesList);
     }
 }
