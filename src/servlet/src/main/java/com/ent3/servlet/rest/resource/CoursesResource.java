@@ -25,6 +25,11 @@ import com.ent3.servlet.service.implementation.RawRepoImplementation;
 public class CoursesResource {
     private CoursesRepository service;
 
+    // Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name":"Valuing Ideas"}'
+    // in de body komt de course class
+    // Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/courses -ContentType "application/json" -Method POST -Body '{"JSON":"HIER"}' # dan vulje hier de json in met de dummy data die je wil uploaden
+
+    //als eerst stop tomcat dan als nodig is eerst cleanen dan packagen en dan die servlet.war runnen op tomcat
     public CoursesResource() {
         service = RawRepoImplementation.getInstance();
     }
@@ -58,17 +63,19 @@ public class CoursesResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Response addCourse(@PathParam("CoursesId") int coursesId, Course course) {
+    @Path("/coursesPost/{coursesId}")
+    public Response addCourse(@PathParam("coursesId") int coursesId, Course course) {
         Courses courses = service.getCoursesListById(coursesId);
 
+
         if (courses == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + coursesId + " not found")).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("CoursesList with ID: " + coursesId + " not found")).build();
         }
 
         if (service.addCourse(courses, course)) {
             return Response.status(Response.Status.CREATED).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + coursesId + " already contains this competency")).build();
+            return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Course with ID: " + course.getCourseId() + " already exists")).build();
         }
     }
 }

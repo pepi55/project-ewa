@@ -1,5 +1,4 @@
 import {API} from './enumRepo';
-//var Buffer = require('buffer/').Buffer
     //Edx
     const EDXPostUrl : string = "https://api.edx.org/oauth2/v1/access_token/";
     const EDXGetUrl : string = "https://api.edx.org/catalog/v1/catalogs/";
@@ -42,6 +41,20 @@ import {API} from './enumRepo';
         },
         json: true,
     };
+
+    //DB
+    const DBgetUrl : string = "http://127.0.0.1:8080/servlet/services/rest/";
+    const DBOptions : any = {
+        // headers: {
+        //     //headerinfo for authorization with udemy
+        //     'Authorization' : UdemyAuth,
+            
+            
+        // },
+        json: true,
+    };
+
+
     
 export class ApiRepo {
 
@@ -55,6 +68,8 @@ export class ApiRepo {
             return UdemyOptions;
         } else if (api === API.KhanAcademy) {
             return KhanAcademyOptions;
+        } else if (api === API.DB) {
+            return DBOptions;
         }
 
         return "error: no specified options";
@@ -67,6 +82,8 @@ export class ApiRepo {
             return UdemyGetUrl;
         } else if (api === API.KhanAcademy) {
             return KhanAcademyGetUrl;
+        } else if (api === API.DB) {
+            return DBgetUrl;
         }
 
         return "error: no specified get-url";
@@ -80,11 +97,14 @@ export class ApiRepo {
             //auth through get-request
         } else if (api === API.KhanAcademy) {
             //no auth needed
+        } else if (api === API.DB) {
+            //no auth needed
         }
 
         return "error: no specified-getAuthUrl";
     }
 
+    //nodig voor EDX
     setAccessToken(POSTResponse : any) {
         this.accessToken = POSTResponse.access_token;
     }

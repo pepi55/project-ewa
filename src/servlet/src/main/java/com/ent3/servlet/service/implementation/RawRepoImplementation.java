@@ -85,13 +85,14 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
 
     @Override
     public boolean addCourse(Courses coursesList, Course course) {
-        // TODO: Proper comparison.
-        boolean doesNotContain = !coursesList.getCourses().contains(course);
-        if (doesNotContain) {
-            coursesList.addCourse(course);
-        }
+        // TODO: check if exists.
+        // boolean doesNotContain = !coursesList.getCourses().contains(course);
+        // if (doesNotContain) {
+        //     coursesList.addCourse(course);
+        // }
 
-        return doesNotContain;
+        coursesList.addCourse(course);
+        return true;
     }
 
 
@@ -146,16 +147,16 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
         areas.put(2, resources);
         areas.put(3, action);
 
-        Course course1 = new Course(1, "rekenen met zn tweeen", "description1", "image1","linkje1");
-        Course course2 = new Course(2, "leren schrijven", "description2", "image2","linkje2");
-        Course course3 = new Course(3, "optellen", "description3", "image3","linkje3");
-        Course course4 = new Course(4, "aftrekken", "description4", "image4","linkje4");
+        // Course course1 = new Course(1, "rekenen met zn tweeen", "description1", "image1","linkje1");
+        // Course course2 = new Course(2, "leren schrijven", "description2", "image2","linkje2");
+        // Course course3 = new Course(3, "optellen", "description3", "image3","linkje3");
+        // Course course4 = new Course(4, "aftrekken", "description4", "image4","linkje4");
 
         Courses CoursesList = new Courses("firstCourseList");
-        CoursesList.addCourse(course1);
-        CoursesList.addCourse(course2);
-        CoursesList.addCourse(course3);
-        CoursesList.addCourse(course4);
+        // CoursesList.addCourse(course1);
+        // CoursesList.addCourse(course2);
+        // CoursesList.addCourse(course3);
+        // CoursesList.addCourse(course4);
         courses.put(1, CoursesList);
     }
 }

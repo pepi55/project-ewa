@@ -29,7 +29,7 @@ export class LoginController extends Controller {
         loginButton.setOnClick((e: any) => {
             this.userHandler.getPasswordByUsername("test");
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
-                window.location.href = "courses.html";
+                window.location.href = "adminCourses.html";
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
             }

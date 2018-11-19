@@ -10,6 +10,7 @@ export class ApiService {
     private repo = new ApiRepo();
     private api : API;
     private queryParam : string;
+    private path : string;
 
     constructor(api :API) {
         this.api = api;
@@ -17,6 +18,7 @@ export class ApiService {
         this.URLPOSTAUTH = this.repo.getAuthUrl(api);
         this.URLGET = this.repo.getGETUrl(api);
         this.queryParam = "";
+        this.path = "";
         
 
     }
@@ -54,21 +56,37 @@ export class ApiService {
 
     }
 
+    public setPath(path : string) {
+        this.path = path;
+    }
+
+    public setOptions(options : any) {
+        this.OPTIONS = options;
+    }
+
     public getParent(callBack : <T> (parent : T) => any) : void {
 
-        request.get(this.URLGET + this.queryParam, this.OPTIONS, (error : any, response : any, body : any) => {
+        request.get(this.URLGET + this.path + this.queryParam, this.OPTIONS, (error : any, response : any, body : any) => {
             callBack(response.body);
         });
 
 
      }
 
-    // //for EDX
+    //EDX
     public postAuthentication() {
         request.post(this.URLPOSTAUTH, this.OPTIONS, (error : any, response : any, body : any) => {
-            //this.repo.setAccessToken(body);
-            //console.log(this.repo.getAccessToken());
             console.log(body);
+        });
+    }
+
+    
+
+    //DB
+    public postCourse(callBack : <T> (parent : T) => any) {
+        console.log(this.URLGET + this.path)
+        request.post(this.URLGET + this.path, this.OPTIONS, (error : any, response : any, body : any) => {
+            callBack(response);
         });
     }
 

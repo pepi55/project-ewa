@@ -1,4 +1,4 @@
-export class CardButton {
+export class AdminButton {
     private onClickCallback: Function;
     private type: string;
 
@@ -23,6 +23,14 @@ export class CardButton {
             template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >
             <i class="material-icons">clear</i>
             </button>`;
+        }
+
+        if (this.type == "refresh") {
+            template = `<th>                  <!-- Colored icon button -->
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
+              <i class="material-icons">refresh</i>
+            </button>
+              </th>`
         }
 
         return $(template)

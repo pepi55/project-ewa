@@ -6,6 +6,15 @@ public class Course {
     private String description;
     private String image;
     private String url;
+    
+    public Course() {
+        courseId = 100;
+        title = "";
+        description = "";
+        image = "";
+        url = "";
+
+    }
 
     public Course(int courseId, String title, String description, String image, String url) {
         this.courseId = courseId;
@@ -54,6 +63,4 @@ public class Course {
     public String getUrl() {
         return url;
     }
-    
-    
 }

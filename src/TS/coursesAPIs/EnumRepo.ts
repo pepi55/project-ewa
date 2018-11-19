@@ -1,7 +1,8 @@
 export enum API {
     KhanAcademy,
     Edx,
-    Udemy
+    Udemy,
+    DB
 };
 
 export enum ORDERING {
