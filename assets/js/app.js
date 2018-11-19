@@ -199,31 +199,36 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
     }(controller_2.Controller));
     exports.LoginController = LoginController;
 });
-define("components/question", ["require", "exports"], function (require, exports) {
+define("components/area", ["require", "exports"], function (require, exports) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Question = (function () {
-        function Question(question, type, answer) {
-            this.answer = new Array();
-            this.question = question;
-            this.answer = answer;
-            this.type = type;
+    var Area = (function () {
+        function Area(area, areas) {
+            this.area = area;
+            this.areas = areas;
         }
-        Question.prototype.getQuestion = function () {
-            return this.question;
-        };
-        Question.prototype.getType = function () {
-            return this.type;
-        };
-        Question.prototype.getAmountOfAnswers = function () {
-            return this.answer.length;
-        };
-        Question.prototype.getAnswer = function (index) {
-            return this.answer[index];
-        };
-        return Question;
+        return Area;
     }());
-    exports.Question = Question;
+    exports.Area = Area;
+});
+define("components/areahandler", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var AreaHandler = (function () {
+        function AreaHandler(callBack) {
+            $.ajax({
+                url: "/assets/json/questions.json",
+            }).done(function (result) {
+                this.areas = result;
+                callBack();
+            }.bind(this));
+        }
+        AreaHandler.prototype.getAreas = function () {
+            return this.areas;
+        };
+        return AreaHandler;
+    }());
+    exports.AreaHandler = AreaHandler;
 });
 define("components/radiobutton/radiobuttons", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -240,22 +245,6 @@ define("components/radiobutton/radiobuttons", ["require", "exports"], function (
         return RadioButtons;
     }());
     exports.RadioButtons = RadioButtons;
-});
-define("components/radiobutton/checkbox", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var CheckBox = (function () {
-        function CheckBox(name, id) {
-            this.name = name;
-            this.id = id;
-        }
-        CheckBox.prototype.getView = function () {
-            var template = "<input type=\"checkbox\" class=\"mdl-radio__button\" name=\"" + this.name + "\" value=\"" + this.id + "\">";
-            return template;
-        };
-        return CheckBox;
-    }());
-    exports.CheckBox = CheckBox;
 });
 define("models/JsonSubQuestion", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -277,50 +266,38 @@ define("models/JsonMainQuestion", ["require", "exports"], function (require, exp
     }());
     exports.JsonMainQuestion = JsonMainQuestion;
 });
-define("components/questions/questions", ["require", "exports", "components/radiobutton/radiobuttons", "components/radiobutton/checkbox"], function (require, exports, radiobuttons_1, checkbox_1) {
+define("components/questions/areas", ["require", "exports", "components/radiobutton/radiobuttons"], function (require, exports, radiobuttons_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    var Questions = (function () {
-        function Questions(questions) {
-            this.questions = questions;
+    var Areas = (function () {
+        function Areas(areas) {
+            this.areas = areas;
         }
-        Questions.prototype.getView = function () {
+        Areas.prototype.getView = function () {
             var div = $("<div>");
-            for (var i = 0; i < this.questions.length; i++) {
+            for (var i = 0; i < this.areas.length; i++) {
                 var table = $("<table>");
-                var question = this.questions[i];
+                var area = this.areas[i];
                 var header = $("<tr>");
+                var mainQuestion;
+                mainQuestion = "How confident are you in the following areas?";
                 header.append($("<td>")
-                    .attr("colspan", question.answers.length + 1)
-                    .html(question.mainQuestion));
+                    .attr("colspan", 6)
+                    .html(mainQuestion));
                 table.append(header);
                 var answers = $("<tr>");
-                answers.append($("<td>"));
-                for (var i2 = 0; i2 < question.answers.length; i2++) {
-                    var answer = question.answers[i2];
-                    answers.append($("<td>").html(answer));
-                }
+                var answer1 = '<td>' + 'Not confident at all' + '<td>' + 'Slightly confident' + '<td>' + 'Somewhat confident' + '<td>' + 'Fairly confident' + '<td>' + 'Completely confident';
+                answers.append($("<td>").html(answer1));
                 table.append(answers);
-                for (var i2 = 0; i2 < question.subQuestions.length; i2++) {
-                    var uniqueName = "subQuestion_" + i + "_" + i2;
-                    var subQuestion = question.subQuestions[i2];
+                for (var i2 = 0; i2 < area.areas.length; i2++) {
+                    var uniqueName = "uniqueArea_" + i + "_" + i2;
+                    var uniqueArea = area.areas[i2];
                     var row = $("<tr>");
-                    row.append($("<td>").html(subQuestion.question));
-                    for (var i3 = 0; i3 < question.answers.length; i3++) {
+                    row.append($("<td>").html(uniqueArea.area));
+                    for (var i3 = 0; i3 < 5; i3++) {
                         var controlView;
-                        switch (subQuestion.type) {
-                            case "radio":
-                                var radiobutton = new radiobuttons_1.RadioButtons(uniqueName, i3);
-                                controlView = radiobutton.getView();
-                                break;
-                            case "checkbox":
-                                var checkbox = new checkbox_1.CheckBox(uniqueName, i3);
-                                controlView = checkbox.getView();
-                                break;
-                            default:
-                                controlView = "Unknown";
-                                break;
-                        }
+                        var radiobutton = new radiobuttons_1.RadioButtons(uniqueName, i3);
+                        controlView = radiobutton.getView();
                         row.append($("<td>").html(controlView));
                     }
                     table.append(row);
@@ -329,30 +306,11 @@ define("components/questions/questions", ["require", "exports", "components/radi
             }
             return $(div).html();
         };
-        return Questions;
+        return Areas;
     }());
-    exports.Questions = Questions;
+    exports.Areas = Areas;
 });
-define("components/questionhandler", ["require", "exports"], function (require, exports) {
-    "use strict";
-    Object.defineProperty(exports, "__esModule", { value: true });
-    var QuestionHandler = (function () {
-        function QuestionHandler(callBack) {
-            $.ajax({
-                url: "/assets/json/questions.json",
-            }).done(function (result) {
-                this.mainQuestions = result;
-                callBack();
-            }.bind(this));
-        }
-        QuestionHandler.prototype.getMainQuestions = function () {
-            return this.mainQuestions;
-        };
-        return QuestionHandler;
-    }());
-    exports.QuestionHandler = QuestionHandler;
-});
-define("controllers/testcontroller", ["require", "exports", "controllers/controller", "components/questions/questions", "components/questionhandler", "components/button/button"], function (require, exports, controller_3, questions_1, questionhandler_1, button_3) {
+define("controllers/testcontroller", ["require", "exports", "controllers/controller", "components/areahandler", "components/button/button", "components/questions/areas"], function (require, exports, controller_3, areahandler_1, button_3, areas_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var TestController = (function (_super) {
@@ -362,15 +320,15 @@ define("controllers/testcontroller", ["require", "exports", "controllers/control
         }
         TestController.prototype.setup = function () {
             var self = this;
-            var saveButton = new button_3.Button("Save");
-            saveButton.setOnClick(function (e) {
-                window.location.href = "/views/results.html";
-            });
-            this.questions = new questionhandler_1.QuestionHandler(function () {
-                var retrievedQuestions = self.questions.getMainQuestions();
-                var question = new questions_1.Questions(retrievedQuestions);
-                $("#testid").html(question.getView());
-                $("save-button").append(saveButton.getView());
+            this.areas = new areahandler_1.AreaHandler(function () {
+                var retrievedAreas = self.areas.getAreas();
+                var area = new areas_1.Areas(retrievedAreas);
+                var saveButton = new button_3.Button("Save");
+                saveButton.setOnClick(function (e) {
+                    window.location.href = "/views/results.html";
+                });
+                $("#testid").html(area.getView());
+                $("#save-button").append(saveButton.getView());
             });
         };
         return TestController;
@@ -400,23 +358,17 @@ define("app", ["require", "exports", "controllers/maincontroller", "controllers/
     }());
     exports.App = App;
 });
-define("components/radiobutton/radioarrays", ["require", "exports", "components/radiobutton/radiobuttons", "components/radiobutton/checkbox"], function (require, exports, radiobuttons_2, checkbox_2) {
+define("components/radiobutton/radioarrays", ["require", "exports", "components/radiobutton/radiobuttons"], function (require, exports, radiobuttons_2) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var RadioArrays = (function () {
-        function RadioArrays(name, type) {
+        function RadioArrays(name) {
             this.name = name;
-            this.type = type;
         }
         RadioArrays.prototype.getView = function (index) {
             var template = "";
             for (var i = 1; i <= index; i++) {
-                if (this.type == "radio") {
-                    template += "<td>" + new radiobuttons_2.RadioButtons(this.name, i).getView() + "</td>";
-                }
-                else {
-                    template += "<td>" + new checkbox_2.CheckBox(this.name, i).getView() + "</td>";
-                }
+                template += "<td>" + new radiobuttons_2.RadioButtons(this.name, i).getView() + "</td>";
             }
             return template;
         };

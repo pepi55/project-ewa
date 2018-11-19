@@ -1,114 +1,189 @@
 [
     {
-        "mainQuestion": "How confident are you in the following areas?",
-        "answers": [
-            "No confidence",
-            "Slight confidence",
-            "Moderate confidence",
-            "High confidence"
-        ],
-        "subQuestions": [
+       
+        "areas": [
             {
-                "question": "Self-awareness & self-efficacy",
-                "type": "radio"
+                "area": "Identifying and seizing opportunities to create value by exploring the social, cultural and economic landscape"
             },
             {
-                "question": "Beliving in yourself",
-                "type": "radio"
+                "area": "Identifying needs and challenges that need to be met"
+                  
             },
             {
-                "question": "Continuous personal development",
-                "type": "radio"
+                "area": "Establishing new connections and bring together scattered elements of the landscape to create opportunities to create value"
+               
             },
             {
-                "question": "Reflecting on your needs, aspirations and wants in the short, medium and long term",
-                "type": "radio"
-            }
-        ]
-    },
-    {
-        "mainQuestion": "In which of the following context do you have experience with any of these activities listed below?",
-        "answers": [
-            "As a hobby or pasttime",
-            "In an educational context",
-            "In a professional context",
-            "In my own company", 
-            "I don't have any experience in this area"
-        ],
-        "subQuestions": [
-            {
-                "question": "Using your imagination and abilities to identify opportunities for creating value",
-                "type": "checkbox"
+                "area": "Developing several ideas and opportunities to create value, including better solutions to existing and new challenges"
+                
             },
             {
-                "question": "Developing creative and purposeful ideas",
-                "type": "checkbox"
+                "area": "Combining knowledge and resources to achieve valuable effects"
+                
             },
             {
-                "question": "Working towards your vision of the future",
-                "type": "checkbox"
+                "area": "Imagining the future"
+                
             },
             {
-                "question": "Making the most of ideas and opportunities",
-                "type": "checkbox"
-            }
-        ]
-    }, 
+                "area": "Developing a vision to turn ideas into action"
+                
+            },
+            {
+                "area": "Visualizing future scenarios to help guide effort and action"
+                
+            },
 
-    {
-        "mainQuestion": "Which of the following concepts appeal most to you? (pick three)",
-        "answers": [
-            "First choice",
-            "Second choice",
-            "Third choice"
-        ],
-        "subQuestions": [
             {
-                "question": "Spotting opportunities",
-                "type": "radio"
+                "area": "Judging what value is in social, cultural and economic terms"
             },
             {
-                "question": "Creativity",
-                "type": "radio"
+                "area": "Recognizing the potential an idea has for creating value and identify suitable ways of making the most out of it"
             },
             {
-                "question": "Vision",
-                "type": "radio"
+                "area": "Assessing the consequences of ideas that bring value"
             },
             {
-                "question": "Valuing ideas",
-                "type": "radio"
-            }
-        ]
-    }, 
-
-    {
-        "mainQuestion": "Which of the following items would you rather avoid and or delegate to one of your team members? (pick three)",
-        "answers": [
-            "First choice",
-            "Second choice",
-            "Third choice"
-        ],
-        "subQuestions": [
-            {
-                "question": "Spotting opportunities",
-                "type": "radio"
+                "area": "Assessing the effect of entrepreneurial action on the target community, the market, society and the environment"
             },
             {
-                "question": "Creativity",
-                "type": "radio"
+                "area": "Reflecting on how sustainable long-term social, cultural and economic goals are"
             },
             {
-                "question": "Vision",
-                "type": "radio"
+                "area": "Reflecting on how sustainable the course of action chosen is"
             },
             {
-                "question": "Valuing ideas",
-                "type": "radio"
+                "area": "Self-awareness & self-efficacy"
+            },
+            {
+                "area": "Believing in yourself"
+            }, 
+            {
+                "area": "Continious personal development"
+            }, 
+            {
+                "area": "Reflecting on your needs, aspirations and wants in the short, medium and long term"
+            }, 
+            {
+                "area": "Identifying and assessing your individual strengths and weaknesses"
+            }, 
+            {
+                "area": "Identifying and assessing my team's strenghts and weaknesses"
+            }, 
+            {
+                "area": "Believing in your ability to influence others"
+            }, 
+            {
+                "area": "Being determined to turn ideas into action"
+            }, 
+            {
+                "area": "Satisfying your needs to achieve"
+            }, 
+            {
+                "area": "Being prepared to be patient to reach your goals"
+            }, 
+            {
+                "area": "Trying to achieve your long-term individual or group aims"
+            }, 
+            {
+                "area": "I display resilience under pressure, adversity, and temporary failure"
+            }, 
+            {
+                "area": "Obtaining resources needed to turn ideas into action"
+            }, 
+            {
+                "area": "Manage resources needed to turn into action"
+            }, 
+            {
+                "area": "Making the most of limited resources"
+            }, 
+            {
+                "area": "Obtaining relevant competences needed at different stages of starting and running your own venture including technical, legal, tax and digital competences"
+            }, 
+            {
+                "area": "Estimating the cost of turning an idea into a value-creating activity"
+            }, 
+            {
+                "area": "Planning, putting in place and evaluating financial decisions over time"
+            }, 
+            {
+                "area": "Managing internal finances to make sure your value-creating activity can last over the long term"
+            }, 
+            {
+                "area": "Dealing with external funding requirements to make sure your opportunity can last over the long run"
+            }, 
+            {
+                "area": "Inspiring and enthusing relevant stakeholders"
+            }, 
+            {
+                "area": "Getting the support needed to achieve valuable outcomes"
+            }, 
+            {
+                "area": "Demonstrating effective communication"
+            }, 
+            {
+                "area": "Demonstrating effective persuasion skills"
+            }, 
+            {
+                "area": "Negotiating effectively and leadership"
+            }, 
+            {
+                "area": "Showing leadership"
+            }, 
+            {
+                "area": "Initiating processes that create value"
+            }, 
+            {
+                "area": "Taking up challenges"
+            }, 
+            {
+                "area": "Acting and working independently to achieve goals"
+            }, 
+            {
+                "area": "Sticking to intentions and carrying out planned tasks"
+            }, 
+            {
+                "area": "Setting long-, medium- and short-term goals"
+            }, 
+            {
+                "area": "Defining priorities and action plans"
+            }, 
+            {
+                "area": "Adapting to unforeseen changes"
+            }, 
+            {
+                "area": "Making decisions based on partial or ambiguous information"
+            }, 
+            {
+                "area": "Making decisions in the face of uncertain outcomes or when there is a risk of unintended outcomes"
+            }, 
+            {
+                "area": "Testing ideas and prototypes from the early stages, to reduce risks of failing"
+            }, 
+            {
+                "area": "Handling fast-moving situations promptly and flexibly"
+            }, 
+            {
+                "area": "Working together and co-operating with others to develop ideas and turn them into action"
+            }, 
+            {
+                "area": "Networking"
+            }, 
+            {
+                "area": "Solving conflicts"
+            }, 
+            {
+                "area": "Facing up to competition with a positive mindset when necessary"
+            }, 
+            {
+                "area": "Using any initiative for value creation as a learning opportunity"
+            }, 
+            {
+                "area": "Learning with others, including peers and mentors"
+            }, 
+            {
+                "area": "Reflecting and learning from both success and failure (you own and other people's)"
             }
         ]
     }
-
-    
-
 ]

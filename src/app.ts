@@ -15,5 +15,6 @@ export class App {
             console.log("i")
             let controller: TestController = new TestController();
         }
+       
     }
 }
