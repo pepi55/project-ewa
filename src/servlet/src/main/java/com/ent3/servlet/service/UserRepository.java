@@ -40,4 +40,12 @@ public interface UserRepository {
      * @return A list of users with the last name.
      */
     public List<User> getUsersByLastName(String lastname);
+
+    /**
+     * Add a user.
+     *
+     * @param user The user to add.
+     * @return The added user.
+     */
+    public User addUser(User user);
 }

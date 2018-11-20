@@ -1,5 +1,6 @@
 package com.ent3.servlet.service.implementation;
 
+/*
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,12 +11,14 @@ import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.UserRepository;
+*/
 
 /**
  * RepoServiceRawImpl
  *
  * @author Peter Dimitrov
  */
+/*
 public class RawRepoImplementation implements UserRepository, AreaRepository {
     private static RawRepoImplementation instance;
 
@@ -48,13 +51,13 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
 
     @Override
     public List<User> getUsersByFirstName(String firstname) {
-        // TODO: implement.
+        // TOD: implement.
         return null;
     }
 
     @Override
     public List<User> getUsersByLastName(String lastname) {
-        // TODO: implement.
+        // TOD: implement.
         return null;
     }
 
@@ -69,7 +72,7 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
     }
 
     @Override
-    public boolean addCompetency(Area area, Competency competency) {
+    public Competency addCompetency(Area area, Competency competency) {
         // TODO: Proper comparison.
         boolean doesNotContain = !area.getCompetencies().contains(competency);
 
@@ -77,31 +80,28 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
             area.addCompetency(competency);
         }
 
-        return doesNotContain;
+        return competency;
     }
 
-    /**
-     * Generate raw dummy data.
-     */
     private void loadData() {
-        users.put(1, new User("admin", "admin", "admin", "admin", 3));
-        users.put(2, new User("peter", "dimitrov", "peter", "password", 1));
+        users.put(1, new User(1, "admin", "admin", "admin", "admin", 3));
+        users.put(2, new User(2, "peter", "dimitrov", "peter", "password", 1));
 
         Area ideas = new Area(Area.Type.IDEAS_OPPORTUNITIES);
         Area resources = new Area(Area.Type.RESOURCES);
         Area action = new Area(Area.Type.INTO_ACTION);
 
-        Competency opportunities = new Competency("Spotting Opportunities");
-        Competency creativity = new Competency("Creativity");
-        Competency vision = new Competency("Vision");
+        Competency opportunities = new Competency(1, "Spotting Opportunities");
+        Competency creativity = new Competency(2, "Creativity");
+        Competency vision = new Competency(3, "Vision");
 
-        Competency self = new Competency("Self-Awareness & Self-Efficacy");
-        Competency motivation = new Competency("Motivation & Perserverance");
-        Competency mobilising = new Competency("Mobilising Resources");
+        Competency self = new Competency(4, "Self-Awareness & Self-Efficacy");
+        Competency motivation = new Competency(5, "Motivation & Perserverance");
+        Competency mobilising = new Competency(6, "Mobilising Resources");
 
-        Competency initiative = new Competency("Taking the Initiative");
-        Competency planning = new Competency("Planning & Management");
-        Competency coping = new Competency("Coping With Ambiguity, Uncertainty & Risk");
+        Competency initiative = new Competency(7, "Taking the Initiative");
+        Competency planning = new Competency(8, "Planning & Management");
+        Competency coping = new Competency(9, "Coping With Ambiguity, Uncertainty & Risk");
 
         ideas.addCompetency(opportunities);
         ideas.addCompetency(creativity);
@@ -120,3 +120,4 @@ public class RawRepoImplementation implements UserRepository, AreaRepository {
         areas.put(3, action);
     }
 }
+*/
