@@ -4,6 +4,6 @@ export class DBCoursesList {
     courses : DBCourse[];
     
     constructor(mainResponse : any) {
-        this.courses = mainResponse[0].courses.map((course : any) => new DBCourse(course));
+        this.courses = mainResponse.map((course : any) => new DBCourse(course));
     }
 }

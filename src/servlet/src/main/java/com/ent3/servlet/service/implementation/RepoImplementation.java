@@ -9,7 +9,6 @@ import javax.persistence.Persistence;
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
-import com.ent3.servlet.model.Courses;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.CourseRepository;
@@ -138,10 +137,10 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Courses> getAllCourses() {
+    public List<Course> getAllCourses() {
         EntityManager em = getEntityManager();
 
-        List<Courses> result = em.createQuery("SELECT c FROM Courses c").getResultList();
+        List<Course> result = em.createQuery("SELECT c FROM Course c").getResultList();
 
         em.close();
 
@@ -149,10 +148,10 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
-    public Courses getCoursesListById(int id) {
+    public Course getCourseById(int id) {
         EntityManager em = getEntityManager();
 
-        Courses result = em.find(Courses.class, id);
+        Course result = em.find(Course.class, id);
 
         em.close();
 
@@ -160,9 +159,8 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
-    public Course addCourse(Courses courses, Course course) {
+    public Course addCourse(Course course) {
         EntityManager em = getEntityManager();
-        courses.addCourse(course);
 
         em.getTransaction().begin();
         em.persist(course);

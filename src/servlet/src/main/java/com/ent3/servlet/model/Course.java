@@ -1,23 +1,36 @@
 package com.ent3.servlet.model;
 
-public class Course {
-    private int courseId;
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name = "courses")
+public class Course implements Serializable {
+    @Transient
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @Column(name = "course_id")
+    @GeneratedValue
+    private int id;
+
     private String title;
     private String description;
     private String image;
     private String url;
     
     public Course() {
-        courseId = 100;
-        title = "";
-        description = "";
-        image = "";
-        url = "";
-
+        // Default constructor required.
     }
 
-    public Course(int courseId, String title, String description, String image, String url) {
-        this.courseId = courseId;
+    public Course(int id, String title, String description, String image, String url) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.image = image;
@@ -25,7 +38,7 @@ public class Course {
     }
 
     public void setCourseId(int courseId) {
-        this.courseId = courseId;
+        this.id = courseId;
     }
 
     public void setTitle(String title) {
@@ -45,7 +58,7 @@ public class Course {
     }
 
     public int getCourseId() {
-        return courseId;
+        return id;
     }
 
     public String getTitle() {

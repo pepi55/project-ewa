@@ -4,7 +4,7 @@ export class TableRowList {
     rows : TableRow[];
 
     constructor(mainResponse : any) {
-        this.rows = mainResponse[0].courses.map((course : any) => new TableRow(course));
+        this.rows = mainResponse.map((course : any) => new TableRow(course));
 
         
     }

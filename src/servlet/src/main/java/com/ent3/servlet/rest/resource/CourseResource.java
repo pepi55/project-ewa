@@ -10,7 +10,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.ent3.servlet.model.Course;
-import com.ent3.servlet.model.Courses;
 import com.ent3.servlet.rest.model.ClientError;
 import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
@@ -18,7 +17,7 @@ import com.ent3.servlet.service.implementation.RepoImplementation;
 /**
  * UserResource
  *
- * @author Peter Dimitrov
+ * @author Hicham
  */
 @Path("courses")
 public class CourseResource {
@@ -37,8 +36,8 @@ public class CourseResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{courseId}")
-    public Response getCoursesListById(@PathParam("courseId") int id) {
-        Courses result = service.getCoursesListById(id);
+    public Response getCourseById(@PathParam("courseId") int id) {
+        Course result = service.getCourseById(id);
 
         if (result == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("CourseList with id: " + id + " not found")).build();
@@ -58,21 +57,8 @@ public class CourseResource {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/coursesPost/{coursesId}")
-    public Response addCourse(@PathParam("coursesId") int coursesId, Course course) {
-        Courses courses = service.getCoursesListById(coursesId);
-
-
-        if (courses == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("CoursesList with ID: " + coursesId + " not found")).build();
-        }
-
-        // TODO: Better check/control.
-        if (course != null) {
-            service.addCourse(courses, course);
-            return Response.status(Response.Status.CREATED).build();
-        } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Course with ID: " + course.getCourseId() + " already exists")).build();
-        }
+    public Response addCourse(Course course) {
+        return Response.status(Response.Status.CREATED).entity(service.addCourse(course)).build();
+        //return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Course with ID: " + course.getCourseId() + " already exists")).build();
     }
 }

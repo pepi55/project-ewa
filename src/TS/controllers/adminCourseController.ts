@@ -47,7 +47,6 @@ export class adminCourseController extends Controller {
     private setAddFunction(acceptCourseButton : AdminButton, card : Card) {
 
         let data : any = {
-            "courseId" : card.getcardId(),
             "title" : card.getTitle(),
             "description" : card.getDescription(),
             "image" : card.getPicture(),  
@@ -68,12 +67,12 @@ export class adminCourseController extends Controller {
         acceptCourseButton.setOnClick((e: any) => {
             console.log("sending course to DB....");
             let DB = new ApiService(API.DB);
-            DB.setPath("courses/coursesPost/1");
+            DB.setPath("courses");
             console.log(DBOptions);
             DB.setOptions(DBOptions);
             DB.postCourse(<T>(object : any) => {
                 console.log(object);
-                if (object.body == "") {
+                if (object.statusCode == 201) {
                     window.alert("Course added succesfully!!");
                 } else {
                     window.alert("something went wrong.");
