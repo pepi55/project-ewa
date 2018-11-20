@@ -76,10 +76,6 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
             logOutButton.setOnClick(function (e) {
                 window.location.href = "/index.html";
             });
-            $("#mycourses-button").append(myCoursesButton.getView());
-            $("#results-button").append(resultsButton.getView());
-            $("#profile-button").append(profileButton.getView());
-            $("#users-button").append(usersButton.getView());
             $("#retaketest-button").append(retakeTestButton.getView());
             $("#logout-button").append(logOutButton.getView());
         };
@@ -161,7 +157,7 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
             loginButton.setOnClick(function (e) {
                 _this.userHandler.getPasswordByUsername("test");
                 if (_this.userHandler.getPasswordByUsername(document.getElementById("username").value) == document.getElementById("password").value) {
-                    window.location.href = "views/main.html";
+                    window.location.href = "views/menu.html";
                 }
                 else {
                     $("#errorbox").html("Username and password don't match. Please try again.");
@@ -174,9 +170,74 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
                     $(".login_buttons").css("display", "none");
                     $("#signup").css("display", "block");
                     $("#back-button").css("display", "block");
+                    onSignup++;
                 }
                 else {
+                    if (document.getElementById("signup_email").value == "") {
+                        $("#email_error").html("*Fill in email").css("display", "block");
+                    }
+                    else {
+                        $("#email_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_username").value == "") {
+                        $("#username_error").html("*Fill in username").css("display", "block");
+                    }
+                    else {
+                        $("#username_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_firstname").value == "") {
+                        $("#firstname_error").html("*Fill in first name").css("display", "block");
+                    }
+                    else {
+                        $("#firstname_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_lastname").value == "") {
+                        $("#lastname_error").html("*Fill in last name").css("display", "block");
+                    }
+                    else {
+                        $("#lastname_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_birthdate").value == "") {
+                        $("#birthdate_error").html("*Fill in date of birth").css("display", "block");
+                    }
+                    else {
+                        $("#birthdate_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_adres").value == "") {
+                        $("#adres_error").html("*Fill in adres").css("display", "block");
+                    }
+                    else {
+                        $("#adres_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_housenumber").value == "") {
+                        $("#housenumber_error").html("*Fill in house number").css("display", "block");
+                    }
+                    else {
+                        $("#housenumber_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_postalcode").value == "") {
+                        $("#postalcode_error").html("*Fill in postal code").css("display", "block");
+                    }
+                    else {
+                        $("#postalcode_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_phone").value == "") {
+                        $("#phone_error").html("*Fill in phone number").css("display", "block");
+                    }
+                    else {
+                        $("#phone_error").html("").css("display", "none");
+                    }
+                    if (document.getElementById("signup_password").value == "") {
+                        $("#password_error").html("*Fill in password").css("display", "block");
+                    }
+                    else {
+                        $("#password_error").html("").css("display", "none");
+                    }
                     if (document.getElementById("signup_password").value == document.getElementById("signup_repassword").value) {
+                        $("#repassword_error").html("").css("display", "none");
+                    }
+                    else {
+                        $("#repassword_error").html("Password don't match").css("display", "block");
                     }
                 }
             });
@@ -185,6 +246,7 @@ define("controllers/logincontroller", ["require", "exports", "controllers/contro
                 $(".login_buttons").css("display", "inline-block");
                 $("#signup").css("display", "none");
                 $("#back-button").css("display", "none");
+                onSignup--;
             });
             $("#login-button").append(loginButton.getView());
             $("#signup-button").append(signupButton.getView());

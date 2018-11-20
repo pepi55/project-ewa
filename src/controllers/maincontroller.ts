@@ -32,10 +32,10 @@ export class MainController extends Controller {
                 window.location.href = "/index.html";
             })
 
-            $("#mycourses-button").append(myCoursesButton.getView());
-            $("#results-button").append(resultsButton.getView());
-            $("#profile-button").append(profileButton.getView());
-            $("#users-button").append(usersButton.getView());
+            // $("#mycourses-button").append(myCoursesButton.getView());
+            // $("#results-button").append(resultsButton.getView());
+            // $("#profile-button").append(profileButton.getView());
+            // $("#users-button").append(usersButton.getView());
             $("#retaketest-button").append(retakeTestButton.getView());
             $("#logout-button").append(logOutButton.getView());
         }

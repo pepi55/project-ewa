@@ -20,5 +20,9 @@ table{
    table-layout: fixed;
    width: 100%;
 }
-
-
+.error{
+    color: red;
+    font-size: 11px;
+    margin-top: 4px;
+    margin-bottom: -20px;
+}
