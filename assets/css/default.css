@@ -6,23 +6,10 @@
     box-shadow: 0 0 50px -10px;
 }
 
-td{
-    height: 50px;
-    width: 50px;
-    border: 1px;
+.loginLabel {
+    float: left;
+}
+
+body{
     background-color: lightgray;
-    text-align: center;
-    vertical-align: center;
-    width: 25%;
-    
-}
-table{
-   table-layout: fixed;
-   width: 100%;
-}
-.error{
-    color: red;
-    font-size: 11px;
-    margin-top: 4px;
-    margin-bottom: -20px;
 }
