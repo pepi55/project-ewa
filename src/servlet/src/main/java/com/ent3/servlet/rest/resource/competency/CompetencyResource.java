@@ -15,7 +15,7 @@ import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.rest.model.ClientError;
 import com.ent3.servlet.service.AreaRepository;
-import com.ent3.servlet.service.implementation.RawRepoImplementation;
+import com.ent3.servlet.service.implementation.RepoImplementation;
 
 /**
  * CompetencyResource
@@ -27,7 +27,8 @@ public class CompetencyResource {
     private AreaRepository service;
 
     public CompetencyResource() {
-        service = RawRepoImplementation.getInstance();
+        // XXX: Repo class implementation here.
+        service = RepoImplementation.getInstance();
     }
 
     @GET
@@ -66,6 +67,7 @@ public class CompetencyResource {
 
     /**
      * Adds competency to area.
+     * Use <code>Invoke-WebRequest -UseBasicParsing *URL* -ContentType "application/json" -Method POST -Body '*JSON*'</code> to add a new competency.
      *
      * @param areaId The ID of the area to add the competency to.
      * @param competency The competency to be added. NOTE: Make sure this object's class has an empty constructor and getters+setters for each member.
@@ -81,7 +83,8 @@ public class CompetencyResource {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + areaId + " not found")).build();
         }
 
-        if (service.addCompetency(area, competency)) {
+        if (competency != null) {
+            service.addCompetency(area, competency);
             return Response.status(Response.Status.CREATED).build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();

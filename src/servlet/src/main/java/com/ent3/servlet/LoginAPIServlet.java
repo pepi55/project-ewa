@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ent3.servlet.model.User;
-import com.google.gson.Gson;
+//import com.google.gson.Gson;
 
 /**
  * Week 3 EWA workshop.
@@ -22,7 +22,7 @@ import com.google.gson.Gson;
 public class LoginAPIServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private Gson gson = new Gson();
+    //private Gson gson = new Gson();
 
     /**
      * Handles the HTTP <code>GET</code> method.
@@ -35,9 +35,9 @@ public class LoginAPIServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("admin", "admin", "admin", "admin", 3));
-        users.add(new User("peter", "dimitrov", "jemoer", "jemoer", 1));
-        String userString = gson.toJson(users);
+        users.add(new User(1, "admin", "admin", "admin", "admin", 3));
+        users.add(new User(2, "peter", "dimitrov", "jemoer", "jemoer", 1));
+        String userString = ""; //gson.toJson(users);
         PrintWriter writer = response.getWriter();
 
         // prevent "no Acces-Control-Allow-Orogin"
