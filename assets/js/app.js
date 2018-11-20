@@ -64,7 +64,7 @@ define("controllers/maincontroller", ["require", "exports", "controllers/control
                 window.location.href = "/views/testpage.html";
             });
             resultsButton.setOnClick(function (e) {
-                window.location.href = "#";
+                window.location.href = "/views/results.html";
             });
             courseButton.setOnClick(function (e) {
                 window.location.href = "#";
@@ -294,9 +294,14 @@ define("components/questions/areas", ["require", "exports", "components/radiobut
                     var uniqueArea = area.areas[i2];
                     var row = $("<tr>");
                     row.append($("<td>").html(uniqueArea.area));
+                    var k = 0;
                     for (var i3 = 0; i3 < 5; i3++) {
                         var controlView;
-                        var radiobutton = new radiobuttons_1.RadioButtons(uniqueName, i3);
+                        k++;
+                        if (k == 5) {
+                            k = 0;
+                        }
+                        var radiobutton = new radiobuttons_1.RadioButtons(uniqueName, i3 + k);
                         controlView = radiobutton.getView();
                         row.append($("<td>").html(controlView));
                     }

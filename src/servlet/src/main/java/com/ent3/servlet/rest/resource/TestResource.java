@@ -10,12 +10,14 @@ import javax.ws.rs.core.MediaType;
  *
  * @author Peter Dimitrov
  */
-@Path("test")
+@Path("/test")
 public class TestResource {
 
+    
     @GET
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public String resourceTest() {
         return "Testing123";
     }
+
 }
