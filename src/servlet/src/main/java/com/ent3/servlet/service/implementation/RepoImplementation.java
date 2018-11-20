@@ -8,8 +8,11 @@ import javax.persistence.Persistence;
 
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
+import com.ent3.servlet.model.Course;
+import com.ent3.servlet.model.Courses;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
+import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.UserRepository;
 
 /**
@@ -17,7 +20,7 @@ import com.ent3.servlet.service.UserRepository;
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, AreaRepository {
+public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -131,6 +134,43 @@ public class RepoImplementation implements UserRepository, AreaRepository {
         em.close();
 
         return competency;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<Courses> getAllCourses() {
+        EntityManager em = getEntityManager();
+
+        List<Courses> result = em.createQuery("SELECT c FROM Courses c").getResultList();
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Courses getCoursesListById(int id) {
+        EntityManager em = getEntityManager();
+
+        Courses result = em.find(Courses.class, id);
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Course addCourse(Courses courses, Course course) {
+        EntityManager em = getEntityManager();
+        courses.addCourse(course);
+
+        em.getTransaction().begin();
+        em.persist(course);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return course;
     }
 
     /**

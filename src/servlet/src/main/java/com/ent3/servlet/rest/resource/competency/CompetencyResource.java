@@ -83,6 +83,7 @@ public class CompetencyResource {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + areaId + " not found")).build();
         }
 
+        // TODO: Better check/control.
         if (competency != null) {
             service.addCompetency(area, competency);
             return Response.status(Response.Status.CREATED).build();
