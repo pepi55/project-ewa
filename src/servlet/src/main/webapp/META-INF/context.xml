@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <Context path="/servlet">
-    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" name="jdbc/ent3" type="javax.sql.DataSource" url="jdbc:mysql://rpi:3306/ent3" username="pepi" password="dbpassword123" />
+    <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" name="jdbc/ent3" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ent3" username="root" password="root" />
 </Context>
