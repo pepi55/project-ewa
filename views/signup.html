@@ -3,28 +3,89 @@
     <p>
         Please fill in e-mail, username and password
     </p>
-    <div class="mdl-cell mdl-cell--6-col loginLabel">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="signup_email">
-            <label class="mdl-textfield__label" for="signup_email">e-mail</label>
+    <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_email">
+                <label class="mdl-textfield__label" for="signup_email">e-mail</label>
+                <p id="email_error" class="error" style="display: none;"></p>
+            </div>
         </div>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col loginLabel">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="text" id="signup_username">
-            <label class="mdl-textfield__label" for="signup_username">Username</label>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_username">
+                <label class="mdl-textfield__label" for="signup_username">Username</label>
+                <p id="username_error" class="error" style="display: none;"></p>
+            </div>
         </div>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col loginLabel">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="password" id="signup_password">
-            <label class="mdl-textfield__label" for="signup_password">Password</label>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_firstname">
+                <label class="mdl-textfield__label" for="signup_firstname">First name</label>
+                <p id="firstname_error" class="error" style="display: none;"></p>
+            </div>
         </div>
-    </div>
-    <div class="mdl-cell mdl-cell--6-col loginLabel">
-        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-            <input class="mdl-textfield__input" type="password" id="signup_repassword">
-            <label class="mdl-textfield__label" for="signup_repassword">re-enter Password</label>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_insertion">
+                <label class="mdl-textfield__label" for="signup_insertion">insertion</label>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_lastname">
+                <label class="mdl-textfield__label" for="signup_lastname">Last name</label>
+                <p id="lastname_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="date" value="" id="signup_birthdate">
+                <label class="mdl-textfield__label" for="signup_birthdate">Date of birth</label>
+                <p id="birthdate_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_adres">
+                <label class="mdl-textfield__label" for="signup_adres">Adres</label>
+                <p id="adres_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_housenumber">
+                <label class="mdl-textfield__label" for="signup_housenumber">House number</label>
+                <p id="housenumber_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_postalcode">
+                <label class="mdl-textfield__label" for="signup_postalcode">Postal code</label>
+                <p id="postalcode_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="text" id="signup_phone">
+                <label class="mdl-textfield__label" for="signup_phone">Phone number</label>
+                <p id="phone_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="signup_password">
+                <label class="mdl-textfield__label" for="signup_password">Password</label>
+                <p id="password_error" class="error" style="display: none;"></p>
+            </div>
+        </div>
+        <div class="mdl-cell mdl-cell--6-col">
+            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                <input class="mdl-textfield__input" type="password" id="signup_repassword">
+                <label class="mdl-textfield__label" for="signup_repassword">re-enter Password</label>
+                <p id="repassword_error" class="error" style="display: none;"></p>
+            </div>
         </div>
     </div>
 </div>
