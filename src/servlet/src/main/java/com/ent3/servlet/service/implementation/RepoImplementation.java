@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
@@ -60,15 +61,31 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<User> getUsersByFirstName(String firstname) {
-        // TODO: implement.
-        return null;
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.firstname = :firstname");
+        query.setParameter("firstname", firstname);
+        List<User> result = query.getResultList();
+
+        em.close();
+
+        return result;
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<User> getUsersByLastName(String lastname) {
-        // TODO: implement.
-        return null;
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.lastname = :lastname");
+        query.setParameter("lastname", lastname);
+        List<User> result = query.getResultList();
+
+        em.close();
+
+        return result;
     }
 
     @Override

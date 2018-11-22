@@ -36,34 +36,24 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname) {
-        List<User> result = service.getAllUsers();
+        List<User> result;
 
-        if (result == null) {
+        if (firstname.isEmpty() && lastname.isEmpty()) {
+            result = service.getAllUsers();
+        } else {
+            result = new ArrayList<>();
+
+            if (!firstname.isEmpty()) {
+                result.addAll(service.getUsersByFirstName(firstname));
+            }
+
+            if (!lastname.isEmpty()) {
+                result.addAll(service.getUsersByLastName(lastname));
+            }
+        }
+
+        if (result.isEmpty()) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("No users found")).build();
-        }
-
-        if (!firstname.isEmpty()) {
-            List<User> tmp = new ArrayList<>();
-
-            for (User user : result) {
-                if (firstname.equals(user.getFirstName())) {
-                    tmp.add(user);
-                }
-            }
-
-            result = tmp;
-        }
-
-        if (!lastname.isEmpty()) {
-            List<User> tmp = new ArrayList<>();
-
-            for (User user : result) {
-                if (lastname.equals(user.getLastName())) {
-                    tmp.add(user);
-                }
-            }
-
-            result = tmp;
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
@@ -76,15 +66,17 @@ public class UserResource {
         User result = service.getUserById(id);
 
         if (result == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(new ClientError("User with id: " + id + " not found")).build();
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
     }
 
     /**
-     * Add a new user.
-     * Use <code>Invoke-WebRequest -UseBasicParsing *URL* -ContentType "application/json" -Method POST -Body '*JSON*'</code> to add a new user.
+     * Add a new user. Use
+     * <code>Invoke-WebRequest -UseBasicParsing *URL* -ContentType "application/json" -Method POST -Body '*JSON*'</code>
+     * to add a new user.
      *
      * @param user User to be added.
      * @return HTTP request response.

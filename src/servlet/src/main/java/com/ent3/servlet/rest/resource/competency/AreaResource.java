@@ -1,5 +1,7 @@
 package com.ent3.servlet.rest.resource.competency;
 
+import java.util.List;
+
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -31,7 +33,13 @@ public class AreaResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllAreas() {
-        return Response.status(Response.Status.OK).entity(service.getAllAreas()).build();
+        List<Area> result = service.getAllAreas();
+
+        if (result.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("No areas found")).build();
+        }
+
+        return Response.status(Response.Status.OK).entity(result).build();
     }
 
     /**

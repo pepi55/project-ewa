@@ -23,8 +23,8 @@ public class User implements Serializable {
     @GeneratedValue
     private int id;
 
-    private String firstName;
-    private String lastName;
+    private String firstname;
+    private String lastname;
     private String username;
     private String password;
     private int role;
@@ -35,8 +35,8 @@ public class User implements Serializable {
 
     public User(int id, String firstName, String lastName, String username, String password, int role) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.firstname = firstName;
+        this.lastname = lastName;
         this.username = username;
         this.password = password;
         this.role = role;
@@ -51,19 +51,19 @@ public class User implements Serializable {
     }
 
     public String getFirstName() {
-        return this.firstName;
+        return this.firstname;
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        this.firstname = firstName;
     }
 
     public String getLastName() {
-        return this.lastName;
+        return this.lastname;
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        this.lastname = lastName;
     }
 
     public String getUsername() {

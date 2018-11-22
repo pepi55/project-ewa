@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
@@ -46,7 +47,7 @@ public class Area implements Serializable {
 
     @Id
     @Column(name = "area_id")
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     //private Type areaType;
@@ -77,6 +78,7 @@ public class Area implements Serializable {
 
     public void addCompetency(Competency comp) {
         competencies.add(comp);
+        comp.setArea(this);
     }
 
     public List<Competency> getCompetencies() {

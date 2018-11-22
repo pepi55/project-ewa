@@ -42,6 +42,10 @@ public class CompetencyResource {
 
         List<Competency> result = area.getCompetencies();
 
+        if (result.isEmpty()) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("No competencies found")).build();
+        }
+
         return Response.status(Response.Status.OK).entity(result).build();
     }
 
@@ -81,14 +85,10 @@ public class CompetencyResource {
 
         if (area == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + areaId + " not found")).build();
-        }
-
-        // TODO: Better check/control.
-        if (competency != null) {
-            service.addCompetency(area, competency);
-            return Response.status(Response.Status.CREATED).build();
         } else {
-            return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();
+            // TODO: Add duplication check.
+            return Response.status(Response.Status.CREATED).entity(service.addCompetency(area, competency)).build();
+            //return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();
         }
     }
 }
