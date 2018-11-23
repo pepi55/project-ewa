@@ -198,6 +198,7 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Question> getAllQuestions() {
         EntityManager em = getEntityManager();
 
@@ -233,11 +234,12 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
+    @SuppressWarnings("unchecked")
     public List<Question> getQuestionsByCompetency(Competency competency) {
         EntityManager em = getEntityManager();
 
         List<Question> result = em.createQuery("SELECT u FROM Question u").getResultList();
-        // TO-DO nog filteren op competency
+        // TODO: nog filteren op competency
         em.close();
 
         return result;
