@@ -10,9 +10,11 @@ import javax.persistence.Query;
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
+import com.ent3.servlet.model.Question;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.CourseRepository;
+import com.ent3.servlet.service.QuestionRepository;
 import com.ent3.servlet.service.UserRepository;
 
 /**
@@ -20,7 +22,7 @@ import com.ent3.servlet.service.UserRepository;
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository {
+public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository, QuestionRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -194,4 +196,50 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     private EntityManager getEntityManager() {
         return entityManagerFactory.createEntityManager();
     }
+
+    @Override
+    public List<Question> getAllQuestions() {
+        EntityManager em = getEntityManager();
+
+        List<Question> result = em.createQuery("SELECT u FROM Question u").getResultList();
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Question getQuestionById(int id) {
+        EntityManager em = getEntityManager();
+
+        Question result = em.find(Question.class, id);
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Question addQuestion(Question Question) {
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.persist(Question);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return Question;
+    }
+
+    @Override
+    public List<Question> getQuestionsByCompetency(Competency competency) {
+        EntityManager em = getEntityManager();
+
+        List<Question> result = em.createQuery("SELECT u FROM Question u").getResultList();
+        // TO-DO nog filteren op competency
+        em.close();
+
+        return result;
+	}
 }
