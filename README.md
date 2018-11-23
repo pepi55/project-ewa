@@ -22,4 +22,8 @@ run maven to compile.
 # Other
 POST request example:
  - Powershell: `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name":"Valuing Ideas"}'`
- - Database: Edit `webapp/META-INF/context.xml` to the correct URL to the database and the correct username + password.
+ - Unix: `curl -d '{"name":"Area1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/servlet/services/rest/areas`
+
+Connect backend to DB:
+ - Run local MySQL database.
+ - Edit `webapp/META-INF/context.xml` to the correct URL to the database and the correct username + password.
