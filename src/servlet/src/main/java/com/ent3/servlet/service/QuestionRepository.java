@@ -41,4 +41,12 @@ public interface QuestionRepository {
      * @return a list of questions filtered by comptency
      */
     public List<Question> getQuestionsByCompetency(Competency competency);
+
+    /**
+     * Sets the score of a question by id
+     * @param id of question 
+     * @param score of the comptence
+     * @return the question that has changed
+     */
+    public Question setScoreById(int id, int score);
 }

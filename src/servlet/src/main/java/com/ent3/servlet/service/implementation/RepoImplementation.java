@@ -242,4 +242,9 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
 
         return result;
 	}
+
+    @Override
+    public Question setScoreById(int id, int score) {
+        return null;
+    }
 }

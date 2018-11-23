@@ -11,10 +11,10 @@ package com.ent3.servlet.model;
      private Competency competency;
      private int score;
 
-     public Question(String question, Competency competency, int score){
+     public Question(String question, Competency competency){
          this.question = question;
          this.competency = competency;
-         this.score = score;
+         this.score = 0;
      }
 
      public String getQuestion() {
