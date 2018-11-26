@@ -1,6 +1,6 @@
 import { Controller } from "./controller";
 import { Button } from "../components/button/button";
-import { API } from "../coursesAPIs/enumRepo";
+import { API } from "../coursesAPIs/EnumRepo";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { Card } from "../components/Card";
 import { DBCoursesList } from "../components/DBCoursesList";

@@ -1,4 +1,4 @@
-import {API} from './enumRepo';
+import {API} from './EnumRepo';
     //Edx
     const EDXPostUrl : string = "https://api.edx.org/oauth2/v1/access_token/";
     const EDXGetUrl : string = "https://api.edx.org/catalog/v1/catalogs/";
