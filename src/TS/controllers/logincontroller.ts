@@ -6,17 +6,6 @@ export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
 
     protected setup(): void {
-        console.log("pop2")
-        $.ajax({
-            url: "http://127.0.0.1:8080/servlet/services/rest/users",
-            success: function (result: any) {
-                console.log(result + "pop");
-            }.bind(this),
-            fail: function(xhr: any, textStatus: any, errorThrown: any){
-                console.log('request failed');
-            }
-        });
-
         $.get("/views/login.html").done(function (data: any) {
             $("#window").append(data);
         });
@@ -29,7 +18,7 @@ export class LoginController extends Controller {
         loginButton.setOnClick((e: any) => {
             this.userHandler.getPasswordByUsername("test");
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
-                window.location.href = "adminCourses.html";
+                window.location.href = "views/menu.html";
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
             }
