@@ -30,9 +30,37 @@ export class LoginController extends Controller {
                 $(".login_buttons").css("display", "none");
                 $("#signup").css("display", "block");
                 $("#back-button").css("display", "block");
+                onSignup++;
             } else {
+                if ((document.getElementById("signup_email") as HTMLInputElement).value == ""){
+                    $("#email_error").html("*Fill in email").css("display", "block");    
+                } else {
+                    $("#email_error").html("").css("display", "none");    
+                }
+                if ((document.getElementById("signup_username") as HTMLInputElement).value == ""){
+                    $("#username_error").html("*Fill in username").css("display", "block");
+                } else {
+                    $("#username_error").html("").css("display", "none"); 
+                }
+                if ((document.getElementById("signup_firstname") as HTMLInputElement).value == ""){
+                    $("#firstname_error").html("*Fill in first name").css("display", "block");    
+                } else {
+                    $("#firstname_error").html("").css("display", "none");    
+                }
+                if ((document.getElementById("signup_lastname") as HTMLInputElement).value == ""){
+                    $("#lastname_error").html("*Fill in last name").css("display", "block");
+                } else {
+                    $("#lastname_error").html("").css("display", "none");   
+                }
+                if ((document.getElementById("signup_password") as HTMLInputElement).value == ""){
+                    $("#password_error").html("*Fill in password").css("display", "block");    
+                } else {
+                    $("#password_error").html("").css("display", "none");    
+                }
                 if ((document.getElementById("signup_password") as HTMLInputElement).value == (document.getElementById("signup_repassword") as HTMLInputElement).value) {
-
+                    $("#repassword_error").html("*Passwords aren't the same").css("display", "none");
+                } else{
+                    $("#repassword_error").html("Password don't match").css("display", "block");    
                 }
             }
         })
@@ -41,6 +69,7 @@ export class LoginController extends Controller {
             $(".login_buttons").css("display", "inline-block");
             $("#signup").css("display", "none");
             $("#back-button").css("display", "none");
+            onSignup--;
         })
         $("#login-button").append(loginButton.getView());
         $("#signup-button").append(signupButton.getView());
