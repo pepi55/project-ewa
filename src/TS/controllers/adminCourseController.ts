@@ -32,7 +32,7 @@ export class adminCourseController extends Controller {
             results.courses.forEach(element => {
                 let declineCourseButton : AdminButton = new AdminButton("decline");
                 let acceptCourseButton : AdminButton = new AdminButton("accept");
-                
+
                 let card = new Card(cardId, element.title, element.url, undefined, element.image_480x270);
                 acceptCourseButton = this.setAddFunction(acceptCourseButton,card);
 
@@ -40,7 +40,6 @@ export class adminCourseController extends Controller {
                 $("#" + cardId).append(acceptCourseButton.getView(), declineCourseButton.getView());
                 cardId++;
             });
-            
         });
     }
 
@@ -49,7 +48,7 @@ export class adminCourseController extends Controller {
         let data : any = {
             "title" : card.getTitle(),
             "description" : card.getDescription(),
-            "image" : card.getPicture(),  
+            "image" : card.getPicture(),
             "url" : card.getUrl()
         };
 
@@ -57,11 +56,11 @@ export class adminCourseController extends Controller {
 
         let DBOptions : any = {
             headers: {
-                //headerinfo  
-                "Content-type": "application/json"    
+                //headerinfo
+                "Content-type": "application/json"
             },
             body: JSON.stringify(data),
-            
+
         };
 
         acceptCourseButton.setOnClick((e: any) => {
@@ -70,15 +69,13 @@ export class adminCourseController extends Controller {
             DB.setPath("courses");
             console.log(DBOptions);
             DB.setOptions(DBOptions);
-            DB.postCourse(<T>(object : any) => {
+            DB.post(<T>(object : any) => {
                 console.log(object);
                 if (object.statusCode == 201) {
                     window.alert("Course added succesfully!!");
                 } else {
                     window.alert("something went wrong.");
                 }
-                
-
             });
          });
 
@@ -101,12 +98,9 @@ export class adminCourseController extends Controller {
                 rows.rows.forEach(element => {
                     $("#selectedCardsTable").append(element.getRowView());
                 });
-                
             });
-            
         });
 
         $("#selectedCardsTableHead").append(refreshButton.getView());
-
     }
 }

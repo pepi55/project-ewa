@@ -19,8 +19,6 @@ export class ApiService {
         this.URLGET = this.repo.getGETUrl(api);
         this.queryParam = "";
         this.path = "";
-        
-
     }
 
     public setQueryParameters(page : number, page_size : number, search? : string, category? : string, subcategory? : SUBCATS, price? : PRICE, ordering? : ORDERING) : void {
@@ -35,7 +33,7 @@ export class ApiService {
         let orderingString = "";
 
         if(search != null) {
-            searchString = "search=" + search + space; 
+            searchString = "search=" + search + space;
         }
         if(category != null) {
             categoryString = "category=" + category + space;
@@ -80,15 +78,11 @@ export class ApiService {
         });
     }
 
-    
-
     //DB
-    public postCourse(callBack : <T> (parent : T) => any) {
+    public post(callBack : <T> (parent : T) => any) {
         console.log(this.URLGET + this.path)
         request.post(this.URLGET + this.path, this.OPTIONS, (error : any, response : any, body : any) => {
             callBack(response);
         });
     }
-
-
 }
