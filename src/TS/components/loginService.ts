@@ -41,4 +41,10 @@ export class LoginService{
         }
         return null;
     }
+
+    public logout(){
+        if (this.isLoggedIn()) {
+            localStorage.clear();
+        }
+    }
 }
