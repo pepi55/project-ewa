@@ -43,3 +43,8 @@ DROP table `ent3`.`student_has_competencies`;
 DROP table `ent3`.`student`; 
 DROP table `ent3`.`question`; 
 DROP table `ent3`.`user`;
+
+#roles
+- 0 = user
+- 1 = teacher
+- 2 = admin
