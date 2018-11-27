@@ -43,17 +43,17 @@ Clearing database:
 ~~~~
 USE ent3;
 DROP TABLE answer;
-DROP table admin`;
-DROP table areas;
-DROP table class;
-DROP table competencies;
-DROP table competency;
-DROP table hibernate_sequence;
-DROP table courses;
-DROP table users;
-DROP table teacher;
-DROP table student_has_competencies;
-DROP table student;
-DROP table question;
-DROP table user;
+DROP TABLE admin;
+DROP TABLE areas;
+DROP TABLE class;
+DROP TABLE competencies;
+DROP TABLE competency;
+DROP TABLE hibernate_sequence;
+DROP TABLE courses;
+DROP TABLE users;
+DROP TABLE teacher;
+DROP TABLE student_has_competencies;
+DROP TABLE student;
+DROP TABLE question;
+DROP TABLE user;
 ~~~~
