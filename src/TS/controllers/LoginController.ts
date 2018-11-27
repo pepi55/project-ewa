@@ -1,8 +1,8 @@
 import { ApiService } from "../coursesAPIs/ApiService";
-import { Controller } from "./controller";
-import { Button } from "../components/button/button";
-import { UserHandler } from "../components/userhandler";
-import { User } from "../components/user";
+import { Controller } from "./Controller";
+import { Button } from "../components/button/Button";
+import { UserHandler } from "../components/UserHandler";
+import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
 
 export class LoginController extends Controller {
