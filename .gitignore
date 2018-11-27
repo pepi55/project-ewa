@@ -6,6 +6,8 @@ assets/js/
 *.bak
 
 node_modules
+src/servlet/src/main/webapp/META-INF/context.xml
+package-lock.json
 
 # Mac
 .DS_Store
