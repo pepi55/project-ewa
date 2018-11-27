@@ -9,15 +9,18 @@ Project members: Melissa, Luc, Toon, Hicham and Peter.
  - tomcat
  - maven
  - jdk-1.8+
+ - live-server
 
 # Startup
-press: ctrl + shift + B then choose "watch.ts".
-type: "live-server" in terminal.
+~~press: ctrl + shift + B then choose "watch.ts".~~
+Run: npm install.
+Run: npm start.
+Type: "(./node_modules/.bin/)live-server" in terminal.
 
 Right click servlet.war in src/servlet/target/ and select run on tomcat server.
 
 # Compile
-run maven to compile.
+Package with maven to compile.
 
 # Other
 POST request example:
@@ -25,24 +28,35 @@ POST request example:
  - Unix: `curl -d '{"name":"Area1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/servlet/services/rest/areas`
 
 Connect backend to DB:
- - Run local MySQL database.
- - Edit `webapp/META-INF/context.xml` to the correct URL to the database and the correct username + password.
+ - ~~Run local MySQL database.~~
+ - Add database titled: `ent3`.
+ - ~~Edit `webapp/META-INF/context.xml` to the correct URL to the database and the correct username + password.~~
+ - Add `webapp/META-INF/context.xml` containing:
+    ~~~~
+    <?xml version="1.0" encoding="UTF-8"?>
+    <Context path="/servlet">
+        <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" name="jdbc/ent3" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ent3?serverTimezone=UTC" username="<username>" password="<password>" />
+    </Context>
+    ~~~~
 
 Clearing database:
-DROP TABLE `ent3`.`answer`;
-DROP table`ent3`.`admin`; 
-DROP table `ent3`.`areas`; 
-DROP table `ent3`.`class`; 
-DROP table `ent3`.`competencies`; 
-DROP table `ent3`.`competency`; 
-DROP table `ent3`.`hibernate_sequence`; 
-DROP table `ent3`.`courses`; 
-DROP table `ent3`.`users`; 
-DROP table `ent3`.`teacher`; 
-DROP table `ent3`.`student_has_competencies`; 
-DROP table `ent3`.`student`; 
-DROP table `ent3`.`question`; 
-DROP table `ent3`.`user`;
+~~~~
+USE ent3;
+DROP TABLE answer;
+DROP table admin`;
+DROP table areas;
+DROP table class;
+DROP table competencies;
+DROP table competency;
+DROP table hibernate_sequence;
+DROP table courses;
+DROP table users;
+DROP table teacher;
+DROP table student_has_competencies;
+DROP table student;
+DROP table question;
+DROP table user;
+~~~~
 
 #roles
 - 0 = user
