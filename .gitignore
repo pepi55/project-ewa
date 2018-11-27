@@ -6,6 +6,7 @@ assets/js/
 *.bak
 
 node_modules
+src/servlet/src/main/webapp/META-INF/context.xml
 
 # Mac
 .DS_Store
