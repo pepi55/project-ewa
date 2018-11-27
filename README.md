@@ -42,18 +42,19 @@ Connect backend to DB:
 Clearing database:
 ~~~~
 USE ent3;
-DROP TABLE answer;
-DROP TABLE admin;
-DROP TABLE areas;
-DROP TABLE class;
-DROP TABLE competencies;
-DROP TABLE competency;
-DROP TABLE hibernate_sequence;
-DROP TABLE courses;
-DROP TABLE users;
-DROP TABLE teacher;
-DROP TABLE student_has_competencies;
-DROP TABLE student;
-DROP TABLE question;
-DROP TABLE user;
+
+DROP TABLE IF EXISTS answer;
+DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS competencies;
+DROP TABLE IF EXISTS areas;
+DROP TABLE IF EXISTS class;
+DROP TABLE IF EXISTS competency;
+DROP TABLE IF EXISTS hibernate_sequence;
+DROP TABLE IF EXISTS courses;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS teacher;
+DROP TABLE IF EXISTS student_has_competencies;
+DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS question;
+DROP TABLE IF EXISTS user;
 ~~~~
