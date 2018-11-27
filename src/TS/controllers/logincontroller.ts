@@ -1,6 +1,8 @@
 import { Controller } from "./controller";
 import { Button } from "../components/button/button";
 import { UserHandler } from "../components/userhandler";
+import { LoginService } from "../components/loginService";
+import { User } from "../components/user";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
@@ -16,8 +18,8 @@ export class LoginController extends Controller {
         let signupButton: Button = new Button("Sign up");
         let backButton: Button = new Button("Back");
         loginButton.setOnClick((e: any) => {
-            this.userHandler.getPasswordByUsername("test");
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
+                LoginService.getInstance().login(this.userHandler.getUserByUsername((document.getElementById("username") as HTMLInputElement).value));
                 window.location.href = "views/menu.html";
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")

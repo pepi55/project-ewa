@@ -10,7 +10,7 @@ export class UserHandler {
             return result.json();
         }).then(function(json:any){
             for (let user of json){
-                this.users.push(new User(user["firstName"], user["lastName"],user["username"],user["password"],user["role"]));
+                this.users.push(new User(user["id"],user["firstName"], user["lastName"],user["username"],user["password"],user["role"]));
             }
         }.bind(this))
     }
@@ -19,6 +19,14 @@ export class UserHandler {
         for (let user of this.users){
             if (user.getUsername() == username){
                 return user.getPassword();
+            }
+        }
+    }
+
+    public getUserByUsername(username: String){
+        for (let user of this.users){
+            if (user.getUsername() == username){
+                return user;
             }
         }
     }

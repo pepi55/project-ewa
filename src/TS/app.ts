@@ -2,11 +2,17 @@ import { MainController } from "./controllers/maincontroller";
 import { LoginController } from "./controllers/logincontroller";
 import { adminCourseController } from "./controllers/adminCourseController";
 import { userCourseController } from "./controllers/userCourseController";
+import { LoginService } from "./components/loginService";
 
 
 export class App {
     
     public main(type: any): void {
+        if (!LoginService.getInstance().isLoggedIn() && type != "Login") {
+            window.location.href = "/index.html";
+            return
+        }
+
         if (type == "main"){
             let controller: MainController = new MainController();
         } else if (type == "login") {
