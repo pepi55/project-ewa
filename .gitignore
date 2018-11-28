@@ -8,6 +8,7 @@ assets/js/
 node_modules
 src/servlet/src/main/webapp/META-INF/context.xml
 package-lock.json
+workbench.xmi
 
 # Mac
 .DS_Store

@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { User } from "./User";
 
 export class UserHandler {
     private users: Array<User> = new Array();
@@ -10,7 +10,7 @@ export class UserHandler {
             return result.json();
         }).then(function(json:any){
             for (let user of json){
-                this.users.push(new User(user["firstName"], user["lastName"],user["username"],user["password"],user["role"]));
+                this.users.push(new User(user["id"], user["firstName"], user["lastName"],user["username"], user["password"], user["email"], user["role"]));
             }
         }.bind(this))
     }

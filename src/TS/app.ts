@@ -4,9 +4,7 @@ import { adminCourseController } from "./controllers/adminCourseController";
 import { userCourseController } from "./controllers/userCourseController";
 import { TestController} from "./controllers/testcontroller";
 
-
 export class App {
-    
     public main(type: any): void {
         if (type == "main"){
             let controller: MainController = new MainController();

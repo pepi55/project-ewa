@@ -1,5 +1,5 @@
-import { Controller } from "./controller";
-import { Button } from "../components/button/button";
+import { Controller } from "./Controller";
+import { Button } from "../components/button/Button";
 import { API } from "../coursesAPIs/EnumRepo";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { Card } from "../components/Card";
@@ -18,7 +18,6 @@ export class userCourseController extends Controller {
     }
 
     private setCards() {
-            
             let DB = new ApiService(API.DB);
             DB.setPath("courses");
             console.log("getting courses....");
@@ -29,10 +28,7 @@ export class userCourseController extends Controller {
                 courses.courses.forEach(element => {
                     let card = new Card(element.courseId, element.title, element.url, element.description, element.image);
                     $("#cardsContainer").append(card.getCardView());
-
                 });
         });
-
     }
-
 }
