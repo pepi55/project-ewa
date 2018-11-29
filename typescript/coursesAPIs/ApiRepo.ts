@@ -26,28 +26,26 @@ const KhanAcademyOptions : any = {
 };
 
 //Udemy
-const UdemyGetUrl : string = "https://cors-anywhere.herokuapp.com/" + "https://www.udemy.com/api-2.0/courses/";
+const CORSProxy : string = ""; // "https://cors-anywhere.herokuapp.com/";
+const UdemyGetUrl : string = CORSProxy + "https://www.udemy.com/api-2.0/courses/";
 
 const UdemyClientID : string = 'wVj9K4L6NfGMMYKFM1loWPtGXdBR6NG9vNYtOsBc';
 const UdemyClientSecret : string = '1IDh0trd3J09Xv0waNHs0KRa89YXbYCuADIUzC7gi3FjnawWQvK6PTkCLK0p1ApFS4jz2lsFxfGbJWTZlUBiLwgPANyU6zifdMKmgh37nRIf5fGYj1TTGUiSr64ZjHi1';
 var UdemyAuth = 'Basic ' + btoa(UdemyClientID + ':' + UdemyClientSecret);
 
 const UdemyOptions : any = {
+    mode: "no-cors",
     headers: {
         //headerinfo for authorization with udemy
         'Authorization' : UdemyAuth,
     },
-    json: true,
+    json: true
 };
 
 //DB
 const DBgetUrl : string = "http://127.0.0.1:8080/servlet/services/rest/";
 const DBOptions : any = {
-    // headers: {
-    //     //headerinfo for authorization with udemy
-    //     'Authorization' : UdemyAuth,
-    // },
-    json: true,
+    json: true
 };
 
 export class ApiRepo {
