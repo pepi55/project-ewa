@@ -63,12 +63,9 @@ export class ApiService {
     }
 
     public getParent(callBack : <T> (parent : T) => any) : void {
-
         request.get(this.URLGET + this.path + this.queryParam, this.OPTIONS, (error : any, response : any, body : any) => {
             callBack(response.body);
         });
-
-
      }
 
     //EDX
