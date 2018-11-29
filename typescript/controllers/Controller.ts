@@ -1,5 +1,5 @@
 export abstract class Controller {
-
+    pathToViews : string = "/servlet/views/";
     constructor() {
         this.setup();
     }

@@ -9,11 +9,11 @@ export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
 
     protected setup(): void {
-        $.get("/views/login.html").done(function (data: any) {
+        $.get(this.pathToViews + "login.html").done(function (data: any) {
             $("#window").append(data);
         });
 
-        $.get("/views/signup.html").done(function (data: any) {
+        $.get(this.pathToViews + "signup.html").done(function (data: any) {
             $("#window").append(data);
         });
 
@@ -25,7 +25,7 @@ export class LoginController extends Controller {
             this.userHandler.getPasswordByUsername("test");
 
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
-                window.location.href = "views/menu.html";
+                window.location.href = this.pathToViews + "menu.html";
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
             }

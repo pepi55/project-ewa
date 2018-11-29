@@ -1,7 +1,7 @@
 #
 # Project ignore files
 #
-assets/js/
+servlet/src/main/webapp/assets/js/
 *.code-workspace
 *.bak
 

@@ -5,7 +5,6 @@ import { Controller } from "./Controller";
 import { Card } from "../components/Card";
 import { AdminButton } from "../components/AdminButton";
 import request = require("request");
-import { TableRow } from "../components/TableRow";
 import { TableRowList } from "../components/TableRowList";
 import { Button } from "../components/button/Button";
 
