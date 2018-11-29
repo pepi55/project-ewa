@@ -4,7 +4,7 @@
     "description": "TypeScript Test",
     "license": "MIT",
     "scripts": {
-        "start": "tsc && browserify servlet/src/main/webapp/assets/js/app.js --s app > servlet/src/main/webapp/assets/js/bundle.js",
+        "start": "tsc && browserify servlet/src/main/webapp/assets/js/App.js --s app > servlet/src/main/webapp/assets/js/bundle.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "devDependencies": {
