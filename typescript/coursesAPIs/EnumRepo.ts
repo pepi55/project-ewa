@@ -12,7 +12,6 @@ export enum ORDERING {
     newest = "newest",
     lowToHigh = "price-low-to-high",
     highToLow = "price-high-to-low"
-    
 }
 
 export enum PRICE {

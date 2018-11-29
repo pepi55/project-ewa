@@ -26,7 +26,7 @@ const KhanAcademyOptions : any = {
 };
 
 //Udemy
-const CORSProxy : string = ""; // "https://cors-anywhere.herokuapp.com/";
+const CORSProxy : string = "https://cors-anywhere.herokuapp.com/";
 const UdemyGetUrl : string = CORSProxy + "https://www.udemy.com/api-2.0/courses/";
 
 const UdemyClientID : string = 'wVj9K4L6NfGMMYKFM1loWPtGXdBR6NG9vNYtOsBc';
@@ -34,7 +34,7 @@ const UdemyClientSecret : string = '1IDh0trd3J09Xv0waNHs0KRa89YXbYCuADIUzC7gi3Fj
 var UdemyAuth = 'Basic ' + btoa(UdemyClientID + ':' + UdemyClientSecret);
 
 const UdemyOptions : any = {
-    mode: "no-cors",
+    //mode: 'no-cors',
     headers: {
         //headerinfo for authorization with udemy
         'Authorization' : UdemyAuth,
