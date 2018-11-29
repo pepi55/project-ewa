@@ -1,57 +1,63 @@
 <html>
+
 <head>
-  <title>courses</title>
+    <!-- Link to the favicon is the current running server -->
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
 
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-  <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-  <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
-  <script src="../assets/js/bundle.js"></script>
+    <title>courses</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/bundle.js"></script>
 </head>
-<style>
-    .demo-card-wide.mdl-card {
-      width: 290px;
-      min-height: 304;
-    }
-    .demo-card-wide > .mdl-card__title {
-      color: #fff;
-      height: 176px;
-      background: url('../assets/demos/welcome_card.jpg') center / cover;
-    }
-    .demo-card-wide > .mdl-card__menu {
-      color: #fff;
-    }
 
-    @media only screen and (min-width: 480px) {
+<style>
     .demo-card-wide.mdl-card {
         width: 290px;
         min-height: 304;
     }
 
-}
-
-@media only screen and (min-width: 1080px) {
-    .demo-card-wide.mdl-card {
-        min-height: 304;
-        width: 390px;
+    .demo-card-wide > .mdl-card__title {
+        color: #fff;
+        height: 176px;
+        background: url('../assets/demos/welcome_card.jpg') center / cover;
+    }
+    .demo-card-wide > .mdl-card__menu {
+        color: #fff;
     }
 
-}
-    </style>
-    <body>
-      <!--<div class="mdl-layout-spacer"></div>-->
+    @media only screen and (min-width: 480px) {
+        .demo-card-wide.mdl-card {
+            width: 290px;
+            min-height: 304;
+        }
 
-      
-    </div>  
+    }
+
+    @media only screen and (min-width: 1080px) {
+        .demo-card-wide.mdl-card {
+            min-height: 304;
+            width: 390px;
+        }
+
+    }
+</style>
+
+<body>
+    <!--<div class="mdl-layout-spacer"></div>-->
+    </div>
     <div class="container" id="menuButton">
-      <div class="mdl-grid" id="cardsContainer">
+        <div class="mdl-grid" id="cardsContainer">
 
-      </div>
+        </div>
     </div>
     <script>
-      window.onload = function(e){
-          app("userCourses");
+        window.onload = function(e){
+            app("userCourses");
         }
-  </script>
-    </body>
-    </html>
+    </script>
+</body>
+
+</html>
