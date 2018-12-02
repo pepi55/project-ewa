@@ -47,11 +47,10 @@ public class CourseResource {
     }
 
      /**
-     * Adds competency to area.
+     * Adds Course
      * Use <code>Invoke-WebRequest -UseBasicParsing *URL* -ContentType "application/json" -Method POST -Body '*JSON*'</code> to add a new course.
      *
-     * @param areaId The ID of the area to add the competency to.
-     * @param competency The competency to be added. NOTE: Make sure this object's class has an empty constructor and getters+setters for each member.
+     * @param course the course added to DB
      * @return HTTP response with code of success.
      */
     @POST
