@@ -5,12 +5,23 @@ export class Card {
     private description? : string;
     private picture? : string;
 
-    constructor(cardId : number, title : string, url : string, description? : string, picture? : string) {
+    constructor(cardId? : number, title? : string, url? : string, description? : string, picture? : string, DBResponse? : any) {
         this.cardId = cardId;
         this.title = title;
         this.url = url;
         this.description = description;
         this.picture = picture;
+        if (DBResponse != null) {
+            this.setDBCard(DBResponse);
+        }
+    }
+
+    private setDBCard(DBResponse : any) {
+        this.cardId = DBResponse.courseId;
+        this.title = DBResponse.title;
+        this.url = DBResponse.url;
+        this.description = DBResponse.description;
+        this.picture = DBResponse.image;
     }
 
     public getcardId() {

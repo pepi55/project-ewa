@@ -4,30 +4,39 @@ import { Results } from "../coursesAPIs/UDYmodels/Results";
 import { Controller } from "./Controller";
 import { Card } from "../components/Card";
 import { AdminButton } from "../components/AdminButton";
-import request = require("request");
-import { TableRowList } from "../components/TableRowList";
 import { Button } from "../components/button/Button";
+import { TableRow } from "../components/TableRow";
 
 export class adminCourseController extends Controller {
 
     protected setup(): void {
+        //add functionality to buttons
+        this.setUserMenuButton();
+        this.setRefreshButton();
+        
+        //manages courses on page
+        this.setCourses();
+        
+    }
+
+    private setUserMenuButton() {
+        //set navigation-button to acces userpage
         let menuButton : Button = new Button("user");
         menuButton.setOnClick((e : any) => {
             window.location.href = "userCourses.html";
         });
 
         $("#menuButton").append(menuButton.getView());
-        this.setRefreshButton();
 
-        let i : number = 0;
-        console.log("calling the courses APIs...");
+    }
+
+    private setCourses() {
+        //setting courses
         let Udemy = new ApiService(API.Udemy);
-
         Udemy.setQueryParameters(2,50,undefined,undefined,SUBCATS.entrepreneurship,PRICE.priceFree,undefined);
         Udemy.getParent(<T>(object : T) => {
             let results = new Results(object);
             let cardId : number = 0;
-            //console.log("aantal courses: " + results.count);
             results.courses.forEach(element => {
                 let declineCourseButton : AdminButton = new AdminButton("decline");
                 let acceptCourseButton : AdminButton = new AdminButton("accept");
@@ -42,6 +51,7 @@ export class adminCourseController extends Controller {
         });
     }
 
+    //getting coursedata ready for sending to DB
     private setAddFunction(acceptCourseButton : AdminButton, card : Card) {
         let data : any = {
             "title" : card.getTitle(),
@@ -59,14 +69,13 @@ export class adminCourseController extends Controller {
 
         };
 
+        //onclick to send course to DB
         acceptCourseButton.setOnClick((e: any) => {
-            console.log("sending course to DB....");
             let DB = new ApiService(API.DB);
             DB.setPath("courses");
-            console.log(DBOptions);
             DB.setOptions(DBOptions);
             DB.post(<T>(object : any) => {
-                console.log(object);
+                //check if POST is succeeded
                 if (object.statusCode == 201) {
                     window.alert("Course added succesfully!!");
                 } else {
@@ -78,20 +87,20 @@ export class adminCourseController extends Controller {
         return acceptCourseButton;
     }
 
+    //setting the refresh button for the selected courses table
     private setRefreshButton() {
         let refreshButton : AdminButton = new AdminButton("refresh");
 
         refreshButton.setOnClick((e : any) => {
-            console.log("cleaning table...");
             $("#selectedCardsTable").empty();
-
             let DB = new ApiService(API.DB);
             DB.setPath("courses");
-            console.log("getting courses....");
-            DB.getParent(<T>(object : T) => {
-                let rows : TableRowList = new TableRowList(object);
-                console.log("setting view...");
-                rows.rows.forEach(element => {
+            //getting the courses from DB
+            DB.getParent((object : any) => {
+                //mapping all courses to tableRows
+                let tableRows : TableRow[];
+                tableRows = object.map((course : any) => new TableRow(course));
+                tableRows.forEach(element => {
                     $("#selectedCardsTable").append(element.getRowView());
                 });
             });

@@ -78,7 +78,7 @@ export class ApiService {
 
     //DB
     public post(callBack : <T> (parent : T) => any) {
-        console.log(this.URLGET + this.path)
+        //console.log(this.URLGET + this.path)
         request.post(this.URLGET + this.path, this.OPTIONS, (error : any, response : any, body : any) => {
             callBack(response);
         });

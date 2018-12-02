@@ -1,6 +1,6 @@
 import { MainController } from "./controllers/MainController"
 import { LoginController } from "./controllers/LoginController";
-import { adminCourseController } from "./controllers/AdminCourseController";
+import { adminCourseController } from "./controllers/AdminController";
 import { userCourseController } from "./controllers/UserCourseController";
 
 export class App {
