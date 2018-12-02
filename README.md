@@ -9,7 +9,6 @@ Project members: Melissa, Luc, Toon, Hicham and Peter.
  - tomcat
  - maven
  - jdk-1.8+
- - live-server
 
 # Startup
 ~~press: ctrl + shift + B then choose "watch.ts".~~
