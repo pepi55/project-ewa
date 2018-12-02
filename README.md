@@ -14,7 +14,7 @@ Project members: Melissa, Luc, Toon, Hicham and Peter.
 ~~press: ctrl + shift + B then choose "watch.ts".~~
 Run: npm install.
 Run: npm start.
-Type: "(./node_modules/.bin/)live-server" in terminal.
+~~Type: "(./node_modules/.bin/)live-server" in terminal.~~
 
 Right click servlet.war in src/servlet/target/ and select run on tomcat server.
 
