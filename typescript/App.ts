@@ -1,8 +1,8 @@
 import { MenuController } from "./controllers/Menucontroller";
-import { LoginController } from "./controllers/logincontroller";
+import { LoginController } from "./controllers/Logincontroller";
 import { adminCourseController } from "./controllers/AdminController";
-import { userCourseController } from "./controllers/userCourseController";
-import { LoginService } from "./components/loginService";
+import { userCourseController } from "./controllers/UserCourseController";
+import { LoginService } from "./components/LoginService";
 
 
 export class App {

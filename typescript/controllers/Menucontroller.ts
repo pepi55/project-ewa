@@ -1,6 +1,6 @@
-import { Controller } from "./controller";
-import { MenuItem } from "../components/menuItem";
-import { LoginService } from "../components/loginService";
+import { Controller } from "./Controller";
+import { MenuItem } from "../components/MenuItem";
+import { LoginService } from "../components/LoginService";
 
 export class MenuController extends Controller {
 

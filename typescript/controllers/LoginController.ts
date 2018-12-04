@@ -4,7 +4,7 @@ import { Button } from "../components/button/Button";
 import { UserHandler } from "../components/UserHandler";
 import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
-import { LoginService } from "../components/loginService";
+import { LoginService } from "../components/LoginService";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
