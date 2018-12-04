@@ -7,7 +7,6 @@ import { ProfileController } from "./controllers/ProfileController";
 
 
 export class App {
-    
     public main(type: any): void {
         if (!LoginService.getInstance().isLoggedIn() && type != "login") {
             window.location.href = "/servlet/index.html";
