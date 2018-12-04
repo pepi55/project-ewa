@@ -1,8 +1,9 @@
 import { MenuController } from "./controllers/Menucontroller";
 import { LoginController } from "./controllers/Logincontroller";
-import { adminCourseController } from "./controllers/AdminController";
-import { userCourseController } from "./controllers/UserCourseController";
+import { AdminCourseController } from "./controllers/AdminController";
+import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
+import { ProfileController } from "./controllers/ProfileController";
 
 
 export class App {
@@ -18,9 +19,11 @@ export class App {
         } else if (type == "login") {
             let controller: LoginController = new LoginController();
         } else if (type == "adminCourses") {
-            let controller : adminCourseController = new adminCourseController();
+            let controller : AdminCourseController = new AdminCourseController();
         } else if (type == "userCourses") {
-            let controller : userCourseController = new userCourseController();
+            let controller : UserCourseController = new UserCourseController();
+        } else if (type == "profile") {
+            let controller : ProfileController = new ProfileController();
         }
     }
 }

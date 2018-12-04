@@ -7,7 +7,7 @@ import { AdminButton } from "../components/AdminButton";
 import { Button } from "../components/button/Button";
 import { TableRow } from "../components/TableRow";
 
-export class adminCourseController extends Controller {
+export class AdminCourseController extends Controller {
 
     protected setup(): void {
         //add functionality to buttons
