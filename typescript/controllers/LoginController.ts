@@ -4,6 +4,7 @@ import { Button } from "../components/button/Button";
 import { UserHandler } from "../components/UserHandler";
 import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
+import { LoginService } from "../components/LoginService";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
@@ -25,6 +26,7 @@ export class LoginController extends Controller {
             this.userHandler.getPasswordByUsername("test");
 
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
+                LoginService.getInstance().login(this.userHandler.getUserByUsername((document.getElementById("username") as HTMLInputElement).value));
                 window.location.href = this.pathToViews + "menu.html";
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
