@@ -45,6 +45,10 @@ public class Competency implements Serializable {
     @JoinColumn(name = "competency_id")
     private List<Course> courses;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "competency_id")
+    private List<Question> questions;
+
     public Competency() {
         // Required.
         courses = new ArrayList<>();
