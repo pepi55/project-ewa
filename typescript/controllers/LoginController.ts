@@ -34,7 +34,7 @@ export class LoginController extends Controller {
         })
 
         let onSignup = 0;
-        let user: User = new User(null, null, null, null, null, null, null);
+        let user: User = new User(null, null, null, null, null, null);
 
         signupButton.setOnClick((e: any) => {
             if (onSignup == 0) {
