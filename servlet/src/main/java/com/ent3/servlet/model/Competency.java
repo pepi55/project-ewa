@@ -102,4 +102,11 @@ public class Competency implements Serializable {
         courses.remove(index);
     }
 
+    public List<Question> getQuestions() {
+        return new ArrayList<>(questions);
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 }
