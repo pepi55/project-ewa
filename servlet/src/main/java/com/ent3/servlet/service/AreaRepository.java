@@ -26,15 +26,6 @@ public interface AreaRepository {
     public Area getAreaById(int id);
 
     /**
-     * Add a competency to an area.
-     *
-     * @param area The area to add the competency to.
-     * @param competency The competency to add.
-     * @return Added competency.
-     */
-    public Competency addCompetency(Area area, Competency competency);
-
-    /**
      * Add a new area.
      *
      * @param area The area to be added.

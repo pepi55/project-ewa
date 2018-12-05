@@ -14,39 +14,25 @@ public interface QuestionRepository {
     /**
      * Gets all available Questions.
      *
-     * @return List containing all Questions.
+     * @param id ID of competency to get questions of.
+     * @return List containing all questions.
      */
-    public List<Question> getAllQuestions();
+    public List<Question> getAllCompetencyQuestions(int id);
 
     /**
-     * Get a specific Question by id.
+     * Get a specific question by id.
      *
-     * @param id ID of Question to get.
-     * @return The Question.
+     * @param id ID of question to get.
+     * @return The question.
      */
     public Question getQuestionById(int id);
 
-  
     /**
      * Add a Question.
      *
-     * @param Question The Question to add.
-     * @return The added Question.
+     * @param competency The competency to add the question to.
+     * @param question The question to add.
+     * @return The added question.
      */
-    public Question addQuestion(Question Question);
-
-    /**
-     * Returns a list of specific questions by competency
-     * @param competency the competency to filter
-     * @return a list of questions filtered by comptency
-     */
-    public List<Question> getQuestionsByCompetency(Competency competency);
-
-    /**
-     * Sets the score of a question by id
-     * @param id of question 
-     * @param score of the comptence
-     * @return the question that has changed
-     */
-    public Question setScoreById(int id, int score);
+    public Question addQuestion(Competency competency, Question question);
 }

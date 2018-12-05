@@ -52,6 +52,7 @@ public class Competency implements Serializable {
     public Competency() {
         // Required.
         courses = new ArrayList<>();
+        questions = new ArrayList<>();
     }
 
     public Competency(int id, String name, Area area) {
@@ -59,6 +60,7 @@ public class Competency implements Serializable {
         this.name = name;
         this.area = area;
         courses = new ArrayList<>();
+        questions = new ArrayList<>();
     }
 
     public int getId() {
@@ -108,5 +110,10 @@ public class Competency implements Serializable {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+        question.setCompetency(this);
     }
 }

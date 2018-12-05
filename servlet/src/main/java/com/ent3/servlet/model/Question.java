@@ -39,6 +39,10 @@ public class Question implements Serializable {
     @JsonbTransient
     private Competency competency;
 
+    public Question() {
+        // Required.
+    }
+
     public Question(String question, Competency competency){
         this.question = question;
         this.competency = competency;
