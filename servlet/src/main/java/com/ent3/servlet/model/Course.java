@@ -34,7 +34,7 @@ public class Course implements Serializable {
     @JoinColumn(name = "competency_id")
     @JsonbTransient
     private Competency competency;
-    
+
     public Course() {
         // Default constructor required.
     }

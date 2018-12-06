@@ -26,11 +26,13 @@ export class AdminButton {
         }
 
         if (this.type == "refresh") {
-            template = `<th>                  <!-- Colored icon button -->
+            template = `
+            <div style="text-align: right;">
+            <!-- Colored icon button -->
             <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
               <i class="material-icons">refresh</i>
             </button>
-              </th>`
+            </div>`;
         }
 
         return $(template)

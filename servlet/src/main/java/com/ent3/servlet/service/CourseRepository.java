@@ -1,6 +1,8 @@
 package com.ent3.servlet.service;
 
 import java.util.List;
+
+import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
 
 /**
@@ -13,7 +15,7 @@ public interface CourseRepository {
      *
      * @return List of all areas.
      */
-    public List<Course> getAllCourses();
+    public List<Course> getAllCompetencyCourses(int id);
 
     /**
      * Get an area using an ID.
@@ -24,11 +26,11 @@ public interface CourseRepository {
     public Course getCourseById(int id);
 
     /**
-     * Add a competency to an area.
-     *
-     * @param area The area to add the competency to.
-     * @param competency The competency to add.
-     * @return Added course.
+     * 
+     * @param competency
+     * @param course
+     * @return
      */
-    public Course addCourse(Course course);
+
+    public Course addCourse(Competency competency, Course course);
 }

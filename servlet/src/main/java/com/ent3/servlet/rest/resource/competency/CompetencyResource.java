@@ -1,7 +1,5 @@
 package com.ent3.servlet.rest.resource.competency;
 
-import java.util.List;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,7 +12,10 @@ import javax.ws.rs.core.Response;
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.rest.model.ClientError;
+import com.ent3.servlet.rest.resource.CourseResource;
+import com.ent3.servlet.rest.resource.QuestionResource;
 import com.ent3.servlet.service.AreaRepository;
+import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
 
 /**
@@ -22,9 +23,8 @@ import com.ent3.servlet.service.implementation.RepoImplementation;
  *
  * @author Peter Dimitrov
  */
-@Path("/")
 public class CompetencyResource {
-    private AreaRepository service;
+    private CompetencyRepository service;
 
     public CompetencyResource() {
         // XXX: Repo class implementation here.
@@ -34,33 +34,14 @@ public class CompetencyResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCompetencies(@PathParam("areaId") int areaId) {
-        Area area = service.getAreaById(areaId);
-
-        if (area == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + areaId + " not found")).build();
-        }
-
-        List<Competency> result = area.getCompetencies();
-
-        if (result.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("No competencies found")).build();
-        }
-
-        return Response.status(Response.Status.OK).entity(result).build();
+        return Response.status(Response.Status.OK).entity(service.getAllAreaCompetencies(areaId)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{competencyId}")
-    public Response getCompetencyById(@PathParam("areaId") int areaId, @PathParam("competencyId") int competencyId) {
-        Area area = service.getAreaById(areaId);
-
-        if (area == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with id: " + areaId + " not found")).build();
-        }
-
-        // TODO: Add safety net for array.
-        Competency result = area.getCompetencies().get(competencyId);
+    public Response getCompetencyById(@PathParam("competencyId") int competencyId) {
+        Competency result = service.getCompetencyById(competencyId);
 
         if (result == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with id: " + competencyId + " not found")).build();
@@ -81,14 +62,31 @@ public class CompetencyResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCompetency(@PathParam("areaId") int areaId, Competency competency) {
-        Area area = service.getAreaById(areaId);
+        Area area = null;
+
+        {
+            // XXX: Repo implementation use here.
+            AreaRepository areaService = RepoImplementation.getInstance();
+
+            area = areaService.getAreaById(areaId);
+        }
 
         if (area == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Area with ID: " + areaId + " not found")).build();
-        } else {
-            // TODO: Add duplication check.
-            return Response.status(Response.Status.CREATED).entity(service.addCompetency(area, competency)).build();
-            //return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();
         }
+
+        // TODO: Add duplication check.
+        return Response.status(Response.Status.CREATED).entity(service.addCompetency(area, competency)).build();
+        //return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();
+    }
+
+    @Path("/{competencyId}/questions")
+    public QuestionResource getQuestionResource() {
+        return new QuestionResource();
+    }
+
+    @Path("/{competencyId}/courses")
+    public CourseResource getCourseResource() {
+        return new CourseResource();
     }
 }
