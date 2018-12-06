@@ -3,6 +3,7 @@ package com.ent3.servlet.service;
 import java.util.List;
 
 import com.ent3.servlet.model.Competency;
+import com.ent3.servlet.model.Course;
 
 /**
  * CompetencyRepository
@@ -25,4 +26,6 @@ public interface CompetencyRepository {
      * @return The competency with the ID.
      */
     public Competency getCompetencyById(int id);
+
+    public Course addCourse(Competency competency, Course course);
 }

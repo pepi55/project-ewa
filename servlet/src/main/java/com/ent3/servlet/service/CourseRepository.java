@@ -23,12 +23,12 @@ public interface CourseRepository {
      */
     public Course getCourseById(int id);
 
-    /**
-     * Add a competency to an area.
-     *
-     * @param area The area to add the competency to.
-     * @param competency The competency to add.
-     * @return Added course.
-     */
-    public Course addCourse(Course course);
+    // /**
+    //  * Add a competency to an area.
+    //  *
+    //  * @param area The area to add the competency to.
+    //  * @param competency The competency to add.
+    //  * @return Added course.
+    //  */
+    // public Course addCourse(Course course);
 }

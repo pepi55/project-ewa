@@ -13,6 +13,7 @@ import com.ent3.servlet.model.Course;
 import com.ent3.servlet.model.Question;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
+import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.QuestionRepository;
 import com.ent3.servlet.service.UserRepository;
@@ -22,7 +23,7 @@ import com.ent3.servlet.service.UserRepository;
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository, QuestionRepository {
+public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository, QuestionRepository, CompetencyRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -178,8 +179,10 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
-    public Course addCourse(Course course) {
+    public Course addCourse(Competency competency, Course course) {
         EntityManager em = getEntityManager();
+
+        competency.addCourse(course);
 
         em.getTransaction().begin();
         em.persist(course);
@@ -249,4 +252,22 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     public Question setScoreById(int id, int score) {
         return null;
     }
+
+    @Override
+    public List<Competency> getAllCompetencies() {
+        return null;
+    }
+
+    @Override
+    public Competency getCompetencyById(int id) {
+        EntityManager em = getEntityManager();
+
+        Competency result = em.find(Competency.class, id);
+
+        em.close();
+
+        return result;
+    }
+
+
 }
