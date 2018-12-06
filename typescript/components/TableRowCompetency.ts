@@ -5,8 +5,8 @@ export class TableRowCompetency {
     private elementCount : number;
 
     constructor(mainResponse : any, elementCount : number) {
-        console.log("compfsf: " + mainResponse.name);
-        console.log("compfsf: " + mainResponse.id);
+        console.log("comp: " + mainResponse.name);
+        console.log("compId: " + mainResponse.id);
         this.name = mainResponse.name;
         this.competencyId = mainResponse.id;
         this.elementCount = elementCount;

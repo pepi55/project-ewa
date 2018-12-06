@@ -50,6 +50,21 @@
     .demo-list-radio {
       display: inline;
     }
+
+    #backButton {
+        float: left;
+        
+    }
+
+    #saveButton {
+        float: right;
+        
+    }
+
+    #nextButton {
+        float: right;
+        
+    }
 </style>
 
 <body>
@@ -60,21 +75,35 @@
             <div class="mdl-cell mdl-cell--4-col" id="table1">
 
             </div>
+            <div class="mdl-cell mdl-cell--4-col"></div>
             <div id="selectedCardsContainer">
+                <div id="tableButtons"></div>
                 <div class="mdl-cell mdl-cell--4-col" id="table2">
 
                 </div>
-                <div id="tableButtons"></div>
+                
             </div>
         </div>
 
         <div class="mdl-grid">
-            <div class="mdl-cell mdl-cell--4-col" id="linkContainer" style="display: none;">
-                <div id="competencyCard"></div>
-                <div id="table3"></div>
-                <div id="backButton"></div>
-                <div id="nextButton"></div>
-                <div id="saveButton"></div>
+            <div class="mdl-cell mdl-cell--12-col" id="linkContainer" style="display: none;">
+                <div id="returnButton"></div>
+                <!--returnbutton-->
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div id="competencyCard"></div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div id="table3"></div>
+                </div>
+
+                <div class="mdl-cell mdl-cell--12-col">
+                    <div id="backButton"></div>
+                    <div class="mdl-layout-spacer"></div>
+                    <div id="nextButton"></div>
+                    <div id="saveButton"></div>
+                </div>
+                
             </div>
             
         </div>

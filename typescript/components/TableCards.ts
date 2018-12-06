@@ -1,18 +1,22 @@
 import { TableRowCard } from "./TableRowCard";
+import { AdminButton } from "./AdminButton";
 
 export class TableCards {
     private bodyHTML : string = "";
-    private buttons : string = "";
 
-    constructor(body? : TableRowCard[], buttons? : string) {
-        this.buttons = buttons;
+
+    constructor(body? : TableRowCard[]) {
+
         this.setBodyHTML(body);
     }
 
     private setBodyHTML(body : TableRowCard[]) {
-        body.forEach(element => {
-            this.bodyHTML += element.getRowView();
-        })
+        if (body != null) {
+            body.forEach(element => {
+                this.bodyHTML += element.getRowView();
+            });
+        }
+        
     }
 
     public getTableView() : string {
