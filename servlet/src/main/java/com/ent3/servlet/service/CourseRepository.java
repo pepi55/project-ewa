@@ -15,7 +15,7 @@ public interface CourseRepository {
      *
      * @return List of all areas.
      */
-    public List<Course> getAllCourses();
+    public List<Course> getAllCompetencyCourses(int id);
 
     /**
      * Get an area using an ID.

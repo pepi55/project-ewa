@@ -149,7 +149,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
 
     @Override
     @SuppressWarnings("unchecked")
-    public List<Course> getAllCourses() {
+    public List<Course> getAllCompetencyCourses(int id) {
         EntityManager em = getEntityManager();
 
         List<Course> result = em.createQuery("SELECT c FROM Course c").getResultList();

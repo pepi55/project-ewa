@@ -12,6 +12,7 @@ import javax.ws.rs.core.Response;
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.rest.model.ClientError;
+import com.ent3.servlet.rest.resource.CourseResource;
 import com.ent3.servlet.rest.resource.QuestionResource;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.CompetencyRepository;
@@ -80,7 +81,12 @@ public class CompetencyResource {
     }
 
     @Path("/{competencyId}/questions")
-    public QuestionResource getCompetencyResource() {
+    public QuestionResource getQuestionResource() {
         return new QuestionResource();
+    }
+
+    @Path("/{competencyId}/courses")
+    public CourseResource getCourseResource() {
+        return new CourseResource();
     }
 }

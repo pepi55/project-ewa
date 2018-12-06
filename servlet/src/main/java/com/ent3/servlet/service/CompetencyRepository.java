@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
-import com.ent3.servlet.model.Course;
 
 /**
  * CompetencyRepository

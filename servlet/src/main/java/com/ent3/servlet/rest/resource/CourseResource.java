@@ -15,6 +15,7 @@ import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
 import com.ent3.servlet.rest.model.ClientError;
 import com.ent3.servlet.service.CompetencyRepository;
+import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
 
 /**
@@ -22,9 +23,8 @@ import com.ent3.servlet.service.implementation.RepoImplementation;
  *
  * @author Hicham
  */
-@Path("courses")
 public class CourseResource {
-    private CompetencyRepository service;
+    private CourseRepository service;
 
     public CourseResource() {
         service = RepoImplementation.getInstance();
@@ -33,33 +33,15 @@ public class CourseResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Response getAllCourses(@PathParam("competencyId") int competencyId) {
-        Competency competency = service.getCompetencyById(competencyId);
 
-        if (competency == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with ID: " + competencyId + " not found")).build();
-        }
-
-        List<Course> result = competency.getCourses();
-
-        if(result.isEmpty()) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("No courses found")).build();
-
-        }
-
-        return Response.status(Response.Status.OK).entity(result).build();
+        return Response.status(Response.Status.OK).entity(service.getAllCompetencyCourses(competencyId)).build();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{courseId}")
-    public Response getCourseById(@PathParam("competencyId") int competencyId, @PathParam("courseId") int courseId) {
-        Competency competency = service.getCompetencyById(competencyId);
-
-        if (competency == null) {
-            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with id: " + competencyId + " not found")).build();
-        }
-
-        Course result = competency.getCourses().get(courseId);
+    public Response getCourseById(@PathParam("courseId") int courseId) {
+        Course result = service.getCourseById(courseId);
 
         if (result == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Course with id: " + courseId + " not found")).build();
@@ -79,7 +61,14 @@ public class CourseResource {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public Response addCourse(@PathParam("competencyId")int competencyId, Course course) {
-        Competency competency = service.getCompetencyById(competencyId);
+        Competency competency = null;
+
+        {
+            // XXX: Repo implementation use here.
+            CompetencyRepository competencyService = RepoImplementation.getInstance();
+
+            competency = competencyService.getCompetencyById(competencyId);
+        }
 
         if (competency == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with ID: " + competencyId + " not found")).build();
