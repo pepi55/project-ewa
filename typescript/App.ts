@@ -1,12 +1,19 @@
-import { MainController } from "./controllers/MainController"
+import { MenuController } from "./controllers/Menucontroller";
 import { LoginController } from "./controllers/LoginController";
 import { adminCourseController } from "./controllers/AdminController";
 import { userCourseController } from "./controllers/UserCourseController";
+import { LoginService } from "./components/LoginService";
+
 
 export class App {
     public main(type: any): void {
+        if (!LoginService.getInstance().isLoggedIn() && type != "login") {
+            window.location.href = "/servlet/index.html";
+            return
+        }
+
         if (type == "main"){
-            let controller: MainController = new MainController();
+            let controller: MenuController = new MenuController();
         } else if (type == "login") {
             let controller: LoginController = new LoginController();
         } else if (type == "adminCourses") {

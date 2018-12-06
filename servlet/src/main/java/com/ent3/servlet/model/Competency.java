@@ -45,9 +45,14 @@ public class Competency implements Serializable {
     @JoinColumn(name = "competency_id")
     private List<Course> courses;
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JoinColumn(name = "competency_id")
+    private List<Question> questions;
+
     public Competency() {
         // Required.
         courses = new ArrayList<>();
+        questions = new ArrayList<>();
     }
 
     public Competency(int id, String name, Area area) {
@@ -55,6 +60,7 @@ public class Competency implements Serializable {
         this.name = name;
         this.area = area;
         courses = new ArrayList<>();
+        questions = new ArrayList<>();
     }
 
     public int getId() {
@@ -98,4 +104,16 @@ public class Competency implements Serializable {
         courses.remove(index);
     }
 
+    public List<Question> getQuestions() {
+        return new ArrayList<>(questions);
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
+
+    public void addQuestion(Question question) {
+        questions.add(question);
+        question.setCompetency(this);
+    }
 }

@@ -12,7 +12,12 @@ export class User {
         this.lastName = lastName;
         this.username = username;
         this.password = password;
+        this.email = email;
         this.role = role;
+    }
+
+    public getId(){
+        return this.id;
     }
 
     public setFirstName(firstName : string) {

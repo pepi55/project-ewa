@@ -3,7 +3,6 @@ package com.ent3.servlet.service;
 import java.util.List;
 
 import com.ent3.servlet.model.Area;
-import com.ent3.servlet.model.Competency;
 
 /**
  * AreaRepository
@@ -24,15 +23,6 @@ public interface AreaRepository {
      * @return The area.
      */
     public Area getAreaById(int id);
-
-    /**
-     * Add a competency to an area.
-     *
-     * @param area The area to add the competency to.
-     * @param competency The competency to add.
-     * @return Added competency.
-     */
-    public Competency addCompetency(Area area, Competency competency);
 
     /**
      * Add a new area.

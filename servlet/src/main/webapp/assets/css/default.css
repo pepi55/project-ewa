@@ -5,11 +5,9 @@
     border-radius: 7px;
     box-shadow: 0 0 50px -10px;
 }
-
 .loginLabel {
     float: left;
 }
-
 body{
     background-color: lightgray;
 }
@@ -21,3 +19,7 @@ body{
 .mdl-textfield__label{
     top: 0px;
 }
+.mdl-navigation__link {
+    cursor: pointer;
+}
+

@@ -23,7 +23,7 @@ import com.ent3.servlet.service.UserRepository;
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, AreaRepository, CourseRepository, QuestionRepository, CompetencyRepository {
+public class RepoImplementation implements UserRepository, CompetencyRepository, AreaRepository, CourseRepository, QuestionRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -34,6 +34,13 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
 
     private RepoImplementation() {
         entityManagerFactory = Persistence.createEntityManagerFactory("ent3PU");
+    }
+
+    /**
+     * Creates a new entity manager.
+     */
+    private EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager();
     }
 
     public static RepoImplementation getInstance() {
@@ -141,21 +148,6 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
-    public Competency addCompetency(Area area, Competency competency) {
-        EntityManager em = getEntityManager();
-
-        area.addCompetency(competency);
-
-        em.getTransaction().begin();
-        em.persist(competency);
-        em.getTransaction().commit();
-
-        em.close();
-
-        return competency;
-    }
-
-    @Override
     @SuppressWarnings("unchecked")
     public List<Course> getAllCourses() {
         EntityManager em = getEntityManager();
@@ -193,19 +185,58 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
         return course;
     }
 
-    /**
-     * Creates a new entity manager.
-     */
-    private EntityManager getEntityManager() {
-        return entityManagerFactory.createEntityManager();
+    @Override
+    public List<Competency> getAllAreaCompetencies(int id) {
+        EntityManager em = getEntityManager();
+
+        Area area = em.find(Area.class, id);
+        List<Competency> result = null;
+
+        if (area != null) {
+            result = area.getCompetencies();
+        }
+
+        em.close();
+
+        return result;
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public List<Question> getAllQuestions() {
+    public Competency getCompetencyById(int id) {
         EntityManager em = getEntityManager();
 
-        List<Question> result = em.createQuery("SELECT u FROM Question u").getResultList();
+        Competency result = em.find(Competency.class, id);
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Competency addCompetency(Area area, Competency competency) {
+        EntityManager em = getEntityManager();
+
+        area.addCompetency(competency);
+
+        em.getTransaction().begin();
+        em.persist(competency);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return competency;
+    }
+
+    @Override
+    public List<Question> getAllCompetencyQuestions(int id) {
+        EntityManager em = getEntityManager();
+
+        Competency competency = em.find(Competency.class, id);
+        List<Question> result = null;
+
+        if (competency != null) {
+            result = competency.getQuestions();
+        }
 
         em.close();
 
@@ -224,50 +255,17 @@ public class RepoImplementation implements UserRepository, AreaRepository, Cours
     }
 
     @Override
-    public Question addQuestion(Question Question) {
+    public Question addQuestion(Competency competency, Question question) {
         EntityManager em = getEntityManager();
 
+        competency.addQuestion(question);
+
         em.getTransaction().begin();
-        em.persist(Question);
+        em.persist(question);
         em.getTransaction().commit();
 
         em.close();
 
-        return Question;
+        return question;
     }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Question> getQuestionsByCompetency(Competency competency) {
-        EntityManager em = getEntityManager();
-
-        List<Question> result = em.createQuery("SELECT u FROM Question u").getResultList();
-        // TODO: nog filteren op competency
-        em.close();
-
-        return result;
-	}
-
-    @Override
-    public Question setScoreById(int id, int score) {
-        return null;
-    }
-
-    @Override
-    public List<Competency> getAllCompetencies() {
-        return null;
-    }
-
-    @Override
-    public Competency getCompetencyById(int id) {
-        EntityManager em = getEntityManager();
-
-        Competency result = em.find(Competency.class, id);
-
-        em.close();
-
-        return result;
-    }
-
-
 }
