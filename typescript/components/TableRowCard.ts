@@ -5,7 +5,7 @@ export class TableRowCard {
 
     constructor(mainResponse : any, elementCount : number) {
         this.title = mainResponse.title;
-        this.cardId = mainResponse.cardId;
+        this.cardId = mainResponse.courseId;
         this.elementCount = elementCount;
 
     }

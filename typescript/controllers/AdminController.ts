@@ -26,13 +26,11 @@ export class adminCourseController extends Controller {
     private jsonToSend : any = {elements : {}};
     private arraySelectedComptencies : string[] = [];
 
-    
 
     protected setup(): void {
         //add functionality to buttons
-        this.setUserMenuButton();
         this.setCompetenciespage();
-        this.setRefreshButtonForSavedCourses();
+        this.setSavedCoursesTable();
         this.getCompetencies();
         
         //manages courses on page
@@ -43,7 +41,7 @@ export class adminCourseController extends Controller {
     private setCompetenciespage() {
         let buttonAdd : Button = new Button("add competencies");
         let buttonDelete : Button = new Button("delete");
-        
+
 
         buttonAdd.setOnClick((e : any) => {
             if(this.selectedCards.length === 0) {
@@ -66,14 +64,20 @@ export class adminCourseController extends Controller {
 
     private getCompetencies() {
         let competencyId : number = 0;
-        let tableRows : TableRowCompetency[];
+        let tableRows : TableRowCompetency[] = [];
         let DB = new ApiService(API.DB);
         DB.setPath("areas");
         //getting the courses from DB
         DB.getParent((object : any) => {
             //TODO: fix deze shit
-            tableRows = object[0].competencies.map((mainResponse: any) => new TableRowCompetency(mainResponse, competencyId++));
-            this.tableCompetencies = new TableCompetencies(tableRows);
+            if (object.errorMessage == null) {
+                object.map((mainResponse: any) =>
+                mainResponse.competencies.map((mainResponse: any) => tableRows.push(new TableRowCompetency(mainResponse, competencyId++))));
+                this.tableCompetencies = new TableCompetencies(tableRows);
+            } else {
+                console.log("Something went wrong!");
+            }
+ 
         });
     }
 
@@ -94,8 +98,7 @@ export class adminCourseController extends Controller {
 
         //setting buttons
         buttonBack.setOnClick((e : any) => {
-            $("#cardsContainer").css("display", "");
-            $("#linkContainer").css("display", "none");
+            this.switchToMainView();
         });
 
         buttonBackCompetency.setOnClick((e : any) => {
@@ -169,12 +172,11 @@ export class adminCourseController extends Controller {
 
         buttonSaveCompetency.setOnClick((e : any) => {
             this.saveSelectedCompetency(this.selectedCards[cardCount]);
-            $("#competencyCard").empty();
-            $("#table3").empty();
+            
             let numberOfFailed : number = this.saveSelectedCourses();
-            $("#tableButtons").css("display", "");
-            $("#cardsContainer").css("display", "");
-            $("#linkContainer").css("display", "none");
+
+            this.switchToMainView();
+
             if (numberOfFailed > 0) {
                 window.alert(numberOfFailed + " have failed saving");
             } else {
@@ -188,14 +190,43 @@ export class adminCourseController extends Controller {
         $("#backButton").append(buttonBackCompetency.getView());
         $("#backButton").css("display", "none");
         $("#nextButton").append(buttonNextCompetency.getView());
+        
 
-        $("#linkContainer").append(buttonBack.getView());
+        //if only one card needs competency
+        if(this.selectedCards.length == 1) {
+            $("#saveButton").css("display", "");
+        } else {
+            $("#nextButton").css("display", "");
+        }
+
+
+
+        $("#returnButton").append(buttonBack.getView());
         componentHandler.upgradeDom();
 
 
         $("#tableButtons").css("display", "none");
         $("#cardsContainer").css("display", "none");
         $("#linkContainer").css("display", "block");
+
+    }
+
+    private switchToMainView() {
+        $("#backButton").empty();
+        $("#nextButton").empty();
+        $("#saveButton").empty();
+        $("#returnButton").empty();
+        $("#competencyCard").empty();
+        $("#table3").empty();
+
+        $("#tableButtons").css("display", "");
+        $("#cardsContainer").css("display", "");
+        $("#linkContainer").css("display", "none");
+        //clearing table
+        this.arraySelectedComptencies = [];
+        this.selectedCards = [];
+        this.tableRows = [];
+        $("#table2").empty();
 
     }
 
@@ -228,7 +259,6 @@ export class adminCourseController extends Controller {
                 "description" : this.selectedCards[i].getDescription(),
                 "image" : this.selectedCards[i].getPicture(),
                 "url" : this.selectedCards[i].getUrl(),
-                "competency_id" : this.arraySelectedComptencies[i]  
             };
 
             let DBOptions : any = {
@@ -243,7 +273,7 @@ export class adminCourseController extends Controller {
 
 
             let DB = new ApiService(API.DB);
-            DB.setPath("courses");
+            DB.setPath("areas/1/competencies/" + this.arraySelectedComptencies[i] + "/courses");
             DB.setOptions(DBOptions);
             DB.post(<T>(object : any) => {
                 //check if POST is succeeded
@@ -279,6 +309,7 @@ export class adminCourseController extends Controller {
                     if (this.selectedCards[j].getcardId().toString() == checkBoxes[i].getAttribute("value")) {
                         //remove the selectedcard from array
                         this.selectedCards.splice(j,1);
+                        this.tableRows.splice(j,1);
                         //remove the row
                         var tableRows = document.getElementById("table2").getElementsByTagName("li");
                         for(var l = 0; l < tableRows.length; l++) {
@@ -293,16 +324,16 @@ export class adminCourseController extends Controller {
         componentHandler.upgradeDom();
     }
 
-    private setUserMenuButton() {
-        //set navigation-button to acces userpage
-        let menuButton : Button = new Button("user");
-        menuButton.setOnClick((e : any) => {
-            window.location.href = "userCourses.html";
-        });
+    // private setUserMenuButton() {
+    //     //set navigation-button to acces userpage
+    //     let menuButton : Button = new Button("user");
+    //     menuButton.setOnClick((e : any) => {
+    //         window.location.href = "userCourses.html";
+    //     });
 
-        $("#menuButton").append(menuButton.getView());
+    //     $("#menuButton").append(menuButton.getView());
 
-    }
+    // }
 
     private setCourses() {
         //setting courses
@@ -312,7 +343,6 @@ export class adminCourseController extends Controller {
             let results = new Results(object);
             let cardId : number = 0;
             results.courses.forEach(element => {
-                let declineCourseButton : AdminButton = new AdminButton("decline");
                 let acceptCourseButton : AdminButton = new AdminButton("accept");
 
                 let card = new Card(cardId, element.title, element.url, undefined, element.image_480x270);
@@ -321,7 +351,7 @@ export class adminCourseController extends Controller {
                 acceptCourseButton = this.addCourseToList(acceptCourseButton, card);
                 $("#cardsContainer").append(card.getCardView());
                 componentHandler.upgradeDom();
-                $("#" + cardId).append(acceptCourseButton.getView(), declineCourseButton.getView());
+                $("#" + cardId).append(acceptCourseButton.getView());
                 componentHandler.upgradeDom();
                 cardId++;
             });
@@ -331,17 +361,16 @@ export class adminCourseController extends Controller {
     //add course to list for adding competency
     private addCourseToList(acceptCourseButton : AdminButton, card : Card) {
         let tableCard : any = {
-            "cardId" : card.getcardId(),
+            "courseId" : card.getcardId(),
             "title" : card.getTitle(),
         };
 
 
         acceptCourseButton.setOnClick((e: any) => {
-            let refreshButton : AdminButton = new AdminButton("refresh");
             let tableRow = new TableRowCard(tableCard, this.selectedCoursesId++);
             this.selectedCards.push(card);
             this.tableRows.push(tableRow);
-            let table = new TableCards(this.tableRows, refreshButton.getView());
+            let table = new TableCards(this.tableRows);
             $("#table2").empty();
             $("#table2").append(table.getTableView());
 
@@ -388,26 +417,37 @@ export class adminCourseController extends Controller {
     }
 
     //setting the refresh button for the selected courses table
-    private setRefreshButtonForSavedCourses() {
-        let refreshButton : AdminButton = new AdminButton("refresh");
-
+    private setSavedCoursesTable() {
+        let refreshButton : Button = new Button("refresh");
+        let tableRows : TableRowCard[];
+        let table = new TableCards(tableRows);
+        
         refreshButton.setOnClick((e : any) => {
             $("#table1").empty();
+            tableRows = [];
             let DB = new ApiService(API.DB);
-            DB.setPath("courses");
+            DB.setPath("areas");
             //getting the courses from DB
             DB.getParent((object : any) => {
                 //mapping all courses to tableRows
-                let tableRows : TableRowCard[];
-                tableRows = object.map((course : any) => new TableRowCard(course, this.savedCoursesId++));
-                let table = new TableCards(tableRows, refreshButton.getView());
-                $("#table1").append(table.getTableView());
+                let tempobject : any = {};    
+                //tableRows.push(new TableRowCard(mainResponse, this.savedCoursesId++))
+                if (object.errorMessage == null) {
+                    object.map((mainResponse: any) =>
+                    mainResponse.competencies.map((mainResponse: any) => 
+                    mainResponse.courses.map((mainResponse: any) => tableRows.push(new TableRowCard(mainResponse, this.savedCoursesId++)))));
+                    table = new TableCards(tableRows);
+                } else {
+                    console.log("Something went wrong!");
+                }
+
+                $("#table1").append(refreshButton.getView(), table.getTableView());
                 componentHandler.upgradeDom();
 
             });
         });
 
-        $("#selectedCardsTableHead").append(refreshButton.getView());
+        $("#table1").append(refreshButton.getView(), table.getTableView());
         componentHandler.upgradeDom();
     }
 }
