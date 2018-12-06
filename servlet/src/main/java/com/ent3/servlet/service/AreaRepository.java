@@ -3,7 +3,6 @@ package com.ent3.servlet.service;
 import java.util.List;
 
 import com.ent3.servlet.model.Area;
-import com.ent3.servlet.model.Competency;
 
 /**
  * AreaRepository
