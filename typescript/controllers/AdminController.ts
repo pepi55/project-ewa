@@ -9,6 +9,7 @@ import { TableRowCard } from "../components/TableRowCard";
 import { TableCards } from "../components/TableCards";
 import { TableCompetencies } from "../components/TableCompetencies";
 import { TableRowCompetency } from "../components/TableRowCompetency";
+import { Parent } from "../coursesAPIs/KAmodels/Parent";
 declare var componentHandler : any;
 
 export class adminCourseController extends Controller {
@@ -190,7 +191,7 @@ export class adminCourseController extends Controller {
         $("#backButton").append(buttonBackCompetency.getView());
         $("#backButton").css("display", "none");
         $("#nextButton").append(buttonNextCompetency.getView());
-        
+        $("#nextButton").css("display", "none");
 
         //if only one card needs competency
         if(this.selectedCards.length == 1) {
@@ -206,7 +207,7 @@ export class adminCourseController extends Controller {
 
 
         $("#tableButtons").css("display", "none");
-        $("#cardsContainer").css("display", "none");
+        $("#mainContainer").css("display", "none");
         $("#linkContainer").css("display", "block");
 
     }
@@ -220,7 +221,7 @@ export class adminCourseController extends Controller {
         $("#table3").empty();
 
         $("#tableButtons").css("display", "");
-        $("#cardsContainer").css("display", "");
+        $("#mainContainer").css("display", "");
         $("#linkContainer").css("display", "none");
         //clearing table
         this.arraySelectedComptencies = [];
@@ -336,16 +337,17 @@ export class adminCourseController extends Controller {
     // }
 
     private setCourses() {
-        //setting courses
+        let cardId : number = 0;
+        //setting courses from Udemy
         let Udemy = new ApiService(API.Udemy);
         Udemy.setQueryParameters(2,50,undefined,undefined,SUBCATS.entrepreneurship,PRICE.priceFree,undefined);
         Udemy.getParent(<T>(object : T) => {
             let results = new Results(object);
-            let cardId : number = 0;
+            
             results.courses.forEach(element => {
                 let acceptCourseButton : AdminButton = new AdminButton("accept");
 
-                let card = new Card(cardId, element.title, element.url, undefined, element.image_480x270);
+                let card = new Card(cardId, element.title, "https://www.udemy.com" + element.url, undefined, element.image_480x270);
                 //acceptCourseButton = this.setAddFunction(acceptCourseButton,card);
 
                 acceptCourseButton = this.addCourseToList(acceptCourseButton, card);
@@ -356,6 +358,30 @@ export class adminCourseController extends Controller {
                 cardId++;
             });
         });
+
+
+        //setting courses from KhanAcademy
+        let KA = new ApiService(API.KhanAcademy);
+        KA.setPath("entrepreneurship2");
+        KA.getParent(<T>(object : T) => {
+            let acceptCourseButton : AdminButton = new AdminButton("accept");
+            let parent = new Parent(object);
+
+            let card = new Card(cardId, parent.title, parent.ka_url, parent.description, parent.icon);
+
+            acceptCourseButton = this.addCourseToList(acceptCourseButton, card);
+            $("#cardsContainer").append(card.getCardView());
+            componentHandler.upgradeDom();
+            $("#" + cardId).append(acceptCourseButton.getView());
+            componentHandler.upgradeDom();
+            cardId++;
+            // let children : any = parent.children;
+            
+            // for (let index = 0; index < children.length; index++) {
+            //     console.log("the specific page: " + children[index].url);   
+            // }
+        });
+
     }
 
     //add course to list for adding competency
@@ -429,9 +455,7 @@ export class adminCourseController extends Controller {
             DB.setPath("areas");
             //getting the courses from DB
             DB.getParent((object : any) => {
-                //mapping all courses to tableRows
-                let tempobject : any = {};    
-                //tableRows.push(new TableRowCard(mainResponse, this.savedCoursesId++))
+                //mapping all courses to tableRows   
                 if (object.errorMessage == null) {
                     object.map((mainResponse: any) =>
                     mainResponse.competencies.map((mainResponse: any) => 
