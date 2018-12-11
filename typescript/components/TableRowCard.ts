@@ -16,9 +16,9 @@ export class TableRowCard {
             this.title = "no title for you!";
         }
 
-        const row : string = `<li class="mdl-list__item" id="${this.cardId}"><span class="mdl-list__item-primary-content">
+        const row : string = `<li class="mdl-list__item" id="tableId${this.cardId}"><span class="mdl-list__item-primary-content">
         ${this.title}</span><span class="mdl-list__item-secondary-action">
-        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-${this.elementCount}" value="${this.cardId}">
+        <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="list-checkbox-${this.elementCount}" value="tableId${this.cardId}">
         <input type="checkbox" id="list-checkbox-${this.elementCount}" class="mdl-checkbox__input" checked /></label></span></li>`;
 
         

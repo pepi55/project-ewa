@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!--getmdl-select-->   
+    <link rel="stylesheet" href="../assets/vendors/get-mdl-select/getmdl-select.min.css">
+    <script defer src="../assets/vendors/get-mdl-select/getmdl-select.min.js"></script>
     <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
     <script src="../assets/js/bundle.js"></script>
 </head>
@@ -65,17 +68,25 @@
         float: right;
         
     }
+
+    #backCardsButton {
+        float: left;
+    }
+
+    #nextCardsButton {
+        float: right;
+    }
 </style>
 
 <body>
     <!--<div class="mdl-layout-spacer"></div>-->
 
     <div class="container" id="menuButton">
-        <div class="mdl-grid" id="cardsContainer">
+        <div class="mdl-grid" id="mainContainer">
             <div class="mdl-cell mdl-cell--4-col" id="table1">
 
             </div>
-            <div class="mdl-cell mdl-cell--4-col"></div>
+            <div class="mdl-cell mdl-cell--4-col" id="filter"></div>
             <div id="selectedCardsContainer">
                 <div id="tableButtons"></div>
                 <div class="mdl-cell mdl-cell--4-col" id="table2">
@@ -83,6 +94,22 @@
                 </div>
                 
             </div>
+
+            <div class="mdl-grid mdl-cell mdl-cell--12-col" id="spinner">
+                <div class="mdl-layout-spacer"></div>
+                <!-- MDL Progress Bar with Indeterminate Progress -->
+                <div class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+                <div class="mdl-layout-spacer"></div>
+            </div>
+
+            <div class="mdl-grid mdl-cell mdl-cell--12-col" id="cardsContainer"></div>
+            
+            <div class="mdl-cell mdl-cell--12-col">
+                <div id="backCardsButton"></div>
+                <div class="mdl-layout-spacer"></div>
+                <div id="nextCardsButton"></div>
+            </div>
+            
         </div>
 
         <div class="mdl-grid">
