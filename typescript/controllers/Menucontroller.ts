@@ -24,6 +24,7 @@ export class MenuController extends Controller {
         $("#on-page")
         .append(logoutItem.getView())
         .append(profileItem.getView());
+        
         $("#on-bar")
         .append(menuItem.getView())
         .append(coursesItem.getView())

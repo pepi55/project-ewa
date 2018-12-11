@@ -13,3 +13,15 @@ export class Question{
     
     
 }
+/*
+export class Question{
+    public question: string;
+    public score int: int;
+
+    public constructor(question: string, score: int){
+        this.question = question;
+        this.score = score;
+        
+    }
+}
+ */
