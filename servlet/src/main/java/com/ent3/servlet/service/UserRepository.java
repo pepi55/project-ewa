@@ -55,4 +55,11 @@ public interface UserRepository {
      * @param user the user to delete
      */
     public void deleteUser(User user);
+
+    /**
+     * Approve new teacher / admin
+     * 
+     * @param approve
+     */
+    public User setApproved(User user, boolean approve);
 }

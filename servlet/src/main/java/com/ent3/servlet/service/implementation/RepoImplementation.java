@@ -277,4 +277,19 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
 
         em.close();
     }
+
+    @Override
+    public User setApproved(User user, boolean approve) {
+        EntityManager em = getEntityManager();
+
+        user.setApproved(approve);
+
+        em.getTransaction().begin();
+        em.persist(user);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return user;
+    }
 }
