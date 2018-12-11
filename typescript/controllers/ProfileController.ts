@@ -30,7 +30,6 @@ export class ProfileController extends Controller {
         });
 
         console.log(user)
-        $("#profile_id").html(user.getId());
         $("#profile_email").html(user.getEmail());
         $("#profile_username").html(user.getUsername());
         $("#profile_firstname").html(user.getFirstName());

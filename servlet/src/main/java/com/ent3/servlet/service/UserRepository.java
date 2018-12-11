@@ -23,7 +23,7 @@ public interface UserRepository {
      * @param id ID of user to get.
      * @return The user.
      */
-    public User getUserById(int id);
+    public User getUserById(String id);
 
     /**
      * Get a list of users with specific name.

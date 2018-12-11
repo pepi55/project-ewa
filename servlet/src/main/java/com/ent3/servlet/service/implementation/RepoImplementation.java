@@ -60,7 +60,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(String id) {
         EntityManager em = getEntityManager();
 
         User result = em.find(User.class, id);

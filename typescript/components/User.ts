@@ -1,5 +1,4 @@
 export class User {
-    private id: number;
     private firstName: string;
     private lastName: string;
     private username: string;
@@ -14,14 +13,6 @@ export class User {
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-
-    public getId(){
-        return this.id;
-    }
-
-    public setId(id: number){
-        this.id = id;
     }
 
     public getEmail(){
