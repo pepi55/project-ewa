@@ -3,6 +3,8 @@ import { LoginController } from "./controllers/LoginController";
 import { adminCourseController } from "./controllers/AdminController";
 import { userCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
+import { TestController } from "./controllers/testController";
+
 
 
 export class App {
@@ -20,6 +22,8 @@ export class App {
             let controller : adminCourseController = new adminCourseController();
         } else if (type == "userCourses") {
             let controller : userCourseController = new userCourseController();
+        } else if (type == "test") {
+            let controller : TestController = new TestController();
         }
     }
 }

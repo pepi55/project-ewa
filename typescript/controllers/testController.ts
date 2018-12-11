@@ -8,20 +8,22 @@ export class TestController extends Controller {
     
     protected setup(): void {
         var self = this;
-        
+        let saveButton = new Button("Save");
+        saveButton.setOnClick((e: any) => {
+            window.location.href = "/views/results.html";
+        })
+        $("#save-button").append(saveButton.getView());
 
         this.areas = new QuestionHandler(function(){
             let retrievedAreas = self.areas.getQuestions()
             let question: questions = new questions(retrievedAreas);
 
-            let saveButton = new Button("Save");
+            
 
-        saveButton.setOnClick((e: any) => {
-            window.location.href = "/views/results.html";
-        })
+            
 
             $("#testid").html(question.getView());
-            $("#save-button").append(saveButton.getView());
+            
 
         });
     }    
