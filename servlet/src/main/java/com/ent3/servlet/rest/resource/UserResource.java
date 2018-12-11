@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -86,5 +87,11 @@ public class UserResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response addUser(User user) {
         return Response.status(Response.Status.CREATED).entity(service.addUser(user)).build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteOrderById(User user) {
+        service.deleteUser(user);
     }
 }

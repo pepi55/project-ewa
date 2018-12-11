@@ -48,4 +48,11 @@ public interface UserRepository {
      * @return The added user.
      */
     public User addUser(User user);
+
+    /**
+     * Deletes a user.
+     * 
+     * @param user the user to delete
+     */
+    public void deleteUser(User user);
 }
