@@ -11,6 +11,8 @@ export class MenuController extends Controller {
         let coursesItem: MenuItem = new MenuItem("Courses");
         let adminItem: MenuItem = new MenuItem("Admin");
         let testItem: MenuItem = new MenuItem("Test");
+        let resultItem: MenuItem = new MenuItem("Results");
+
         logoutItem.setOnClick((e: any) => {
             LoginService.getInstance().logout();
             window.location.href = "/servlet/index.html";
@@ -20,6 +22,8 @@ export class MenuController extends Controller {
         coursesItem.setOnClick((e: any) => {window.location.href = "/servlet/views/userCourses.html";})
         adminItem.setOnClick((e: any) => {window.location.href = "/servlet/views/adminCourses.html";})
         testItem.setOnClick((e: any) => {window.location.href = "/servlet/views/test.html"})
+        resultItem.setOnClick((e: any) => {window.location.href = "/servlet/views/result.html"})
+        
 
         $("#on-page")
         .append(logoutItem.getView())
@@ -29,6 +33,7 @@ export class MenuController extends Controller {
         .append(menuItem.getView())
         .append(coursesItem.getView())
         .append(testItem.getView())
+        .append(resultItem.getView())
         .append(adminItem.getView())
         .append(logoutItem.getView())
         .append(profileItem.getView());

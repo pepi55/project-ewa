@@ -9,10 +9,13 @@ export class questions {
         this.questions = questions;
     }
 
+
     public getView(): string {
-
+        console.log(this.questions);
+        console.log(this.questions.length);
         var div = $("<div>");
-
+        
+       
         for (var i = 0; i < this.questions.length; i++) {
             var table = $("<table>");
             var question: Question = this.questions[i];

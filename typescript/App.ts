@@ -27,7 +27,7 @@ export class App {
             let controller : TestController = new TestController();
         } else if (type == "result") {
             let controller : ResultController = new ResultController();
-        } 
+        }  
     }
 }
 

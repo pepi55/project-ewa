@@ -1,5 +1,6 @@
 import { Question } from "./Question"
 
+
 export class QuestionHandler {
     private questions: Array<Question>;
 
@@ -14,7 +15,7 @@ export class QuestionHandler {
     }
    
     public getQuestions(){
-        return this.questions;
+        return this.questions[0]["areas"];
     }
 }
 
