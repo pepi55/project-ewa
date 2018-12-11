@@ -23,7 +23,7 @@ public interface UserRepository {
      * @param id ID of user to get.
      * @return The user.
      */
-    public User getUserById(int id);
+    public User getUserById(String id);
 
     /**
      * Get a list of users with specific name.
@@ -48,4 +48,11 @@ public interface UserRepository {
      * @return The added user.
      */
     public User addUser(User user);
+
+    /**
+     * Deletes a user.
+     * 
+     * @param user the user to delete
+     */
+    public void deleteUser(User user);
 }

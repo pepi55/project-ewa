@@ -60,7 +60,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public User getUserById(int id) {
+    public User getUserById(String id) {
         EntityManager em = getEntityManager();
 
         User result = em.find(User.class, id);
@@ -267,5 +267,14 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         em.close();
 
         return question;
+    }
+
+    @Override
+    public void deleteUser(User user) {
+        EntityManager em = getEntityManager();
+
+        em.remove(user);
+
+        em.close();
     }
 }

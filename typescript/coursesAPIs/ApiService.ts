@@ -84,4 +84,10 @@ export class ApiService {
             callBack(response);
         });
     }
+
+    public delete(callBack: <T>(parent: T) => any) {
+        request.delete(this.URLGET + this.path, this.OPTIONS, (error : any, response : any, body : any) => {
+            callBack(response);
+        });
+    }
 }
