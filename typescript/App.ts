@@ -4,6 +4,7 @@ import { adminCourseController } from "./controllers/AdminController";
 import { userCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
 import { TestController } from "./controllers/testController";
+import { ResultController } from "./controllers/ResultController";
 
 
 
@@ -24,7 +25,9 @@ export class App {
             let controller : userCourseController = new userCourseController();
         } else if (type == "test") {
             let controller : TestController = new TestController();
-        }
+        } else if (type == "result") {
+            let controller : ResultController = new ResultController();
+        } 
     }
 }
 
