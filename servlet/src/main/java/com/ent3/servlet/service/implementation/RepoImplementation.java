@@ -189,16 +189,12 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     public List<Competency> getAllAreaCompetencies(int id) {
         EntityManager em = getEntityManager();
 
-<<<<<<< Updated upstream
         Area area = em.find(Area.class, id);
         List<Competency> result = null;
 
         if (area != null) {
             result = area.getCompetencies();
         }
-=======
-        List<Question> result = em.createQuery("SELECT q FROM Question q").getResultList();
->>>>>>> Stashed changes
 
         em.close();
 
