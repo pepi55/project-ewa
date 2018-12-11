@@ -16,7 +16,7 @@ export class LoginService{
         if (id){
             let userdata = JSON.parse(id);
             this.user = new User(userdata.firstName,userdata.lastName,userdata.username,userdata.password,userdata.email,userdata.role);
-            this.user.setId(userdata.id);
+            //this.user.setId(userdata.id);
         }
     }
 
@@ -31,7 +31,7 @@ export class LoginService{
 
     public getUserId(): number{
         if (this.isLoggedIn()) {
-            return this.user.getId();
+            //return this.user.getId();
         }
         return null;
     }
