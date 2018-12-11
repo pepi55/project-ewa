@@ -14,23 +14,19 @@ export class AdminButton {
         let template : string = "";
 
         if (this.type == "accept") {
-            template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >
-            <i class="material-icons">add</i>
+            template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" >
+            <i class="material-icons">done</i>
             </button>`;
         }
 
         if (this.type == "decline") {
-            template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" >
+            template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" >
             <i class="material-icons">clear</i>
             </button>`;
         }
 
         if (this.type == "refresh") {
-            template = `<th>                  <!-- Colored icon button -->
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored">
-              <i class="material-icons">refresh</i>
-            </button>
-              </th>`
+            template = `<!-- Colored icon button --><button class="mdl-button mdl-js-button mdl-button--icon mdl-button--colored"><i class="material-icons">refresh</i></button>`;
         }
 
         return $(template)

@@ -64,7 +64,8 @@ export class ApiService {
 
     public getParent(callBack : <T> (parent : T) => any) : void {
         request.get(this.URLGET + this.path + this.queryParam, this.OPTIONS, (error : any, response : any, body : any) => {
-            console.log(error);
+            //console.log(body);
+            //console.log(error);
             callBack(response.body);
         });
      }
