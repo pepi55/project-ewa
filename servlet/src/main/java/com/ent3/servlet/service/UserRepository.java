@@ -62,4 +62,6 @@ public interface UserRepository {
      * @param approve
      */
     public User setApproved(User user, boolean approve);
+
+    public List<User> getApprovedUsers(boolean approved);
 }

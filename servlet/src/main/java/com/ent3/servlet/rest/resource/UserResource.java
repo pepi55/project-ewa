@@ -37,10 +37,10 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname) {
+    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("false") @QueryParam("approve") Boolean approve) {
         List<User> result;
 
-        if (firstname.isEmpty() && lastname.isEmpty()) {
+        if (firstname.isEmpty() && lastname.isEmpty() && approve == false) {
             result = service.getAllUsers();
         } else {
             result = new ArrayList<>();
@@ -51,6 +51,10 @@ public class UserResource {
 
             if (!lastname.isEmpty()) {
                 result.addAll(service.getUsersByLastName(lastname));
+            }
+
+            if (approve){
+                result.addAll(service.getApprovedUsers(approve));
             }
         }
 
@@ -64,12 +68,16 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{userId}")
-    public Response getUserById(@PathParam("userId") String id) {
+    public Response getUserById(@PathParam("userId") String id, @DefaultValue("false") @QueryParam("approve") boolean approve) {
         User result = service.getUserById(id);
 
         if (result == null) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(new ClientError("User with id: " + id + " not found")).build();
+        }
+
+        if (approve) {
+            service.setApproved(result, approve);
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
@@ -96,6 +104,7 @@ public class UserResource {
         service.deleteUser(user);
     }
 
+    /*
     @PUT
     @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
@@ -107,4 +116,5 @@ public class UserResource {
 
         return Response.status(Response.Status.OK).entity(service.setApproved(user, approve)).build();
     }
+    */
 }

@@ -285,11 +285,25 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         user.setApproved(approve);
 
         em.getTransaction().begin();
-        em.persist(user);
+        em.merge(user);
         em.getTransaction().commit();
 
         em.close();
 
         return user;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> getApprovedUsers(boolean approved) {
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.approved = :approved");
+        query.setParameter("approved", approved);
+        List<User> result = query.getResultList();
+
+        em.close();
+
+        return result;
     }
 }

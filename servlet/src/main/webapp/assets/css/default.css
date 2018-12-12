@@ -23,3 +23,36 @@ body{
     cursor: pointer;
 }
 
+.profile-info {
+    margin: auto;
+}
+
+.middlebar {
+    background-color: rgba(0, 0, 0, .87);
+    height: 260px;
+    width: 2px;
+    display: inline-block;
+}
+
+.card-wide.mdl-card {
+    width: 512px;
+}
+
+.card-wide>.mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url('https://blog.visme.co/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-013.jpg') center / cover;
+}
+
+.card-wide>.mdl-card__menu {
+    color: #fff;
+}
+
+.list-item {
+    width: 180px !important;
+    display: inline-block;
+}
+
+.list-item {
+    width: 300px;
+}
