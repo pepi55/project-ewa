@@ -37,10 +37,10 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("false") @QueryParam("approve") Boolean approve) {
+    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("") @QueryParam("approve") String approve) {
         List<User> result;
 
-        if (firstname.isEmpty() && lastname.isEmpty() && approve == false) {
+        if (firstname.isEmpty() && lastname.isEmpty() && approve.isEmpty()) {
             result = service.getAllUsers();
         } else {
             result = new ArrayList<>();
@@ -53,8 +53,10 @@ public class UserResource {
                 result.addAll(service.getUsersByLastName(lastname));
             }
 
-            if (approve){
-                result.addAll(service.getApprovedUsers(approve));
+            if (approve.equals("approved")){
+                result.addAll(service.getApprovedUsers(true));
+            } else if(approve.equals(toString("not_approved"))){
+                result.addAll(service.getApprovedUsers(false));
             }
         }
 
