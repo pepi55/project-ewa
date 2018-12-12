@@ -60,6 +60,6 @@ DROP TABLE IF EXISTS user;
 
 Initializing coursespage(to be able to add courses):
 
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/ -ContentType "application/json" -Method POST -Body '{"name": "TestArea"}'
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "teaching"}'
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "pitching"}'
+ 1. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/ -ContentType "application/json" -Method POST -Body '{"name": "TestArea"}'`
+ 2. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "teaching"}'`
+ 3. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "pitching"}'`

@@ -251,24 +251,26 @@ export class AdminCourseController extends Controller {
     }
 
     //KAN HANDIG ZIJN BIJ UPDATEN VAN COURSES
-    // private setSelectedRadioButton(cardCount : number) {
-    //     var radioButtons = document.getElementById("table3").getElementsByTagName("label");
-    //     //loop through checkboxes
-    //     console.log("cardCount" + cardCount);
-    //     console.log("arrayselectedComptencies" + this.arraySelectedComptencies);
-    //     for(var i = 0; i < radioButtons.length; i++) {
-    //         if(this.arraySelectedComptencies[cardCount] != null) {
-    //             console.log("gevonden in de lijst!");
-    //             if(radioButtons[i].getAttribute("value") === this.arraySelectedComptencies[cardCount]) {
-    //                 console.log("set checked");
-    //                 radioButtons[i].classList.add("is-checked");
-    //                 $("#table3").empty();
-    //                 componentHandler.upgradeDom();
+    /*
+    private setSelectedRadioButton(cardCount : number) {
+        var radioButtons = document.getElementById("table3").getElementsByTagName("label");
+        //loop through checkboxes
+        console.log("cardCount" + cardCount);
+        console.log("arrayselectedComptencies" + this.arraySelectedComptencies);
+        for(var i = 0; i < radioButtons.length; i++) {
+            if(this.arraySelectedComptencies[cardCount] != null) {
+                console.log("gevonden in de lijst!");
+                if(radioButtons[i].getAttribute("value") === this.arraySelectedComptencies[cardCount]) {
+                    console.log("set checked");
+                    radioButtons[i].classList.add("is-checked");
+                    $("#table3").empty();
+                    componentHandler.upgradeDom();
 
-    //             }
-    //         }
-    //     }
-    // }
+                }
+            }
+        }
+    }
+    */
 
     private saveSelectedCourses() {
         let failed : number = 0;
@@ -286,10 +288,7 @@ export class AdminCourseController extends Controller {
                     "Content-type": "application/json"
                 },
                 body: JSON.stringify(data),
-    
             };
-    
-
 
             let DB = new ApiService(API.DB);
             DB.setPath("areas/1/competencies/" + this.arraySelectedComptencies[i] + "/courses");
@@ -300,8 +299,6 @@ export class AdminCourseController extends Controller {
                     failed++;
                 }
             });
-            
-      
         }
         return failed;
     }
@@ -313,7 +310,6 @@ export class AdminCourseController extends Controller {
             if(radioButtons[i].classList.contains("is-checked")) {
                 //console.log("added competency");
                 this.arraySelectedComptencies.push(radioButtons[i].getAttribute("value"))
-                
             }
         }
     }
@@ -343,16 +339,17 @@ export class AdminCourseController extends Controller {
         componentHandler.upgradeDom();
     }
 
-    // private setUserMenuButton() {
-    //     //set navigation-button to acces userpage
-    //     let menuButton : Button = new Button("user");
-    //     menuButton.setOnClick((e : any) => {
-    //         window.location.href = "userCourses.html";
-    //     });
+    /*
+    private setUserMenuButton() {
+        //set navigation-button to acces userpage
+        let menuButton : Button = new Button("user");
+        menuButton.setOnClick((e : any) => {
+            window.location.href = "userCourses.html";
+        });
 
-    //     $("#menuButton").append(menuButton.getView());
-
-    // }
+        $("#menuButton").append(menuButton.getView());
+    }
+    */
 
     private setCourses() {
         $("#cardsContainer").empty();
@@ -360,7 +357,7 @@ export class AdminCourseController extends Controller {
         let cardId : number = 0;
 
         //setting courses from Udemy
-        let Udemy = new ApiService(API.Udemy);        
+        let Udemy = new ApiService(API.Udemy);
 
         Udemy.setQueryParameters(this.enumParameters.page,this.enumParameters.pageSize,this.enumParameters.search,
             this.enumParameters.category,this.enumParameters.subCategory,this.enumParameters.price,this.enumParameters.ordering);
@@ -380,8 +377,6 @@ export class AdminCourseController extends Controller {
                 $("#backCardsButton").css("display", "none");
             }
 
-            
-
             results.courses.forEach(element => {
                 let acceptCourseButton : AdminButton = new AdminButton("accept");
 
@@ -396,7 +391,6 @@ export class AdminCourseController extends Controller {
                 cardId++;
             });
         });
-
 
         //setting courses from KhanAcademy
         let KA = new ApiService(API.KhanAcademy);
@@ -461,7 +455,6 @@ export class AdminCourseController extends Controller {
     }
 
     private setParameters(resetPage : boolean) {
-
             if (parseInt(this.tempParameters[1]) > 0) {
                 this.enumParameters.pageSize = parseInt(this.tempParameters[1]);
             } else if (this.tempParameters[1] === "") {
