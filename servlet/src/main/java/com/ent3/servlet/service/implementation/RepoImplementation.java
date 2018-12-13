@@ -273,7 +273,9 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     public void deleteUser(User user) {
         EntityManager em = getEntityManager();
 
-        em.remove(user);
+        em.getTransaction().begin();
+        em.remove(em.contains(user) ? user : em.merge(user));
+        em.getTransaction().commit();
 
         em.close();
     }

@@ -2,7 +2,7 @@ import { Controller } from "./Controller";
 import { MenuItem } from "../components/MenuItem";
 import { LoginService } from "../components/LoginService";
 import { User } from "../components/User";
-import { UserCard } from "../components/usercard";
+import { UserCard } from "../components/UserCard";
 import { Button } from "../components/button/Button";
 declare var componentHandler: any;
 
@@ -39,7 +39,7 @@ export class MenuController extends Controller {
         } else if (LoginService.getInstance().getUser().getRole() == 2) {
             console.log("in admin")
             let users: Array<User> = new Array();
-            let url = "http://127.0.0.1:8080/servlet/services/rest/users?approve=false";
+            let url = "http://127.0.0.1:8080/servlet/services/rest/users?approve=not_approved";
             let promise = fetch(url);
             promise.then(function (result) {
                 return result.json();
@@ -49,7 +49,7 @@ export class MenuController extends Controller {
                     $("#admin_approve").append(new UserCard(newuser).getView());
                     let acceptButton = new Button("Accept");
                     acceptButton.setOnClick((e: any) => {
-                        let url = "http://localhost:8080/servlet/services/rest/users/"+user["username"]+"?approve=true";
+                        let url = "http://localhost:8080/servlet/services/rest/users/"+user["username"]+"?approve=not_approved";
                         let promise = fetch(url);
                         promise.then(function (result) {
                             return result.json();

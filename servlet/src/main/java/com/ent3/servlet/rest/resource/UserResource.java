@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.rest.model.ClientError;
+import com.ent3.servlet.rest.model.ClientMessage;
 import com.ent3.servlet.service.UserRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
 
@@ -37,10 +38,10 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("false") @QueryParam("approve") Boolean approve) {
+    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("") @QueryParam("approve") String approve) {
         List<User> result;
 
-        if (firstname.isEmpty() && lastname.isEmpty() && approve == false) {
+        if (firstname.isEmpty() && lastname.isEmpty() && approve.isEmpty()) {
             result = service.getAllUsers();
         } else {
             result = new ArrayList<>();
@@ -53,8 +54,10 @@ public class UserResource {
                 result.addAll(service.getUsersByLastName(lastname));
             }
 
-            if (approve){
-                result.addAll(service.getApprovedUsers(approve));
+            if (approve.equals("approved")){
+                result.addAll(service.getApprovedUsers(true));
+            } else if(approve.equals(toString("not_approved"))){
+                result.addAll(service.getApprovedUsers(false));
             }
         }
 
@@ -72,8 +75,7 @@ public class UserResource {
         User result = service.getUserById(id);
 
         if (result == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(new ClientError("User with id: " + id + " not found")).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
         }
 
         if (approve) {
@@ -81,6 +83,22 @@ public class UserResource {
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
+    }
+
+    @DELETE
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{userId}")
+    public Response deleteUserById(@PathParam("userId") String id) {
+        User result = service.getUserById(id);
+
+        if (result == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
+        }
+
+        service.deleteUser(result);
+
+        return Response.status(Response.Status.OK).entity(new ClientMessage("User with ID: " + id + " deleted")).build();
     }
 
     /**
@@ -97,24 +115,4 @@ public class UserResource {
     public Response addUser(User user) {
         return Response.status(Response.Status.CREATED).entity(service.addUser(user)).build();
     }
-
-    @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void deleteOrderById(User user) {
-        service.deleteUser(user);
-    }
-
-    /*
-    @PUT
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
-    @Path("/{id}")
-    public Response setApprove(@PathParam("id") String id, @DefaultValue("false") @QueryParam("approve") boolean approve) {
-        User user = service.getUserById(id);
-
-        System.out.println(approve);
-
-        return Response.status(Response.Status.OK).entity(service.setApproved(user, approve)).build();
-    }
-    */
 }
