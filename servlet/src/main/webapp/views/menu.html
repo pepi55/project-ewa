@@ -56,10 +56,6 @@
             width: 180px !important;
             display: inline-block;
         }
-
-        .list-item {
-            width: 300px;
-        }
     </style>
 </head>
 
@@ -82,14 +78,19 @@
         </div>
     </div>
     <main class="mdl-layout__content">
-        <div id="admin_approve">
+        <div class="mdl-grid portfolio-max-width" id="admin_approve" style="margin-top: 30px">
 
         </div>
     </main>
 </body>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <script>
     window.onload = function (e) {
         app("main");
+    }
+
+    function removeItem(item){
+        $("newUser"+item).remove();
     }
 </script>
 

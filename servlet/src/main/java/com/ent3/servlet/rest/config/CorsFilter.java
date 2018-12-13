@@ -26,7 +26,7 @@ public class CorsFilter implements ContainerRequestFilter, ContainerResponseFilt
         if (isPreFlightRequest(requestContext)) {
             responseContext.getHeaders().add("Access-Control-Allow-Credentials", "true");
             // Additional options include: PUT, DELETE, OPTIONS, HEAD
-            responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST");
+            responseContext.getHeaders().add("Access-Control-Allow-Methods", "GET, POST, DELETE");
             responseContext.getHeaders().add("Access-Control-Allow-Headers", requestContext.getHeaderString("Access-Control-Request-Headers"));
         }
 

@@ -4,6 +4,8 @@ import { LoginService } from "../components/LoginService";
 import { User } from "../components/User";
 import { UserCard } from "../components/UserCard";
 import { Button } from "../components/button/Button";
+import { ApiService } from "../coursesAPIs/ApiService";
+import { API } from "../coursesAPIs/EnumRepo";
 declare var componentHandler: any;
 
 export class MenuController extends Controller {
@@ -17,7 +19,6 @@ export class MenuController extends Controller {
 
         logoutItem.setOnClick((e: any) => {
             LoginService.getInstance().logout();
-            window.location.href = "/servlet/index.html";
         })
         profileItem.setOnClick((e: any) => { window.location.href = "/servlet/views/profile.html"; })
         menuItem.setOnClick((e: any) => { window.location.href = "/servlet/views/menu.html"; })
@@ -44,29 +45,47 @@ export class MenuController extends Controller {
             promise.then(function (result) {
                 return result.json();
             }).then(function (json: any) {
+                let i = 0;
                 for (let user of json) {
                     let newuser = new User(user["email"], user["firstName"], user["lastName"], user["username"], user["password"], user["role"]);
-                    $("#admin_approve").append(new UserCard(newuser).getView());
+                    $("#admin_approve").append(new UserCard(newuser, i).getView());
+                    componentHandler.upgradeDom();
                     let acceptButton = new Button("Accept");
                     acceptButton.setOnClick((e: any) => {
-                        let url = "http://localhost:8080/servlet/services/rest/users/"+user["username"]+"?approve=not_approved";
+                        let url = "http://localhost:8080/servlet/services/rest/users/" + user["username"] + "?approve=not_approved";
                         let promise = fetch(url);
                         promise.then(function (result) {
                             return result.json();
                         }).then(function (json: any) {
-                            for (let user of json){
-                                if (user["approved"] == "true"){
+                            for (let user of json) {
+                                if (user["approved"] == "true") {
                                     window.alert("Hallo?");
                                 }
                             }
                         }.bind(this))
                     })
                     let denyButton = new Button("Deny");
-                    denyButton.setOnClick((e: any) => { console.log("deny") })
+                    denyButton.setOnClick((e: any) => {
+                        let DB = new ApiService(API.DB);
+                        DB.setPath("users/" + user["username"]);
+                        DB.delete(<T>(object: any) => {
+                            console.log(object);
+                            if (object.statusCode == 200) {
+                                console.log("denied")
+                                $("#newUser" + i).remove();
+                                console.log("removed #newUser" + i)
+                                componentHandler.upgradeDom();
 
-                    $("#button_area").append(acceptButton.getView());
-                    $("#button_area").append('<div style="width:20px; display: inline-block"></div>');
-                    $("#button_area").append(denyButton.getView());
+                                // Ghetto fix
+                                location.reload();
+                            }
+                        })
+                    })
+
+                    $("#button_area" + i).append(acceptButton.getView())
+                        .append('<div style="width:20px; display: inline-block"></div>')
+                        .append(denyButton.getView());
+                    i++;
                 }
             });
             componentHandler.upgradeDom();

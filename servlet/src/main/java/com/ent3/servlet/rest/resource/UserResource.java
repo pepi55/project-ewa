@@ -56,7 +56,7 @@ public class UserResource {
 
             if (approve.equals("approved")){
                 result.addAll(service.getApprovedUsers(true));
-            } else if(approve.equals(toString("not_approved"))){
+            } else if(approve.equals("not_approved")){
                 result.addAll(service.getApprovedUsers(false));
             }
         }
@@ -86,7 +86,6 @@ public class UserResource {
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{userId}")
     public Response deleteUserById(@PathParam("userId") String id) {
