@@ -54,9 +54,9 @@ public class UserResource {
                 result.addAll(service.getUsersByLastName(lastname));
             }
 
-            if (approve.equals("approved")){
+            if (approve.trim().equals("approved")){
                 result.addAll(service.getApprovedUsers(true));
-            } else if(approve.equals("not_approved")){
+            } else if(approve.trim().equals("not_approved")){
                 result.addAll(service.getApprovedUsers(false));
             }
         }

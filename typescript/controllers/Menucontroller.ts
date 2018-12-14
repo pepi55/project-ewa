@@ -52,14 +52,20 @@ export class MenuController extends Controller {
                     componentHandler.upgradeDom();
                     let acceptButton = new Button("Accept");
                     acceptButton.setOnClick((e: any) => {
-                        let url = "http://localhost:8080/servlet/services/rest/users/" + user["username"] + "?approve=not_approved";
+                        let url = "http://localhost:8080/servlet/services/rest/users/" + user["username"] + "?approve=true";
                         let promise = fetch(url);
                         promise.then(function (result) {
                             return result.json();
                         }).then(function (json: any) {
                             for (let user of json) {
-                                if (user["approved"] == "true") {
-                                    window.alert("Hallo?");
+                                if (user["approved"] == true) {
+                                    window.alert("approved?");
+                                    $("#newUser" + i).remove();
+                                    console.log("removed #newUser" + i)
+                                    componentHandler.upgradeDom();
+
+                                    // Ghetto fix
+                                    location.reload();
                                 }
                             }
                         }.bind(this))
