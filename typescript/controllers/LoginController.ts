@@ -5,11 +5,9 @@ import { UserHandler } from "../components/UserHandler";
 import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
 import { LoginService } from "../components/LoginService";
-import { ObjectInserter } from "../components/objectInserter";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
-    private objectInserter: ObjectInserter = new ObjectInserter();
 
     protected setup(): void {
         $.get(this.pathToViews + "login.html").done(function (data: any) {
