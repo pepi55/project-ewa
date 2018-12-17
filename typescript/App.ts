@@ -1,5 +1,5 @@
 import { MenuController } from "./controllers/Menucontroller";
-import { LoginController } from "./controllers/Logincontroller";
+import { LoginController } from "./controllers/LoginController";
 import { AdminCourseController } from "./controllers/AdminController";
 import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
