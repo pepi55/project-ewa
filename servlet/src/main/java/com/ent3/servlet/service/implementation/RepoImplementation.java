@@ -103,6 +103,9 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();
+        if (user.getRole() == 0){
+            user.setApproved(true);
+        }
         em.persist(user);
         em.getTransaction().commit();
 
