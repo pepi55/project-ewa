@@ -39,7 +39,7 @@ public class User implements Serializable {
         this.password = password;
         this.email = email;
         this.role = role;
-        if (role == 0){
+        if (role == 0) {
             this.approved = true;
         } else {
             this.approved = false;
@@ -91,14 +91,22 @@ public class User implements Serializable {
     }
 
     public void setRole(int role) {
+        if (this.role == 0) {
+            if (role == 1 || role == 2) {
+                this.approved = false;
+            }
+        }
         this.role = role;
+        if (role == 0) {
+            this.approved = true;
+        }
     }
 
     public boolean getApproved() {
         return this.approved;
     }
 
-    public void setApproved(boolean approved){
+    public void setApproved(boolean approved) {
         this.approved = approved;
     }
 }
