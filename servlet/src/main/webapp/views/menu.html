@@ -1,32 +1,64 @@
 <html class="mdl-js">
 
-    <head>
-        <!-- Link to the favicon is the current running server -->
-        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
-    
-        <title>Menu</title>
-    
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-        <script defer="" src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-    
-        <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
-        <!-- <script src="/assets/vendors/popper-js/popper.min.js"></script> -->
-        <!-- <script src="/assets/vendors/almond/almond.js"></script> -->
-    
-        <link href="../assets/css/default.css" rel="stylesheet">
-    
-        <script src="../assets/js/bundle.js"></script>
-        <style>
-            .layout-transparent {
-                background: url('https://i.imgur.com/jVmP8KW.jpg') center / cover;
-            }
-            .layout-transparent .mdl-layout__header,
-            .layout-transparent .mdl-layout__drawer-button {
-                color: white;
-            }
-        </style>
-    </head>
+<head>
+    <!-- Link to the favicon is the current running server -->
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+
+    <title>Menu</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer="" src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+
+    <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <!-- <script src="/assets/vendors/popper-js/popper.min.js"></script> -->
+    <!-- <script src="/assets/vendors/almond/almond.js"></script> -->
+
+    <link href="../assets/css/default.css" rel="stylesheet">
+
+    <script src="../assets/js/bundle.js"></script>
+    <style>
+        .layout-transparent {
+            background: url('https://i.imgur.com/jVmP8KW.jpg') center / cover;
+        }
+
+        .layout-transparent .mdl-layout__header,
+        .layout-transparent .mdl-layout__drawer-button {
+            color: white;
+        }
+
+        .profile-info {
+            margin: auto;
+        }
+
+        .middlebar {
+            background-color: rgba(0, 0, 0, .87);
+            height: 260px;
+            width: 2px;
+            display: inline-block;
+        }
+
+        .card-wide.mdl-card {
+            width: 240px;
+        }
+
+        .card-wide>.mdl-card__title {
+            color: #fff;
+            height: 65px;
+            background: url('https://blog.visme.co/wp-content/uploads/2017/07/50-Beautiful-and-Minimalist-Presentation-Backgrounds-013.jpg') center / cover;
+        }
+
+        .card-wide>.mdl-card__menu {
+            color: #fff;
+        }
+
+        .list-item {
+            width: 180px !important;
+            display: inline-block;
+        }
+    </style>
+</head>
+
 <body>
     <div class="layout-transparent mdl-layout mdl-js-layout">
         <header class="mdl-layout__header mdl-layout__header--transparent">
@@ -46,11 +78,19 @@
         </div>
     </div>
     <main class="mdl-layout__content">
+        <div class="mdl-grid portfolio-max-width" id="admin_approve" style="margin-top: 30px">
+
+        </div>
     </main>
 </body>
+<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
 <script>
-    window.onload = function(e){
-      app("main");
+    window.onload = function (e) {
+        app("main");
+    }
+
+    function removeItem(item){
+        $("newUser"+item).remove();
     }
 </script>
 

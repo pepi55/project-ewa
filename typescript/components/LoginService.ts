@@ -46,6 +46,7 @@ export class LoginService{
     public logout(){
         if (this.isLoggedIn()) {
             localStorage.clear();
+            window.location.href = "/servlet/index.html";
         }
     }
 

@@ -103,6 +103,9 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();
+        if (user.getRole() == 0){
+            user.setApproved(true);
+        }
         em.persist(user);
         em.getTransaction().commit();
 
@@ -278,5 +281,34 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         em.getTransaction().commit();
 
         em.close();
+    }
+
+    @Override
+    public User setApproved(User user, boolean approve) {
+        EntityManager em = getEntityManager();
+
+        user.setApproved(approve);
+
+        em.getTransaction().begin();
+        em.merge(user);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return user;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public List<User> getApprovedUsers(boolean approved) {
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("SELECT u FROM User u WHERE u.approved = :approved");
+        query.setParameter("approved", approved);
+        List<User> result = query.getResultList();
+
+        em.close();
+
+        return result;
     }
 }

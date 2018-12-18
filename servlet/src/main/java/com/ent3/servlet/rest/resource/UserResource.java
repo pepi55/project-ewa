@@ -8,6 +8,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,10 +38,10 @@ public class UserResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname) {
+    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("") @QueryParam("approve") String approve) {
         List<User> result;
 
-        if (firstname.isEmpty() && lastname.isEmpty()) {
+        if (firstname.isEmpty() && lastname.isEmpty() && approve.isEmpty()) {
             result = service.getAllUsers();
         } else {
             result = new ArrayList<>();
@@ -51,6 +52,12 @@ public class UserResource {
 
             if (!lastname.isEmpty()) {
                 result.addAll(service.getUsersByLastName(lastname));
+            }
+
+            if (approve.trim().equals("approved")){
+                result.addAll(service.getApprovedUsers(true));
+            } else if(approve.trim().equals("not_approved")){
+                result.addAll(service.getApprovedUsers(false));
             }
         }
 
@@ -64,18 +71,21 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{userId}")
-    public Response getUserById(@PathParam("userId") String id) {
+    public Response getUserById(@PathParam("userId") String id, @DefaultValue("false") @QueryParam("approve") boolean approve) {
         User result = service.getUserById(id);
 
         if (result == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
         }
 
+        if (approve) {
+            service.setApproved(result, approve);
+        }
+
         return Response.status(Response.Status.OK).entity(result).build();
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{userId}")
     public Response deleteUserById(@PathParam("userId") String id) {

@@ -27,6 +27,8 @@ Package with maven to compile.
     1. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/ -ContentType "application/json" -Method POST -Body '{"name": "TestArea"}'`
     2. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "teaching"}'`
     3. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "pitching"}'`
+ - Powershell: Deleting user:
+   - `Invoke-WebRequest -Method DELETE -Uri http://localhost:8080/servlet/services/rest/users/a`
 
  - Unix: Using curl to add an area:
     - `curl -d '{"name":"Area1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/servlet/services/rest/areas`
