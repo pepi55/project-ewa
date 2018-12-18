@@ -17,14 +17,14 @@ import com.ent3.servlet.service.QuestionRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
 
 /**
- * QuestionResource
+ * UserCompetencyResource
  *
  * @author Toon de Hoop
  */
-public class QuestionResource {
+public class UserCompetencyResource {
     private QuestionRepository service;
 
-    public QuestionResource(){
+    public UserCompetencyResource(){
         service = RepoImplementation.getInstance();
     }
 
@@ -54,12 +54,12 @@ public class QuestionResource {
     public Response addQuestion(@PathParam("competencyId") int competencyId, Question question) {
         Competency competency = null;
 
-        
+        {
             // XXX: Repo implementation use here.
             CompetencyRepository competencyService = RepoImplementation.getInstance();
 
             competency = competencyService.getCompetencyById(competencyId);
-        
+        }
 
         if (competency == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with ID: " + competencyId + " not found")).build();

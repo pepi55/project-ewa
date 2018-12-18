@@ -1,4 +1,107 @@
-<html>
+<html class="mdl-js">
+
+    <head>
+        <!-- Link to the favicon is the current running server -->
+        <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+    
+        <title>Test</title>
+    
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <script defer="" src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    
+        <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
+        <!-- <script src="/assets/vendors/popper-js/popper.min.js"></script> -->
+        <!-- <script src="/assets/vendors/almond/almond.js"></script> -->
+    
+        <link href="../assets/css/default.css" rel="stylesheet">
+    
+        <script src="../assets/js/bundle.js"></script>
+        <style>
+            
+            .layout-transparent .mdl-layout__header,
+            .layout-transparent .mdl-layout__drawer-button {
+                color: white;
+            }
+        </style>
+    </head>
+<body>
+    <div class="layout-transparent mdl-layout mdl-js-layout">
+        <header class="mdl-layout__header mdl-layout__header--transparent">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Menu</span>
+                <div class="mdl-layout-spacer"></div>
+                <nav class="mdl-navigation" id="on-page">
+                    <!-- on-page appends come here -->
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Menu</span>
+            <nav class="mdl-navigation" id="on-bar">
+                <!-- on-bar appends come here -->
+                <!--<a class="mdl-navigation__link" href="test.html">Test</a>-->
+            </nav>
+        </div>
+    </div>
+    <main class="mdl-layout__content">
+        <div class="container">
+            <div class="mdl-grid">
+                <div class="mdl-cell mdl-cell--2-col"></div>
+                <div class="mdl-cell mdl-cell--8-col">
+                    <h1>Test</h1>
+                    <p id="testid"></p>
+                    <form id="testForm">
+                    <table>
+                            <tbody id="test">
+                                <tr>
+                                    <td colspan="6">How confident are you in the following areas?</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Not confident at all</td>
+                                    <td>Slightly confident</td>
+                                    <td>Somewhat confident</td>
+                                    <td>Fairly confident</td>
+                                    <td>Completely confident</td>
+                                </tr>
+                               <!--test appends here-->
+                               <tr>
+                                <td>Identifying and seizing opportunities to create value by exploring the social, cultural and economic landscape</td>
+                                <td><input type="radio" class="mdl-radio__button" name="uniqueArea_0_0" value="1"></td>
+                                <td><input type="radio" class="mdl-radio__button" name="uniqueArea_0_0" value="3"></td>
+                                <td><input type="radio" class="mdl-radio__button" name="uniqueArea_0_0" value="5"></td>
+                                <td><input type="radio" class="mdl-radio__button" name="uniqueArea_0_0" value="7"></td>
+                                <td><input type="radio" class="mdl-radio__button" name="uniqueArea_0_0" value="4"></td>
+                            </tr>
+                            </tbody>
+                        </table>         
+                    </form>   
+                            
+                </div>
+                <div class="mdl-cell mdl-cell--2-col"></div>
+            </div>
+        </div>
+        <p id="test"></p>
+        <p id="save-button"></p>
+        
+
+    </main>
+</body>
+<script>
+    window.onload = function(e){
+      app("test");
+    }
+</script>
+
+</html>
+
+
+
+
+
+
+<!-- <html>
 
 <head>
     <link rel="shortcut icon" type="image/png" href="../favicon.png" />
@@ -12,7 +115,7 @@
     <!---<script src="../assets//vendors/popper-js/popper.min.js"></script>-->
     <!--<script src="/assets/vendors/almond/almond.js"></script>-->
 
-    <link href="../assets/css/default.css" rel="stylesheet" />
+    <!-- <link href="../assets/css/default.css" rel="stylesheet" />
 
     <script src="../assets/js/bundle.js"></script>
     <style>
@@ -46,4 +149,4 @@
 </body>
 
 
-</html>
+</html> --> 
