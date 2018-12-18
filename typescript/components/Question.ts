@@ -1,11 +1,13 @@
 export class Question{
     private id: number;
     private question: string;
+    //private competencyId : number;
 
 
     public constructor(id:number, question:string){
         this.id = id;
         this.question = question;
+        //this.competencyId = competencyId;
         
     }
 
@@ -18,16 +20,24 @@ export class Question{
         return this.question;
     }
 
+    // public getCompetencyId(){
+    //     return this.competencyId;
+    // }
+
   
 
     //Setters
-    public setId(id:number){
+    public setId(id : number){
         this.id = id;
     }
 
-    public setQuestion(question:string){
+    public setQuestion(question : string){
         this.question = question;
     }
+
+    // public setCompetencyId(competencyId : number){
+    //     this.competencyId = competencyId;
+    // }
 
    
 

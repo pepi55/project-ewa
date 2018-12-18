@@ -1,13 +1,9 @@
 import { Controller } from "./Controller";
 import { QuestionHandler } from "../components/QuestionHandler";
 import { Button } from "../components/Button/button";
-//import { questions } from "../components/questions/questions";
-import { Question } from "../components/Question";
 import { MenuItem } from "../components/MenuItem";
 import { LoginService } from "../components/LoginService";
 import { Question2 } from "../components/question2";
-import { ApiService } from "../coursesAPIs/ApiService";
-import { API } from "../coursesAPIs/EnumRepo";
 
 
 
@@ -21,21 +17,23 @@ export class TestController extends Controller {
         console.log("in Testcontroller: ",questions);
         //Test
         let testButton: Button = new Button("Save");
-
+        let testButton2: Button = new Button("Test");
         
-        let template;
-        for(let index; questions.length; index++){
-            let temp : Question2 = new Question2(questions[index].getQuestion(), questions[index].getId());
-            template += temp;
+        testButton2.setOnClick(() =>{
+            for(let index = 0; index < questions.length; index++){
             
-        }
-        console.log("template: " , template);
-        $('#test').append(template);
+                let temp : Question2 = new Question2(questions[index].getQuestion(), questions[index].getId());
+                
+                $('#test').append(temp.getView());
+            }
+    
+        })
+        
 
         // let question2: Question2 = new Question2("Test", 1);
         // $('#test').append(question2.getView());
 
-        testButton.setOnClick((e: any) => {
+        testButton.setOnClick(() => {
             let formData = $('#testForm').serializeArray().reduce(function (obj, item) {
                 obj[item.name] = item.value;
                 return obj;
@@ -45,7 +43,7 @@ export class TestController extends Controller {
 
         });
 
-        $("#save-button").append(testButton.getView());
+        $("#save-button").append(testButton.getView()).append(testButton2.getView());
 
 
 
@@ -62,16 +60,16 @@ export class TestController extends Controller {
         let testItem: MenuItem = new MenuItem("Test");
         let resultItem: MenuItem = new MenuItem("Results");
 
-        logoutItem.setOnClick((e: any) => {
+        logoutItem.setOnClick(() => {
             LoginService.getInstance().logout();
             window.location.href = "/servlet/index.html";
         })
-        profileItem.setOnClick((e: any) => { window.location.href = "/servlet/views/profile.html"; })
-        menuItem.setOnClick((e: any) => { window.location.href = "/servlet/views/menu.html"; })
-        coursesItem.setOnClick((e: any) => { window.location.href = "/servlet/views/userCourses.html"; })
-        adminItem.setOnClick((e: any) => { window.location.href = "/servlet/views/adminCourses.html"; })
-        testItem.setOnClick((e: any) => { window.location.href = "/servlet/views/test.html" })
-        resultItem.setOnClick((e: any) => { window.location.href = "/servlet/views/result.html" })
+        profileItem.setOnClick(() => { window.location.href = "/servlet/views/profile.html"; })
+        menuItem.setOnClick(() => { window.location.href = "/servlet/views/menu.html"; })
+        coursesItem.setOnClick(() => { window.location.href = "/servlet/views/userCourses.html"; })
+        adminItem.setOnClick(() => { window.location.href = "/servlet/views/adminCourses.html"; })
+        testItem.setOnClick(() => { window.location.href = "/servlet/views/test.html" })
+        resultItem.setOnClick(() => { window.location.href = "/servlet/views/result.html" })
 
 
         $("#on-page")
