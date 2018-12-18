@@ -6,22 +6,34 @@ import { Question } from "../components/Question";
 import { MenuItem } from "../components/MenuItem";
 import { LoginService } from "../components/LoginService";
 import { Question2 } from "../components/question2";
+import { ApiService } from "../coursesAPIs/ApiService";
+import { API } from "../coursesAPIs/EnumRepo";
 
 
 
 export class TestController extends Controller {
-    private questionHandler: QuestionHandler = new QuestionHandler();
+    
+    
 
     protected setup(): void {
-
+        let questionHandler: QuestionHandler = new QuestionHandler();
+        let questions = questionHandler.getQuestionsWithId();
+        console.log("in Testcontroller: ",questions);
         //Test
         let testButton: Button = new Button("Save");
-        let testButton2: Button = new Button("test");
-        let testButton3: Button = new Button("Result");
 
+        
+        let template;
+        for(let index; questions.length; index++){
+            let temp : Question2 = new Question2(questions[index].getQuestion(), questions[index].getId());
+            template += temp;
+            
+        }
+        console.log("template: " , template);
+        $('#test').append(template);
 
-        let question2: Question2 = new Question2("Test", 1);
-        $('#test').append(question2.getView());
+        // let question2: Question2 = new Question2("Test", 1);
+        // $('#test').append(question2.getView());
 
         testButton.setOnClick((e: any) => {
             let formData = $('#testForm').serializeArray().reduce(function (obj, item) {
@@ -33,33 +45,7 @@ export class TestController extends Controller {
 
         });
 
-
-
-        let questions: Array<Question> = new Array();
-
-        $.getJSON("http://localhost:8080/servlet/services/rest/areas/1/competencies/", function (obj) {
-            $.each(obj, function (key, value) {
-                questions = value.questions;
-
-            })
-        })
-
-        
-
-
-
-
-        testButton3.setOnClick((e: any) => {
-            for(let index; questions.length; index++){
-            let temp : Question2 = new Question2(questions[index].getQuestion(), questions[index].getId());
-            console.log("getQuestion: ",questions[index].getQuestion())
-            console.log("getID: ",questions[index].getId())
-            $('#test').append(temp.getView());
-        }
-
-        })
-
-        $("#save-button").append(testButton.getView()).append(testButton2.getView()).append(testButton3.getView());
+        $("#save-button").append(testButton.getView());
 
 
 

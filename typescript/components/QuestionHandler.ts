@@ -1,4 +1,6 @@
 import { Question } from "./Question"
+import { ApiService } from "../coursesAPIs/ApiService";
+import { API } from "../coursesAPIs/EnumRepo";
 
 
 export class QuestionHandler{
@@ -6,17 +8,34 @@ export class QuestionHandler{
 
     public constructor(){
         let url = "http://localhost:8080/servlet/services/rest/areas/1/competencies/";
-        let promise = fetch(url);
-        promise.then(function(result){
-            console.log(result);
-            return result.json();
-        }).then(function(json:any){
-            console.log(json);
+        let DB = new ApiService(API.DB);
 
-           console.log("Json + question filter :",json["questions"]);
+        DB.setPath("areas");
+        DB.getParent((object : any) => {
+            //mapping all question to tableRows   
+            if (object.errorMessage == null) {
+                object.map((mainResponse: any) =>
+                mainResponse.competencies.map((mainResponse: any) => 
+                mainResponse.questions.map((mainResponse: any) => this.questions.push(new Question(mainResponse.id, mainResponse.question)))));
+                console.log(this.questions);
+            } else {
+                console.log("Something went wrong!");
+            }
+
+        });
+    //     let promise = fetch(url);
+    //     promise.then(function(result){
+    //         console.log(result);
+    //         return result.json();
+    //     }).then(function(json:any){
+    //         console.log(json);
+
+    //         let x = json.questions;
+    //        console.log("Json + question filter :",json["questions"]);
+    //         console.log("x = ", x)
            
-        })
-        console.log(this.questions);
+    //     })
+    //     console.log(this.questions);
     }
 
     public getQuestionById(id: number){
@@ -33,6 +52,10 @@ export class QuestionHandler{
             onlyQuestions[i] = this.questions[i].getQuestion();
         }
         return onlyQuestions; 
+    }
+
+    public  getQuestionsWithId() : Array<Question> {
+        return this.questions;
     }
 }
 
