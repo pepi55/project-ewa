@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -16,6 +17,7 @@ import javax.ws.rs.core.Response;
 
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.rest.model.ClientError;
+import com.ent3.servlet.rest.model.ClientMessage;
 import com.ent3.servlet.service.UserRepository;
 import com.ent3.servlet.service.implementation.RepoImplementation;
 
@@ -29,16 +31,15 @@ public class UserResource {
     private UserRepository service;
 
     public UserResource() {
-        // XXX: Repo implementation class here.
         service = RepoImplementation.getInstance();
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname) {
+    public Response getAllUsers(@DefaultValue("") @QueryParam("firstname") String firstname, @DefaultValue("") @QueryParam("lastname") String lastname, @DefaultValue("") @QueryParam("approve") String approve) {
         List<User> result;
 
-        if (firstname.isEmpty() && lastname.isEmpty()) {
+        if (firstname.isEmpty() && lastname.isEmpty() && approve.isEmpty()) {
             result = service.getAllUsers();
         } else {
             result = new ArrayList<>();
@@ -49,6 +50,12 @@ public class UserResource {
 
             if (!lastname.isEmpty()) {
                 result.addAll(service.getUsersByLastName(lastname));
+            }
+
+            if (approve.trim().equals("approved")){
+                result.addAll(service.getApprovedUsers(true));
+            } else if(approve.trim().equals("not_approved")){
+                result.addAll(service.getApprovedUsers(false));
             }
         }
 
@@ -62,15 +69,33 @@ public class UserResource {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/{userId}")
-    public Response getUserById(@PathParam("userId") int id) {
+    public Response getUserById(@PathParam("userId") String id, @DefaultValue("false") @QueryParam("approve") boolean approve) {
         User result = service.getUserById(id);
 
         if (result == null) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(new ClientError("User with id: " + id + " not found")).build();
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
+        }
+
+        if (approve) {
+            service.setApproved(result, approve);
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
+    }
+
+    @DELETE
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{userId}")
+    public Response deleteUserById(@PathParam("userId") String id) {
+        User result = service.getUserById(id);
+
+        if (result == null) {
+            return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("User with id: " + id + " not found")).build();
+        }
+
+        service.deleteUser(result);
+
+        return Response.status(Response.Status.OK).entity(new ClientMessage("User with ID: " + id + " deleted")).build();
     }
 
     /**

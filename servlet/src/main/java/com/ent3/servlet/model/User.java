@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -20,36 +19,31 @@ public class User implements Serializable {
 
     @Id
     @Column(name = "user_id")
-    @GeneratedValue
-    private int id;
+    private String username;
 
     private String firstname;
     private String lastname;
-    private String username;
     private String password;
     private String email;
     private int role;
+    private boolean approved;
 
     public User() {
         // Required.
     }
 
-    public User(int id, String firstName, String lastName, String username, String password, String email, int role) {
-        this.id = id;
+    public User(String firstName, String lastName, String username, String password, String email, int role) {
         this.firstname = firstName;
         this.lastname = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-    }
-
-    public int getId() {
-        return this.id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        if (role == 0) {
+            this.approved = true;
+        } else {
+            this.approved = false;
+        }
     }
 
     public String getFirstName() {
@@ -97,6 +91,22 @@ public class User implements Serializable {
     }
 
     public void setRole(int role) {
+        if (this.role == 0) {
+            if (role == 1 || role == 2) {
+                this.approved = false;
+            }
+        }
         this.role = role;
+        if (role == 0) {
+            this.approved = true;
+        }
+    }
+
+    public boolean getApproved() {
+        return this.approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
     }
 }

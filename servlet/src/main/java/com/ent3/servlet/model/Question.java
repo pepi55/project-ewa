@@ -34,7 +34,7 @@ public class Question implements Serializable {
     private String question;
     
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "competency_id")
     @JsonbTransient
     private Competency competency;

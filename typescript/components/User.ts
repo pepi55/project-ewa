@@ -1,5 +1,4 @@
 export class User {
-    private id: number;
     private firstName: string;
     private lastName: string;
     private username: string;
@@ -7,7 +6,7 @@ export class User {
     private email: string;
     private role: number;
 
-    public constructor(id:number, firstName:string, lastName:string, username:string, password:string, email:string, role: number) {
+    public constructor(firstName:string, lastName:string, username:string, password:string, email:string, role: number) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -16,8 +15,30 @@ export class User {
         this.role = role;
     }
 
-    public getId(){
-        return this.id;
+    public getEmail(){
+        return this.email;
+    }
+
+    public getFirstName(){
+        return this.firstName;
+    }
+
+    public getLastName(){
+        return this.lastName;
+    }
+
+    public getRole(){
+        return this.role;
+    }
+
+    public getRoleName(){
+        if (this.role == 0){
+            return "Student";
+        } else if(this.role == 1){
+            return "Teacher";
+        } else{
+            return "Admin";
+        }
     }
 
     public setFirstName(firstName : string) {
@@ -70,5 +91,9 @@ export class User {
         }
 
         return result;
+    }
+
+    public getWholeName(){
+        return this.firstName + " " + this.lastName;
     }
 }

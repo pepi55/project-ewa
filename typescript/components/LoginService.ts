@@ -15,7 +15,8 @@ export class LoginService{
         let id = localStorage.getItem("loggedInUser");
         if (id){
             let userdata = JSON.parse(id);
-            this.user = new User(userdata.id,userdata.firstname,userdata.lastname,userdata.username,userdata.password,userdata.email,userdata.role);
+            this.user = new User(userdata.firstName,userdata.lastName,userdata.username,userdata.password,userdata.email,userdata.role);
+            //this.user.setId(userdata.id);
         }
     }
 
@@ -30,7 +31,7 @@ export class LoginService{
 
     public getUserId(): number{
         if (this.isLoggedIn()) {
-            return this.user.getId();
+            //return this.user.getId();
         }
         return null;
     }
@@ -45,6 +46,13 @@ export class LoginService{
     public logout(){
         if (this.isLoggedIn()) {
             localStorage.clear();
+            window.location.href = "/servlet/index.html";
         }
+    }
+
+    public getUser(){
+        if (this.isLoggedIn()) {
+            return this.user;
+        } 
     }
 }

@@ -11,7 +11,10 @@ export class UserHandler {
         }).then(function(json:any){
             console.log(json);
             for (let user of json){
-                this.users.push(new User(user["id"],user["email"],user["firstName"],user["lastName"],user["username"],user["password"],user["role"]));
+                console.log(user)
+                let newuser = new User(user["email"],user["firstName"],user["lastName"],user["username"],user["password"],user["role"]); 
+                //newuser.setId(user["id"]);
+                this.users.push(newuser);
             }
         }.bind(this))
     }

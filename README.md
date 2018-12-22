@@ -22,15 +22,24 @@ Right click servlet.war in src/servlet/target/ and select run on tomcat server.
 Package with maven to compile.
 
 # Other
-POST request example:
- - Powershell: `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name":"Valuing Ideas"}'`
- - Unix: `curl -d '{"name":"Area1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/servlet/services/rest/areas`
+## POST request example:
+ - Powershell: Initializing coursespage:
+    1. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/ -ContentType "application/json" -Method POST -Body '{"name": "TestArea"}'`
+    2. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "teaching"}'`
+    3. `Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "pitching"}'`
+ - Powershell: Deleting user:
+   - `Invoke-WebRequest -Method DELETE -Uri http://localhost:8080/servlet/services/rest/users/a`
 
-Connect backend to DB:
+ - Unix: Using curl to add an area:
+    - `curl -d '{"name":"Area1"}' -H "Content-Type: application/json" -X POST http://localhost:8080/servlet/services/rest/areas`
+ - Unix: Using curl to delete user:
+    - `curl -X DELETE "http://localhost:8080/servlet/services/rest/users/{user_id}"`
+
+## Connect backend to DB:
  - ~~Run local MySQL database.~~
- - Add database titled: `ent3`.
+ 1. Add database titled: `ent3`.
  - ~~Edit `webapp/META-INF/context.xml` to the correct URL to the database and the correct username + password.~~
- - Add `webapp/META-INF/context.xml` containing:
+ 2. Add `webapp/META-INF/context.xml` containing:
     ~~~~
     <?xml version="1.0" encoding="UTF-8"?>
     <Context path="/servlet">
@@ -38,7 +47,10 @@ Connect backend to DB:
     </Context>
     ~~~~
 
-Clearing database:
+## Clearing database:
+
+Run only if you have forward engineered the local database.
+
 ~~~~
 USE ent3;
 
@@ -57,9 +69,3 @@ DROP TABLE IF EXISTS student;
 DROP TABLE IF EXISTS question;
 DROP TABLE IF EXISTS user;
 ~~~~
-
-Initializing coursespage(to be able to add courses):
-
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/ -ContentType "application/json" -Method POST -Body '{"name": "TestArea"}'
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "teaching"}'
-Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/1/competencies -ContentType "application/json" -Method POST -Body '{"name": "pitching"}'

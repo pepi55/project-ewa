@@ -4,7 +4,7 @@ import { API } from "../coursesAPIs/EnumRepo";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { Card } from "../components/Card";
 
-export class userCourseController extends Controller {
+export class UserCourseController extends Controller {
     protected setup(): void {
         this.setAdminMenuButton();
         this.setCards();
