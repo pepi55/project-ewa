@@ -1,103 +1,59 @@
 import { Question } from "./Question"
 import { ApiService } from "../coursesAPIs/ApiService";
 import { API } from "../coursesAPIs/EnumRepo";
+import { Competentie } from "./Competentie";
+import { QuestionScreen } from "./QuestionScreen";
+declare var componentHandler: any;
 
+export class QuestionHandler {
+    private competenties: Array<Competentie> = new Array();
 
-export class QuestionHandler{
-    private questions: Array<Question> = new Array();
+    public constructor() {
+        this.getCompetentiesFromDatabase();
+    }
 
-    public constructor(){
-        let url = "http://localhost:8080/servlet/services/rest/areas/1/competencies/";
+    private getCompetentiesFromDatabase() {
         let DB = new ApiService(API.DB);
+        let i = 0;
 
         DB.setPath("areas");
-        DB.getParent((object : any) => {
-            //mapping all question to tableRows   
+        DB.getParent((object: any) => {
             if (object.errorMessage == null) {
                 object.map((mainResponse: any) =>
-                mainResponse.competencies.map((mainResponse: any) => 
-                mainResponse.questions.map((mainResponse: any) => this.questions.push(new Question(mainResponse.id, mainResponse.question)))));
-                console.log(this.questions);
+                    mainResponse.competencies.map((mainResponse: any) => {
+                        let tempQuestions = new Array<Question>();
+                        mainResponse.questions.map((mainResponse: any) => tempQuestions.push(new Question(mainResponse.id, mainResponse.question)))
+                        this.competenties.push(new Competentie(mainResponse.name, tempQuestions))
+                        for (let question of tempQuestions){
+                            let questionScreen = new QuestionScreen(mainResponse.name, question.getId(), question.getQuestion());
+                            $("#test-area").append(questionScreen.getView(i));
+                            i++;
+                        }
+                    $("#loading_layer").remove()}));
+                    componentHandler.upgradeDom();
             } else {
                 console.log("Something went wrong!");
             }
-
         });
-    //     let promise = fetch(url);
-    //     promise.then(function(result){
-    //         console.log(result);
-    //         return result.json();
-    //     }).then(function(json:any){
-    //         console.log(json);
-
-    //         let x = json.questions;
-    //        console.log("Json + question filter :",json["questions"]);
-    //         console.log("x = ", x)
-           
-    //     })
-    //     console.log(this.questions);
     }
 
-    public getQuestionById(id: number){
-        for (let question of this.questions){
-            if (question.getId() == id){
-                return question.getQuestion();
-            }
+    public getCompetenties() {
+        return this.competenties;
+    }
+
+    public getCompetentieById(id: number){
+        return this.competenties[id];
+    }
+
+    public getQuestionLength(){
+        let temp = 0
+        for (let competencie of this.competenties){
+            temp += +competencie.getQuestions().length;
         }
+        return temp;
     }
 
-    public getAllQuestions() {
-        let onlyQuestions: string[];
-        for(let i = 0; i > this.questions.length; i++){
-            onlyQuestions[i] = this.questions[i].getQuestion();
-        }
-        return onlyQuestions; 
-    }
-
-    public  getQuestionsWithId() : Array<Question> {
-        return this.questions;
+    public sendCompetentieScore(){
+        
     }
 }
-
-
-
-
-// export class QuestionHandler {
-//     private questions: Array<Question>;
-
-//     public constructor(callBack: any){
-//         $.ajax({
-//             url: "../json/questions.json", //URL van Api           
-//         }).done(function(result: Array<Question>){
-//             this.questions = result;
-
-//             callBack();
-//         }.bind(this))
-//     }
-   
-//     public getQuestions(){
-//         return this.questions[0]["questions"];
-//     }
-// }
-
-/*
-export class QuestionHandler {
-    private questions: Array<Question>;
-
-    public constructor(callBack: any){
-        $.ajax({
-            url: "http://localhost:8080/servlet/services/rest/areas/1/competencies/1/questions", //URL van Api           
-        }).done(function(result: Array<Question>){
-            this.questions = result;
-
-            callBack();
-        }.bind(this))
-    }
-   
-    public getQuestions(){
-        return this.questions;
-    }
-}
-*/
-    
-    

@@ -18,7 +18,9 @@
     
         <script src="../assets/js/bundle.js"></script>
         <style>
-            
+            .mdl-layout__header .mdl-layout__drawer-button{
+                z-index: 30;
+            }
             .layout-transparent .mdl-layout__header,
             .layout-transparent .mdl-layout__drawer-button {
                 color: white;
@@ -44,41 +46,22 @@
             </nav>
         </div>
     </div>
+    <div id="loading_layer" style="width: 100%;height: 100%;background-color: gray;opacity: 0.5;position: absolute;top: 0;z-index: 10;"></div>
     <main class="mdl-layout__content">
         <div class="container">
             <div class="mdl-grid">
-                <div class="mdl-cell mdl-cell--2-col"></div>
-                <div class="mdl-cell mdl-cell--8-col">
-                    <h1>Test</h1>
-                    <p id="testid"></p>
-                    <form id="testForm">
-                    <table>
-                            <tbody id="test">
-                                <tr>
-                                    <td colspan="6">How confident are you in the following areas?</td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td>Not confident at all</td>
-                                    <td>Slightly confident</td>
-                                    <td>Somewhat confident</td>
-                                    <td>Fairly confident</td>
-                                    <td>Completely confident</td>
-                                </tr>
-                               <!--test appends here-->
-                               
-                            </tbody>
-                        </table>         
-                    </form>   
-                            
+                <div class="mdl-cell mdl-cell--2-col">
+                    <p id="back_button" style="margin-top: 60px;"></p>
+                    <p id="test-button"></p>
                 </div>
-                <div class="mdl-cell mdl-cell--2-col"></div>
+                <div class="mdl-cell mdl-cell--8-col" id="test-area" style="position: relative; height: 100%;">
+                    
+                </div>
+                <div class="mdl-cell mdl-cell--2-col">
+                    <p id="next_button" style="margin-top: 60px;"></p>
+                </div>
             </div>
         </div>
-        <p id="test"></p>
-        <p id="save-button"></p>
-        
-
     </main>
 </body>
 <script>
