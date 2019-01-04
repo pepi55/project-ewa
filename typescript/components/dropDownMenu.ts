@@ -2,11 +2,11 @@ export class dropDownMenu {
 
     private title : string;
     private items : string[];
+    private number : number = 0;
 
     constructor(title : string, items : string[]) {
         this.title = title;
         this.items = items;
-
     }
 
     public getMenuView() : string {
@@ -30,6 +30,8 @@ export class dropDownMenu {
         }
         
         return mainStart + itemsview + mainEnd;
+
+
     }
         
 }

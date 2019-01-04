@@ -5,9 +5,11 @@ import { UserHandler } from "../components/UserHandler";
 import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
 import { LoginService } from "../components/LoginService";
+import { Menu } from "./Menu";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
+    private menu : Menu;
 
     protected setup(): void {
         $.get(this.pathToViews + "login.html").done(function (data: any) {
@@ -27,7 +29,23 @@ export class LoginController extends Controller {
 
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
                 LoginService.getInstance().login(this.userHandler.getUserByUsername((document.getElementById("username") as HTMLInputElement).value));
-                window.location.href = this.pathToViews + "menu.html";
+                let role : string = this.userHandler.getRoleByUsername((document.getElementById("username") as HTMLInputElement).value);
+
+                //for setting the homepage when user logs in
+                if(role === "Admin") {
+                    // admin homepage
+                    window.location.href = this.pathToViews + "newCourses.html";
+                    
+                } else if (role === "Teacher") {
+                    // teacher homepage
+                    window.location.href = this.pathToViews + "teacherClass.html";
+
+                } else if (role === "Student") {
+                    // student homepage
+                    window.location.href = this.pathToViews + "studentCourses.html";
+
+                }
+
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
             }

@@ -92,4 +92,8 @@ export class User {
 
         return result;
     }
+
+    public getWholeName(){
+        return this.firstName + " " + this.lastName;
+    }
 }

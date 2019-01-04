@@ -33,4 +33,12 @@ export class UserHandler {
             }
         }
     }
+
+    public getRoleByUsername(username : string) {
+        for (let user of this.users){
+            if (user.getUsername() == username){
+                return user.getRoleName();
+            }
+        }
+    }
 }

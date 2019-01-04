@@ -46,6 +46,7 @@ export class LoginService{
     public logout(){
         if (this.isLoggedIn()) {
             localStorage.clear();
+            window.location.href = "/servlet/index.html";
         }
     }
 
@@ -54,4 +55,12 @@ export class LoginService{
             return this.user;
         } 
     }
+
+    public getUserRole() {
+        if (this.isLoggedIn()) {
+            return this.user.getRoleName();
+        }
+        return null;
+    }
+
 }
