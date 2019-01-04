@@ -66,7 +66,7 @@ export class AdminSavedCoursesController extends Controller {
                         checkButton.setOnClick((e : any) => {
                             let numberOfTables : number = checkButton.getId();
                             console.log("checkBoxSelectAll" + numberOfTables);
-                            this.selectAllSelectButtons("checkBoxSelectAll" + numberOfTables, 0, "tableCards" + numberOfScrollTables);
+                            this.selectAllSelectButtons("checkBoxSelectAll" + numberOfTables, 0, "tableCards" + numberOfTables);
                         });
 
                         $("#cardsContainer").append(table.getCardsScrollTableView());
