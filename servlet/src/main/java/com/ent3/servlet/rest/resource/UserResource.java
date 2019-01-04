@@ -117,4 +117,9 @@ public class UserResource {
     // public UserCompetencyResource getUserCompetencyResource() {
     //     return new UserCompetencyResource();
     // }
+
+    @Path("/{userId}/results")
+    public ResultResource getResultResource() {
+        return new ResultResource();
+    }
 }

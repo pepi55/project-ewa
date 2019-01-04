@@ -23,7 +23,7 @@ export class QuestionHandler {
                     mainResponse.competencies.map((mainResponse: any) => {
                         let tempQuestions = new Array<Question>();
                         mainResponse.questions.map((mainResponse: any) => tempQuestions.push(new Question(mainResponse.id, mainResponse.question)))
-                        this.competenties.push(new Competentie(mainResponse.name, tempQuestions))
+                        this.competenties.push(new Competentie(mainResponse.id, mainResponse.name, tempQuestions))
                         for (let question of tempQuestions){
                             let questionScreen = new QuestionScreen(mainResponse.name, question.getId(), question.getQuestion());
                             $("#test-area").append(questionScreen.getView(i));

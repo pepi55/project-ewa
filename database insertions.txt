@@ -93,3 +93,5 @@ Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/a
 Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/3/competencies/18/questions -ContentType "application/json" -Method POST -Body '{"question": "Using any initiative for value creation as a learning opportunity"}'
 Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/3/competencies/18/questions -ContentType "application/json" -Method POST -Body '{"question": "Learning with others, including peers and mentors"}'
 Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/areas/3/competencies/18/questions -ContentType "application/json" -Method POST -Body '{"question": "Reflecting and learning from both success and failure (your own and other people&#39s)"}'
+
+Invoke-WebRequest -UseBasicParsing http://localhost:8080/servlet/services/rest/users/a/score -ContentType "application/json" -Method POST -Body '{"competencieId": 4, "competencieScore": 4}'

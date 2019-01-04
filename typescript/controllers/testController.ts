@@ -2,17 +2,17 @@ import { Controller } from "./Controller";
 import { QuestionHandler } from "../components/QuestionHandler";
 import { Button } from "../components/Button/button";
 import { MenuController } from "./Menucontroller";
-import { Results } from "../components/Results";
+import { Result } from "../components/Result";
 declare var componentHandler: any;
 
 export class TestController extends Controller {
     private questionHandler: QuestionHandler = new QuestionHandler;
     private menu: MenuController = new MenuController();
     private currentScreen: number = 1;
-    private result: Results;
+    private results: Array<Result>;
 
     protected setup(): void {
-        this.result = new Results();
+        this.results = new Array();
         let testButton: Button = new Button("getTest");
 
         testButton.setOnClick((e: any) => {
@@ -31,8 +31,7 @@ export class TestController extends Controller {
             let x = this.questionHandler.getCompetentieById(z).getQuestionLength();
             for (let i = 0; i < this.questionHandler.getQuestionLength(); i++) {
                 if (x <= 0) {
-                    this.result.addCompetentieName(this.questionHandler.getCompetentieById(z).getCompetentieText());
-                    this.result.addCompetentieResult(this.questionHandler.getCompetentieById(z).getScore());
+                    this.results.push(new Result(this.questionHandler.getCompetentieById(z).getCompetentieId(), this.questionHandler.getCompetentieById(z).getScore()))
                     z++;
                     x = this.questionHandler.getCompetentieById(z).getQuestionLength();
                 }
@@ -44,7 +43,6 @@ export class TestController extends Controller {
                 }
                 x--;
             }
-            this.result.log();
         });
 
         $("#back_button").append(backButton.getView());
@@ -54,8 +52,8 @@ export class TestController extends Controller {
         /** temp button */
         let tempButton: Button = new Button("temp");
         tempButton.setOnClick(() => {
-            for (let competentie of this.questionHandler.getCompetenties()) {
-                console.log(competentie.getCompetentieText() + " : " + competentie.getScore());
+            for (let competentie of this.results) {
+                competentie.log();
             }
         })
         $("#next_button").append(tempButton.getView());
