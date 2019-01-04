@@ -1,22 +1,28 @@
 export class AdminButton {
     private onClickCallback: Function;
-    private type: string;
+    private type : string;
+    private id : number;
 
-    constructor(type : string) {
+    constructor(type : string, id? : number) {
         this.type = type;
+        this.id = id;
     }
 
     public setOnClick(callback: Function): void {
         this.onClickCallback = callback;
     }
 
+    public getId() {
+        return this.id;
+    }
+
     public getView(): string {
         let template : string = "";
 
         if (this.type == "accept") {
-            template = `<button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" >
-            <i class="material-icons">done</i>
-            </button>`;
+            template = `<label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect" for="checkbox-${this.id}" style="width: 0%;">
+            <input type="checkbox" id="checkbox-${this.id}" class="mdl-checkbox__input">
+            </label>`;
         }
 
         if (this.type == "decline") {

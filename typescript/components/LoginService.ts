@@ -55,4 +55,12 @@ export class LoginService{
             return this.user;
         } 
     }
+
+    public getUserRole() {
+        if (this.isLoggedIn()) {
+            return this.user.getRoleName();
+        }
+        return null;
+    }
+
 }

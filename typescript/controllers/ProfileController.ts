@@ -1,5 +1,5 @@
 import { Controller } from "./Controller";
-import { MenuController } from "./menucontroller";
+import { Menu } from "./Menu";
 import { LoginService } from "../components/loginService";
 import { CardButton } from "../components/CardButton";
 import { ApiService } from "../coursesAPIs/ApiService";
@@ -8,7 +8,7 @@ import { API } from "../coursesAPIs/EnumRepo";
 export class ProfileController extends Controller {
 
     protected setup(): void {
-        let menuController = new MenuController();
+        let menuController = new Menu("");
         let user = LoginService.getInstance().getUser();
 
         let cardButton = new CardButton();
