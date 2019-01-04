@@ -85,6 +85,16 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
     public void deleteUser(User user) {
         users.remove(user.getUsername());
     }
+
+    @Override
+    public User setApproved(User user, boolean approve) {
+        return null;
+    }
+
+    @Override
+    public List<User> getApprovedUsers(boolean approved) {
+        return null;
+    }
     ///// USERS /////
 
     ///// AREAS /////
