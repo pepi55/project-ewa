@@ -8,7 +8,7 @@ export class QuestionRadioButtos {
         const view = `
         <p>
         <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-${screenNumber}-1">
-        <input type="radio" id="option-${screenNumber}-1" class="mdl-radio__button" name="options-${screenNumber}" value="1" checked>
+        <input type="radio" id="option-${screenNumber}-1" class="mdl-radio__button" name="options-${screenNumber}" value="1">
         <span class="mdl-radio__label">Completely confident</span>
         </label>
         </p>
