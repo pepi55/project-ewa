@@ -5,9 +5,12 @@ import { UserHandler } from "../components/UserHandler";
 import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
 import { LoginService } from "../components/LoginService";
+import { Menu } from "./Menu";
+import { UserRole } from "../components/UserRole";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
+    private menu : Menu;
 
     protected setup(): void {
         $.get(this.pathToViews + "login.html").done(function (data: any) {
@@ -27,7 +30,25 @@ export class LoginController extends Controller {
 
             if (this.userHandler.getPasswordByUsername((document.getElementById("username") as HTMLInputElement).value) == (document.getElementById("password") as HTMLInputElement).value) {
                 LoginService.getInstance().login(this.userHandler.getUserByUsername((document.getElementById("username") as HTMLInputElement).value));
-                window.location.href = this.pathToViews + "menu.html";
+                let role : string = this.userHandler.getRoleByUsername((document.getElementById("username") as HTMLInputElement).value);
+
+                switch (role) {
+                    case UserRole.ADMIN:
+                        window.location.href = this.pathToViews + "newCourses.html";
+                        break;
+
+                    case UserRole.TEACHER:
+                        window.location.href = this.pathToViews + "teacherClass.html";
+                        break;
+
+                    case UserRole.USER:
+                        window.location.href = this.pathToViews + "studentCourses.html";
+                        break;
+
+                    default:
+                        break;
+                }
+
             } else {
                 $("#errorbox").html("Username and password don't match. Please try again.")
             }
@@ -110,9 +131,9 @@ export class LoginController extends Controller {
                 // Set user role.
                 {
                     let element = (document.getElementById("signup_role") as HTMLSelectElement);
-                    let signup_role = Number(element.options[element.selectedIndex].value);
+                    let signup_role = UserRole[element.options[element.selectedIndex].value];
 
-                    //console.log(signup_role);
+                    console.log(signup_role);
                     user.setRole(signup_role);
                 }
 

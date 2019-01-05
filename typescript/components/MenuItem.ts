@@ -12,7 +12,8 @@ export class MenuItem {
     }
 
     public getView(): string {
-        const template: string = `<div class="mdl-navigation__link">${this.text}</div>`;
+        const template: string = `<a class="mdl-navigation__link mdl-typography--text-uppercase">${this.text}</a>`;
+        
 
         return $(template)
             .on(

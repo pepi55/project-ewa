@@ -7,8 +7,6 @@ import { AdminButton } from "../components/AdminButton";
 import { Button } from "../components/button/Button";
 import { TableRowCard } from "../components/TableRowCard";
 import { TableCards } from "../components/TableCards";
-import { TableCompetencies } from "../components/TableCompetencies";
-import { TableRowCompetency } from "../components/TableRowCompetency";
 import { Parent } from "../coursesAPIs/KAmodels/Parent";
 import { dropDownMenu } from "../components/dropDownmenu";
 declare var componentHandler : any;
@@ -16,22 +14,22 @@ declare var getmdlSelect : any;
 
 export class AdminCourseController extends Controller {
 
-    //
     private tableRows : TableRowCard[] = [];
     //cards for setting the competency
     private selectedCards : Card[] = [];
-    //ids for incrementing on tablesrows
-    private savedCoursesId : number = 0;
+    private cards : Card[] = [];
     private selectedCoursesId : number = 0;
-    //comptenciestable
-    private tableCompetencies : TableCompetencies;
-    //courses with competencies
-    private arraySelectedComptencies : string[] = [];
+    //competencies
+    private competencyNames : string[] = [];
+    private competencyIds : number[] = [];
+    //areas
+    private areaNames : string[] = [];
+    private areaIds : number[] = [];
 
     //parameters for API's
     private enumParameters : any = {};
     private tempParameters : string[] = ["1", "50", "Entrepreneurship", "price-free", "relevance"];
-
+    
 
     protected setup(): void {
         this.enumParameters = {
@@ -44,316 +42,52 @@ export class AdminCourseController extends Controller {
             ordering : ORDERING.relevance
         };
 
-        // this.tempParameters = ;
-
-        //add functionality to buttons
-        this.setCompetenciespage();
-        this.setSavedCoursesTable();
         this.getCompetencies();
         this.setFilter();
+        
         this.setBackAndNextButtons();
         
         //manages courses on page
         this.setCourses();
-        
-    }
-    
-    private setCompetenciespage() {
-        let buttonAdd : Button = new Button("add competencies");
-        let buttonDelete : Button = new Button("delete");
-
-
-        buttonAdd.setOnClick((e : any) => {
-            if(this.selectedCards.length === 0) {
-                window.alert("select cards please...");
-            } else {
-                this.addCompetencyToCourse();
-            }
-        });
-
-        buttonDelete.setOnClick((e : any) => {
-            this.deleteSelectedCards();
-        });
-
-
-        $("#tableButtons").append(buttonAdd.getView());
-        $("#tableButtons").append(buttonDelete.getView());
-        
+        this.addNewCoursesButtons();
         
     }
 
-    private getCompetencies() {
-        let competencyId : number = 0;
-        let tableRows : TableRowCompetency[] = [];
+    private getEmptyTableView(text : string) {
+        return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
+    }
+
+    private getCompetencies() : any {
         let DB = new ApiService(API.DB);
         DB.setPath("areas");
         //getting the courses from DB
         DB.getParent((object : any) => {
             //TODO: fix deze shit
             if (object.errorMessage == null) {
-                object.map((mainResponse: any) =>
-                mainResponse.competencies.map((mainResponse: any) => tableRows.push(new TableRowCompetency(mainResponse, competencyId++))));
-                this.tableCompetencies = new TableCompetencies(tableRows);
+                object.forEach(mainResponse => {
+                    let areaId = mainResponse.id;
+                    this.areaNames.push(mainResponse.name);
+                    mainResponse.competencies.forEach(mainResponse => {
+                        this.areaIds.push(areaId);
+                        console.log(mainResponse.name);
+                        this.competencyNames.push(mainResponse.name);
+                        this.competencyIds.push(mainResponse.id);                
+                    });
+                });
+                this.setSelectCoursesWithCompetencyTable();
             } else {
                 console.log("Something went wrong!");
             }
  
         });
+ 
+        
     }
-
-    //DE JUISTE MOET GESELECTEERD ZIJN WANNEER JE OP BACK KLIKT
-    private addCompetencyToCourse() {
-        let buttonBack : Button = new Button("Return to courses");
-        let buttonBackCompetency : Button = new Button("Back");
-        let buttonNextCompetency : Button = new Button("Next");
-        let buttonSaveCompetency : Button = new Button("Save");
-        let cardCount = 0;
-        let saveComptency : boolean = false;
-
-        //setup
-        let card = this.selectedCards[cardCount];
-        $("#competencyCard").append(card.getCardView());
-        $("#table3").append(this.tableCompetencies.getTableView());
-        componentHandler.upgradeDom();
-
-        //setting buttons
-        buttonBack.setOnClick((e : any) => {
-            this.switchToMainView();
-        });
-
-        buttonBackCompetency.setOnClick((e : any) => {
-            //remove the last saved competency
-            if(saveComptency) {
-                this.saveSelectedCompetency(this.selectedCards[cardCount]);
-                saveComptency = false;
-            }
-            
-            console.log("deleted element with id: " + this.arraySelectedComptencies.pop());
-            $("#competencyCard").empty();
-            $("#table3").empty();
-
-            let card = this.selectedCards[--cardCount];
-
-            if(cardCount === 0) {
-                $("#backButton").css("display", "none");
-                componentHandler.upgradeDom();
-                
-            } else {
-                $("#backButton").css("display", "block");
-                componentHandler.upgradeDom();
-            }
-
-            //limit
-            if(cardCount < (this.selectedCards.length)) {
-                
-                $("#saveButton").css("display", "none");
-                $("#nextButton").css("display", "block");
-                componentHandler.upgradeDom();
-                
-            }
-
-            $("#competencyCard").append(card.getCardView());
-            $("#table3").append(this.tableCompetencies.getTableView());
-            // this.setSelectedRadioButton(cardCount);
-            componentHandler.upgradeDom();
-        });
-
-        buttonNextCompetency.setOnClick((e : any) => {
-            saveComptency = true;
-            this.saveSelectedCompetency(this.selectedCards[cardCount]);
-            $("#competencyCard").empty();
-            $("#table3").empty();
-            
-            let card = this.selectedCards[++cardCount];
-
-            //limit
-            if(cardCount === (this.selectedCards.length - 1)) {
-                
-                $("#saveButton").css("display", "block");
-                $("#nextButton").css("display", "none");
-                $("#backButton").css("display", "block");
-                componentHandler.upgradeDom();
-                
-            } else {
-                //hide saveButton
-                $("#saveButton").css("display", "none");
-                //show nextButton and backButton
-                $("#nextButton").css("display", "block");
-                $("#backButton").css("display", "block");
-                componentHandler.upgradeDom();
-            }
-
-            $("#competencyCard").append(card.getCardView());
-            $("#table3").append(this.tableCompetencies.getTableView());
-            //this.setSelectedRadioButton(cardCount);
-            componentHandler.upgradeDom();
-            
-        });
-
-        buttonSaveCompetency.setOnClick((e : any) => {
-            this.saveSelectedCompetency(this.selectedCards[cardCount]);
-            
-            let numberOfFailed : number = this.saveSelectedCourses();
-
-            this.switchToMainView();
-
-            if (numberOfFailed > 0) {
-                window.alert(numberOfFailed + " have failed saving");
-            } else {
-                window.alert("Course(s) added succesfully!!");
-            }
-        });
-
-
-        $("#saveButton").append(buttonSaveCompetency.getView());
-        $("#saveButton").css("display", "none");
-        $("#backButton").append(buttonBackCompetency.getView());
-        $("#backButton").css("display", "none");
-        $("#nextButton").append(buttonNextCompetency.getView());
-        $("#nextButton").css("display", "none");
-
-        //if only one card needs competency
-        if(this.selectedCards.length == 1) {
-            $("#saveButton").css("display", "");
-        } else {
-            $("#nextButton").css("display", "");
-        }
-
-
-
-        $("#returnButton").append(buttonBack.getView());
-        componentHandler.upgradeDom();
-
-
-        $("#tableButtons").css("display", "none");
-        $("#mainContainer").css("display", "none");
-        $("#linkContainer").css("display", "block");
-
-    }
-
-    private switchToMainView() {
-        $("#backButton").empty();
-        $("#nextButton").empty();
-        $("#saveButton").empty();
-        $("#returnButton").empty();
-        $("#competencyCard").empty();
-        $("#table3").empty();
-
-        $("#tableButtons").css("display", "");
-        $("#mainContainer").css("display", "");
-        $("#linkContainer").css("display", "none");
-        //clearing table
-        this.arraySelectedComptencies = [];
-        this.selectedCards = [];
-        this.tableRows = [];
-        $("#table2").empty();
-
-    }
-
-    //KAN HANDIG ZIJN BIJ UPDATEN VAN COURSES
-    /*
-    private setSelectedRadioButton(cardCount : number) {
-        var radioButtons = document.getElementById("table3").getElementsByTagName("label");
-        //loop through checkboxes
-        console.log("cardCount" + cardCount);
-        console.log("arrayselectedComptencies" + this.arraySelectedComptencies);
-        for(var i = 0; i < radioButtons.length; i++) {
-            if(this.arraySelectedComptencies[cardCount] != null) {
-                console.log("gevonden in de lijst!");
-                if(radioButtons[i].getAttribute("value") === this.arraySelectedComptencies[cardCount]) {
-                    console.log("set checked");
-                    radioButtons[i].classList.add("is-checked");
-                    $("#table3").empty();
-                    componentHandler.upgradeDom();
-
-                }
-            }
-        }
-    }
-    */
-
-    private saveSelectedCourses() {
-        let failed : number = 0;
-        for (let i = 0; i < this.arraySelectedComptencies.length; i++) {
-            let data : any = {
-                "title" : this.selectedCards[i].getTitle(),
-                "description" : this.selectedCards[i].getDescription(),
-                "image" : this.selectedCards[i].getPicture(),
-                "url" : this.selectedCards[i].getUrl(),
-            };
-
-            let DBOptions : any = {
-                headers: {
-                    //headerinfo
-                    "Content-type": "application/json"
-                },
-                body: JSON.stringify(data),
-            };
-
-            let DB = new ApiService(API.DB);
-            DB.setPath("areas/1/competencies/" + this.arraySelectedComptencies[i] + "/courses");
-            DB.setOptions(DBOptions);
-            DB.post(<T>(object : any) => {
-                //check if POST is succeeded
-                if (object.statusCode != 201) {
-                    failed++;
-                }
-            });
-        }
-        return failed;
-    }
-
-    private saveSelectedCompetency(card : Card) {
-        var radioButtons = document.getElementById("table3").getElementsByTagName("label");
-        //loop through checkboxes
-        for(var i = 0; i < radioButtons.length; i++) {
-            if(radioButtons[i].classList.contains("is-checked")) {
-                //console.log("added competency");
-                this.arraySelectedComptencies.push(radioButtons[i].getAttribute("value"))
-            }
-        }
-    }
-
-    private deleteSelectedCards() {
-        var checkBoxes = document.getElementById("table2").getElementsByTagName("label");
-        //loop through checkboxes
-        for(var i = 0; i < checkBoxes.length; i++) {
-            if(checkBoxes[i].classList.contains("is-checked")) {
-                //loopthrough selectedCards
-                for(var j = 0; j < this.selectedCards.length; j++) {
-                    if ("tableId" + this.selectedCards[j].getcardId().toString() == checkBoxes[i].getAttribute("value")) {
-                        //remove the selectedcard from array
-                        this.selectedCards.splice(j,1);
-                        this.tableRows.splice(j,1);
-                        //remove the row
-                        var tableRows = document.getElementById("table2").getElementsByTagName("li");
-                        for(var l = 0; l < tableRows.length; l++) {
-                            if (tableRows[l].getAttribute("id") == checkBoxes[i].getAttribute("value")) {
-                                tableRows[l].parentNode.removeChild(tableRows[l]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        componentHandler.upgradeDom();
-    }
-
-    /*
-    private setUserMenuButton() {
-        //set navigation-button to acces userpage
-        let menuButton : Button = new Button("user");
-        menuButton.setOnClick((e : any) => {
-            window.location.href = "userCourses.html";
-        });
-
-        $("#menuButton").append(menuButton.getView());
-    }
-    */
-
+   
     private setCourses() {
         $("#cardsContainer").empty();
         $("#spinner").css("display", "");
+        this.cards = [];
         let cardId : number = 0;
 
         //setting courses from Udemy
@@ -378,14 +112,14 @@ export class AdminCourseController extends Controller {
             }
 
             results.courses.forEach(element => {
-                let acceptCourseButton : AdminButton = new AdminButton("accept");
-
+                let acceptCourseButton : AdminButton = new AdminButton("accept", cardId);
+                //prevent errors
+                acceptCourseButton.setOnClick((e: any) => {
+                });
                 let card = new Card(cardId, element.title, "https://www.udemy.com" + element.url, undefined, element.image_480x270);
-                //acceptCourseButton = this.setAddFunction(acceptCourseButton,card);
+                this.cards.push(card);
 
-                acceptCourseButton = this.addCourseToList(acceptCourseButton, card);
                 $("#cardsContainer").append(card.getCardView());
-                componentHandler.upgradeDom();
                 $("#" + cardId).append(acceptCourseButton.getView());
                 componentHandler.upgradeDom();
                 cardId++;
@@ -396,26 +130,295 @@ export class AdminCourseController extends Controller {
         let KA = new ApiService(API.KhanAcademy);
         KA.setPath("entrepreneurship2");
         KA.getParent(<T>(object : T) => {
-            let acceptCourseButton : AdminButton = new AdminButton("accept");
+            let acceptCourseButton : AdminButton = new AdminButton("accept", cardId);
+            //prevent errors
+            acceptCourseButton.setOnClick((e: any) => {
+            });
             let parent = new Parent(object);
-
             let card = new Card(cardId, parent.title, parent.ka_url, parent.description, parent.icon);
+            this.cards.push(card);
 
-            acceptCourseButton = this.addCourseToList(acceptCourseButton, card);
             $("#cardsContainer").append(card.getCardView());
-            componentHandler.upgradeDom();
             $("#" + cardId).append(acceptCourseButton.getView());
             componentHandler.upgradeDom();
             cardId++;
-            // let children : any = parent.children;
-            
-            // for (let index = 0; index < children.length; index++) {
-            //     console.log("the specific page: " + children[index].url);   
-            // }
         });
 
         $("#spinner").css("display", "none");
 
+
+    }
+
+    private addNewCoursesButtons() {
+        let addButton : Button = new Button("Add");
+
+        addButton.setOnClick((e : any) => {
+            this.tableRows = [];
+            this.selectedCards = [];
+            let atleastOneCardChecked : boolean = false;
+
+            var checkBoxes = document.getElementById("cardsContainer").getElementsByTagName("label");
+            //loop through checkboxes
+            for(var i = 0; i < checkBoxes.length; i++) {
+                if(checkBoxes[i].classList.contains("is-checked")) {
+                    atleastOneCardChecked = true;
+                    let tableCard : any = {
+                        "courseId" : this.cards[i].getcardId(),
+                        "title" : this.cards[i].getTitle(),
+                    };
+                    let tableRow = new TableRowCard(tableCard, this.selectedCoursesId++);
+                    this.tableRows.push(tableRow);
+                    this.selectedCards.push(this.cards[i]);
+                    
+
+                }
+            }
+
+            if (!atleastOneCardChecked) {
+                window.alert("Please select a card..");
+                return;
+            }
+
+            let table = new TableCards(this.tableRows);
+            $("#table4").empty();
+            $("#table4").append(table.getTableView());
+
+            componentHandler.upgradeDom();
+
+            
+        });
+
+        let selectButton : AdminButton = new AdminButton("accept", 10001);
+
+        selectButton.setOnClick((e : any) => {
+            this.selectAllSelectButtons("cardsContainerButtons", 0, "cardsContainer");
+            
+            
+        });
+
+        $("#cardsContainerButtons").append(addButton.getView());
+
+        $("#cardsContainerButtons").append(selectButton.getView());
+
+    }
+
+    private selectAllSelectButtons(ownCheckBox : string, element : number, checkboxesList : string) {
+        var OwnCheckbox = document.getElementById(ownCheckBox).getElementsByTagName("label");
+        var checkBoxes = document.getElementById(checkboxesList).getElementsByTagName("label");
+
+        if(!OwnCheckbox[element].classList.contains("is-checked")) {
+            //loop through checkboxes
+            for(var i = 0; i < checkBoxes.length; i++) {
+                if(!checkBoxes[i].classList.contains("is-checked")) {
+                    checkBoxes[i].classList.add("is-checked");
+                }
+            }
+        } else {
+            //loop through checkboxes
+            for(var i = 0; i < checkBoxes.length; i++) {
+                if(checkBoxes[i].classList.contains("is-checked")) {
+                    checkBoxes[i].classList.remove("is-checked");
+                }
+            }
+
+        }
+        componentHandler.upgradeDom();
+    }
+
+    private setSelectCoursesWithCompetencyTable() {
+        let competenciesMenu : dropDownMenu = new dropDownMenu("Competency", this.competencyNames);
+        $("#competencySelectorAndSelectAllRows").append(competenciesMenu.getMenuView());
+        componentHandler.upgradeDom();
+        getmdlSelect.init(".getmdl-select");  
+        
+        $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new Courses!!"));
+
+        this.addContainerButtons(); 
+
+    }
+
+    private addContainerButtons() {
+        let saveButton : Button = new Button("Save");
+        let deleteButton : Button = new Button("Delete");
+        let button : AdminButton = new AdminButton("accept", 1000);
+
+        saveButton.setOnClick((e : any) => {
+            this.saveButton();
+        });
+
+        deleteButton.setOnClick((e : any) => {
+            this.deleteButton();
+        });
+
+        button.setOnClick((e : any) => {
+            this.selectAllSelectButtons("competencySelectorAndSelectAllRows", 1, "table4");
+        });
+
+        $("#competencySelectorAndSelectAllRows").append(button.getView());
+        
+        $("#tableCardsButtons").append(deleteButton.getView());
+        $("#tableCardsButtons").append(saveButton.getView());
+        componentHandler.upgradeDom();
+        
+        
+    }
+
+    private saveButton() {
+        let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
+
+        //get selected competeny
+        let competencyName : string = "";
+        let competencyId : number = 0;
+        let areaId : number = 0;
+        var inputs = document.getElementById("competencySelectorAndSelectAllRows").getElementsByTagName("input");
+        //loop through inputs
+        for(var i = 0; i < inputs.length; i++) {
+            if(inputs[i].getAttribute("name") === "Competency") {
+                if (inputs[i].getAttribute("value").length === 0) {
+                    window.alert("Please select a competency..");
+                    return;
+                }
+                console.log(inputs[i].getAttribute("value"));
+                competencyName = inputs[i].getAttribute("value");  
+            }     
+        }
+
+        for(var i = 0; i < this.competencyNames.length; i++) {
+            if(competencyName === this.competencyNames[i]) {
+                competencyId = this.competencyIds[i];
+                areaId = this.areaIds[i];
+            }     
+        }
+
+        //get selected courses
+        let failed : number = 0;
+        let atleastOneCardChecked : boolean = false;
+        var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
+        //loop through checkboxes
+        for(var i = 0; i < checkBoxes.length; i++) {
+            if(checkBoxes[i].classList.contains("is-checked")) {
+                atleastOneCardChecked = true;
+                this.tableRows[i] = deletedElement;
+                
+                let failedBool : boolean = this.sendCardToDB(areaId, competencyId, this.selectedCards[i]);
+                
+                if (failedBool) {
+                    failed++;
+                }  
+
+            }
+        }
+
+        if (!atleastOneCardChecked) {
+            window.alert("Please select a card..");
+            return;
+        }
+
+        for( var i = 0; i < this.tableRows.length; i++) {
+            if (this.tableRows[i] === deletedElement) {
+                this.tableRows.splice(i, 1); 
+                this.selectedCards.splice(i, 1);
+            }
+        }
+
+        for( var i = this.tableRows.length-1; i >= 0 ; i--) {
+            if (this.tableRows[i] === deletedElement) {
+                this.tableRows.splice(i, 1); 
+                this.selectedCards.splice(i, 1);
+            }         
+        }        
+
+        if (failed > 0) {
+            window.alert(failed + " have failed saving");
+        } else {
+            window.alert("Course(s) added succesfully!!");
+        }
+
+        let table = new TableCards(this.tableRows);
+        $("#table4").empty();
+        if (this.tableRows.length === 0) {
+            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+
+        } else {
+            $("#table4").append(table.getTableView());
+        }
+
+        componentHandler.upgradeDom();
+
+    }
+
+    private deleteButton() {
+        let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
+
+        //get selected courses
+        let atleastOneCardChecked : boolean = false;
+        var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
+        //loop through checkboxes
+        for(var i = 0; i < checkBoxes.length; i++) {
+            if(checkBoxes[i].classList.contains("is-checked")) {
+                atleastOneCardChecked = true;
+                this.tableRows[i] = deletedElement;                
+            }
+        }
+
+        if (!atleastOneCardChecked) {
+            window.alert("Please select a card..");
+            return;
+        }
+
+        for( var i = 0; i < this.tableRows.length; i++) {
+            if (this.tableRows[i] === deletedElement) {
+                this.tableRows.splice(i, 1); 
+                this.selectedCards.splice(i, 1);
+            }
+        }
+
+        for( var i = this.tableRows.length-1; i >= 0 ; i--) {
+            if (this.tableRows[i] === deletedElement) {
+                this.tableRows.splice(i, 1); 
+                this.selectedCards.splice(i, 1);
+            }         
+        }
+
+        let table = new TableCards(this.tableRows);
+        $("#table4").empty();
+        if (this.tableRows.length === 0) {
+            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+
+        } else {
+            $("#table4").append(table.getTableView());
+        }
+
+        componentHandler.upgradeDom();
+
+    }
+
+    private sendCardToDB(areaId : number, competencyId : number, selectedCard : Card) : any {
+            let data : any = {
+                "title" : selectedCard.getTitle(),
+                "description" : selectedCard.getDescription(),
+                "image" : selectedCard.getPicture(),
+                "url" : selectedCard.getUrl(),
+            };
+
+            let DBOptions : any = {
+                headers: {
+                    //headerinfo
+                    "Content-type": "application/json"
+                },
+                body: JSON.stringify(data),
+            };
+
+            let DB = new ApiService(API.DB);
+            DB.setPath("areas/" + areaId + "/competencies/" + competencyId + "/courses");
+            DB.setOptions(DBOptions);
+            DB.post(<T>(object : any) => {
+                //check if POST is succeeded
+                if (object.statusCode != 201) {
+                    return true;
+                }
+                return false;
+            });
     }
 
     private setFilter() {
@@ -425,6 +428,7 @@ export class AdminCourseController extends Controller {
         let priceMenu : dropDownMenu = new dropDownMenu(names[2], [PRICE.priceFree, PRICE.pricePaid]);
         let OrderingMenu : dropDownMenu = new dropDownMenu(names[3], [ORDERING.highToLow, 
             ORDERING.highestRated, ORDERING.lowToHigh, ORDERING.mostReviewed, ORDERING.newest, ORDERING.relevance]);
+
 
         let applyButton : Button = new Button("Apply");
 
@@ -448,9 +452,10 @@ export class AdminCourseController extends Controller {
         });
 
 
-        $("#filter").append(pageSizeMenu.getMenuView(), subCatMenu.getMenuView(), priceMenu.getMenuView(), OrderingMenu.getMenuView(), applyButton.getView());
+        $("#filter").append(pageSizeMenu.getMenuView(), subCatMenu.getMenuView(), priceMenu.getMenuView(), OrderingMenu.getMenuView());
+        $("#cardsContainerButtons").append(applyButton.getView());
         componentHandler.upgradeDom();
-        getmdlSelect.init("#filter");
+        getmdlSelect.init(".getmdl-select");
 
     }
 
@@ -535,96 +540,5 @@ export class AdminCourseController extends Controller {
 
         $("#backCardsButton").append(backButton.getView());
         $("#nextCardsButton").append(nextButton.getView());
-    }
-
-    //add course to list for adding competency
-    private addCourseToList(acceptCourseButton : AdminButton, card : Card) {
-        let tableCard : any = {
-            "courseId" : card.getcardId(),
-            "title" : card.getTitle(),
-        };
-
-
-        acceptCourseButton.setOnClick((e: any) => {
-            let tableRow = new TableRowCard(tableCard, this.selectedCoursesId++);
-            this.selectedCards.push(card);
-            this.tableRows.push(tableRow);
-            let table = new TableCards(this.tableRows);
-            $("#table2").empty();
-            $("#table2").append(table.getTableView());
-
-            componentHandler.upgradeDom();
-        });
-
-        return acceptCourseButton;
-    }
-
-    //getting coursedata ready for sending to DB
-    private setAddFunction(acceptCourseButton : AdminButton, card : Card) {
-        let data : any = {
-            "title" : card.getTitle(),
-            "description" : card.getDescription(),
-            "image" : card.getPicture(),
-            "url" : card.getUrl()
-        };
-
-        let DBOptions : any = {
-            headers: {
-                //headerinfo
-                "Content-type": "application/json"
-            },
-            body: JSON.stringify(data),
-
-        };
-
-        //onclick to send course to DB
-        acceptCourseButton.setOnClick((e: any) => {
-            let DB = new ApiService(API.DB);
-            DB.setPath("courses");
-            DB.setOptions(DBOptions);
-            DB.post(<T>(object : any) => {
-                //check if POST is succeeded
-                if (object.statusCode == 201) {
-                    window.alert("Course added succesfully!!");
-                } else {
-                    window.alert("something went wrong.");
-                }
-            });
-         });
-
-        return acceptCourseButton;
-    }
-
-    //setting the refresh button for the selected courses table
-    private setSavedCoursesTable() {
-        let refreshButton : Button = new Button("refresh");
-        let tableRows : TableRowCard[];
-        let table = new TableCards(tableRows);
-        
-        refreshButton.setOnClick((e : any) => {
-            $("#table1").empty();
-            tableRows = [];
-            let DB = new ApiService(API.DB);
-            DB.setPath("areas");
-            //getting the courses from DB
-            DB.getParent((object : any) => {
-                //mapping all courses to tableRows   
-                if (object.errorMessage == null) {
-                    object.map((mainResponse: any) =>
-                    mainResponse.competencies.map((mainResponse: any) => 
-                    mainResponse.courses.map((mainResponse: any) => tableRows.push(new TableRowCard(mainResponse, this.savedCoursesId++)))));
-                    table = new TableCards(tableRows);
-                } else {
-                    console.log("Something went wrong!");
-                }
-
-                $("#table1").append(refreshButton.getView(), table.getTableView());
-                componentHandler.upgradeDom();
-
-            });
-        });
-
-        $("#table1").append(refreshButton.getView(), table.getTableView());
-        componentHandler.upgradeDom();
     }
 }

@@ -1,0 +1,239 @@
+<html>
+
+<head>
+    <!-- Link to the favicon is the current running server -->
+    <link rel="shortcut icon" type="image/png" href="../favicon.png" />
+
+    <title>New Courses</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <!--getmdl-select-->   
+    <link rel="stylesheet" href="../assets/vendors/get-mdl-select/getmdl-select.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <script defer src="../assets/vendors/get-mdl-select/getmdl-select.min.js"></script>
+    <script src="../assets/vendors/jquery/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/bundle.js"></script>
+</head>
+
+<style>
+    .demo-card-wide.mdl-card {
+        width: 290px;
+        min-height: 304;
+    }
+
+    .demo-card-wide > .mdl-card__title {
+        color: #fff;
+        height: 176px;
+        background: url('../assets/demos/welcome_card.jpg') center / cover;
+    }
+    .demo-card-wide > .mdl-card__menu {
+        color: #fff;
+    }
+
+    @media only screen and (min-width: 480px) {
+        .demo-card-wide.mdl-card {
+            width: 290px;
+            min-height: 304;
+        }
+
+    }
+
+    @media only screen and (min-width: 1080px) {
+        .demo-card-wide.mdl-card {
+            min-height: 304;
+            width: 390px;
+        }
+    }
+
+    /*.demo-list-control {
+      width: 300px;
+    }*/
+    
+    .demo-list-radio {
+      display: inline;
+    }
+
+    #backButton {
+        float: left;
+        
+    }
+
+    #saveButton {
+        float: right;
+        
+    }
+
+    #nextButton {
+        float: right;
+        
+    }
+
+    #backCardsButton {
+        float: left;
+    }
+
+    #nextCardsButton {
+        float: right;
+    }
+
+    #fixed-table {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+    
+    #cardsContainerButtons {
+        text-align: right;
+        margin-right: 1%;
+    }
+
+    #tableCardsButtons {
+        text-align: right;
+        padding: 3%;
+    }
+
+    .mdl-button {
+        margin-right: 3%;
+    }
+
+</style>
+
+<body>
+    <!--<div class="mdl-layout-spacer"></div>-->
+
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <!-- Title -->
+                    <span class="mdl-layout-title">TestYourSkills</span>
+                    <!-- Add spacer, to align navigation to the right -->
+                    <div class="mdl-layout-spacer"></div>
+                    <!-- Navigation. We hide it in small screens. -->
+                    <nav class="mdl-navigation android-navigation mdl-layout--large-screen-only" id="onPage">
+                        <!--menubuttons-->
+
+                    </nav>
+                </div>
+            </header>
+
+            <div class="mdl-layout__drawer">
+                <span class="mdl-layout-title">TestYourSkills</span>
+                <nav class="mdl-navigation" id="onBar">
+                    <!--menubuttons-->
+                </nav>
+            </div>
+
+            <main class="mdl-layout__content">
+                <div class="page-content">
+                    <!-- Your content goes here -->
+                    <a name="top"></a>
+                    
+                    <div class="android-more-section" style="margin-left: unset;">
+                        <div class="mdl-cell mdl-cell--4-col" style="float: left;">
+                            
+                            <div class="android-section-title mdl-typography--display-1-color-contrast">2. Add competencies to your cards!!</div>
+                            <div class="mdl-shadow--3dp">
+                                <div id="competencySelectorAndSelectAllRows" style="text-align: center;"></div>
+                                <div id="table4" style="overflow-y: scroll; height: 350px; margin-left: 2%;"></div>
+                                <div id="tableCardsButtons"></div>
+                            </div>
+                        </div>
+
+                        <div class="mdl-cell mdl-cell--12-col">
+                            <div class="android-section-title mdl-typography--display-1-color-contrast">1. Pick Your Cards!!</div>
+                            <div class="mdl-layout-spacer"></div>
+                            <div class="mdl-cell mdl-cell--12-col" id="filter"></div>
+                            <div id="cardsContainerButtons">
+                                
+                            </div>
+                            
+                        </div>
+                        
+
+                        <div class="android-card-container mdl-grid" id="cardsContainer">
+            
+                        </div>
+                        <div class="mdl-cell mdl-cell--8-col" style="float: right">
+                            <div id="backCardsButton"></div>
+                            <div class="mdl-layout-spacer"></div>
+                            <div id="nextCardsButton"></div>
+                        </div>
+                    </div>
+
+                    <footer class="mdl-mega-footer">
+                        <div class="mdl-mega-footer__middle-section">
+                        
+                            <div class="mdl-mega-footer__drop-down-section">
+                            <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+                            <h1 class="mdl-mega-footer__heading">Features</h1>
+                            <ul class="mdl-mega-footer__link-list">
+                                <li><a href="#">About</a></li>
+                                <li><a href="#">Terms</a></li>
+                                <li><a href="#">Partners</a></li>
+                                <li><a href="#">Updates</a></li>
+                            </ul>
+                            </div>
+                        
+                            <div class="mdl-mega-footer__drop-down-section">
+                            <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+                            <h1 class="mdl-mega-footer__heading">Technology</h1>
+                            <ul class="mdl-mega-footer__link-list">
+                                <li><a href="#">How it works</a></li>
+                                <li><a href="#">Patterns</a></li>
+                                <li><a href="#">Usage</a></li>
+                                <li><a href="#">Products</a></li>
+                                <li><a href="#">Contracts</a></li>
+                            </ul>
+                            </div>
+                        
+                            <div class="mdl-mega-footer__drop-down-section">
+                            <input class="mdl-mega-footer__heading-checkbox" type="checkbox" checked>
+                            <h1 class="mdl-mega-footer__heading">FAQ</h1>
+                            <ul class="mdl-mega-footer__link-list">
+                                <li><a href="#">Questions</a></li>
+                                <li><a href="#">Answers</a></li>
+                                <li><a href="#">Contact us</a></li>
+                            </ul>
+                            </div>
+
+                            <div class="mdl-mega-footer--right-section">
+                                <a class="mdl-typography--font-light" href="#top">
+                                    Back to Top
+                                    <i class="material-icons">expand_less</i>
+                                </a>
+                            </div>
+                        
+                        </div>
+
+                        
+                        
+                        <div class="mdl-mega-footer__bottom-section">
+                            <div class="mdl-logo">TestYourSkills</div>
+                            <ul class="mdl-mega-footer__link-list">
+                            <li><a href="#">Help</a></li>
+                            <li><a href="#">Privacy & Terms</a></li>
+                            </ul>
+                        </div>
+                          
+                    </footer>
+                </div>
+            </main>
+        </div>
+        
+
+    
+
+    <script>
+        window.onload = function(e){
+            app("adminCourses");
+        }
+    </script>
+</body>
+</html>
