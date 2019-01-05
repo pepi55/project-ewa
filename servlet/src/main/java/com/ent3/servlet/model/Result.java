@@ -2,7 +2,6 @@ package com.ent3.servlet.model;
 
 import java.io.Serializable;
 
-import javax.json.bind.annotation.JsonbTransient;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;

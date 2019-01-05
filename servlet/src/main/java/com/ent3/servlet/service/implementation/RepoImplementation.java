@@ -398,6 +398,8 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         throw new NotYetImplementedException();
     }
 
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Result> getAllResults(User user) {
         EntityManager em = getEntityManager();
 
@@ -410,6 +412,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         return result;
     }
 
+    @Override
     public void deleteAllResults(User user) {
         EntityManager em = getEntityManager();
 
