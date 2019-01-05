@@ -69,6 +69,10 @@ export class AdminSavedCoursesController extends Controller {
                             this.selectAllSelectButtons("checkBoxSelectAll" + numberOfTables, 0, "tableCards" + numberOfTables);
                         });
 
+                        if (cards.length === 0) {
+                            table.addEmptyScrollTable(this.getEmptyTableView("This box is empty. Go fill it with some new courses!!"));
+                        }
+
                         $("#cardsContainer").append(table.getCardsScrollTableView());
                         $("#checkBoxSelectAll" + numberOfScrollTables).append(checkButton.getView());
                         componentHandler.upgradeDom();
@@ -118,5 +122,9 @@ export class AdminSavedCoursesController extends Controller {
             }
 
         }
+    }
+
+    private getEmptyTableView(text : string) {
+        return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
     }
 }

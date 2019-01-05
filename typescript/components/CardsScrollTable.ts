@@ -21,6 +21,10 @@ export class CardsScrollTable {
         
     }
 
+    public addEmptyScrollTable(html : string) {
+        this.bodyHTML = html;
+    }
+
     public getCardsScrollTableView() : string {
         const mainStart : string = `<!--cards--> <div class="mdl-cell mdl-cell--12-col mdl-shadow--3dp">`;
         const competencyName : string = `<div class="mdl-card__title"><h2 class="mdl-card__title-text">${this.competencyName}</h2><div id="checkBoxSelectAll${this.id}" style="margin-left: 1%;"></div></div>`;
