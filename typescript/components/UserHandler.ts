@@ -9,6 +9,7 @@ export class UserHandler {
         promise.then(function(result){
             return result.json();
         }).then(function(json:any){
+            console.log(json);
             for (let user of json){
                 console.log(user)
                 let newuser = new User(user["email"],user["firstName"],user["lastName"],user["username"],user["password"],user["role"]); 

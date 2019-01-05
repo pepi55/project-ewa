@@ -4,11 +4,14 @@ import { AdminCourseController } from "./controllers/AdminController";
 import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
 import { ProfileController } from "./controllers/ProfileController";
+import { TestController } from "./controllers/testController";
+import { ResultController } from "./controllers/ResultController";
 import { AdminSavedCoursesController } from "./controllers/AdminsavedCoursesController";
 import { UserRole } from "./components/UserRole";
 import { AdminEditTestController } from "./controllers/AdminEditTestController";
 
 declare var componentHandler : any;
+
 
 export class App {
 
@@ -38,7 +41,11 @@ export class App {
             let controller : UserCourseController = new UserCourseController();
         } else if (type == "profile") {
             let controller : ProfileController = new ProfileController();
-        } else if (type == "AdminSavedCoursesController") {
+        } else if (type == "test") {
+            let controller : TestController = new TestController();
+        } else if (type == "result") {
+            let controller : ResultController = new ResultController();
+        }  else if (type == "AdminSavedCoursesController") {
             let controller : AdminSavedCoursesController = new AdminSavedCoursesController();
         } else if (type == "adminEditTestController") {
             let controller : AdminEditTestController = new AdminEditTestController();
