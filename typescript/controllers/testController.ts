@@ -29,14 +29,14 @@ export class TestController extends Controller {
     }
 
     private updateScreen(screen: number) {
-        if (screen <= 0){
+        if (screen <= 0) {
             $("#back_button").addClass("disabled-button");
-        } else if (screen >= this.questionHandler.getQuestionLength()){
+        } else if (screen >= this.questionHandler.getQuestionLength()) {
             $("#next_button").addClass("disabled-button");
             let completeButton: Button = new Button("Complete");
             completeButton.setOnClick(() => this.getDataFromTest());
             $("#button_area2").html(completeButton.getView());
-        } else{
+        } else {
             let nextButton: Button = new Button("Next");
             nextButton.setOnClick(() => this.updateScreen(this.currentScreen + 1));
             $("#button_area2").html(nextButton.getView());
@@ -52,6 +52,7 @@ export class TestController extends Controller {
     }
 
     private getDataFromTest() {
+        let missing = 0;
         this.newResults = new Array();
         let z = 0;
         let x = this.questionHandler.getCompetentieById(z).getQuestionLength();
@@ -61,15 +62,28 @@ export class TestController extends Controller {
                 z++;
                 x = this.questionHandler.getCompetentieById(z).getQuestionLength();
             }
-            let tempOptions = document.getElementsByName('options-'+i);
-            for (let y = 0; y < tempOptions.length; y++) {
+            let tempOptions = document.getElementsByName('options-' + i);
+            let y = 0;
+            for (;y < tempOptions.length;) {
                 if (tempOptions[y]["checked"] == true) {
                     this.questionHandler.getCompetentieById(z).addScore(tempOptions[y]["value"])
+                    break;
                 }
+                y++;
             }
             x--;
+            if (y == 5){
+            window.alert("Not everything is filled in");
+                missing++;
+                break;
+            }
+            if (missing > 0) {
+                break;
+            }
         }
-        this.getOldData();
+        if (missing == 0) {
+            this.getOldData();
+        }
     }
 
     private storeData() {

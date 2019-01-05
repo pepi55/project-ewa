@@ -81,7 +81,6 @@ export class ResultComparer {
     }
 
     public getView() {
-        console.log(this.getResultList())
         const string = `<div class="mdl-grid">
             <div class="mdl-cell mdl-cell--2-col">
             </div>
