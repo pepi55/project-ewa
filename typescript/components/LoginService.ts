@@ -29,13 +29,6 @@ export class LoginService{
         return !!this.user;
     }
 
-    public getUserId(): number{
-        if (this.isLoggedIn()) {
-            //return this.user.getId();
-        }
-        return null;
-    }
-
     public getUserName() {
         if (this.isLoggedIn()) {
             return this.user.getUsername();

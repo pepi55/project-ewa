@@ -32,7 +32,7 @@ public class Question implements Serializable {
     private int id;
 
     private String question;
-    // private int score;
+    
 
     @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
     @JoinColumn(name = "competency_id")
@@ -46,7 +46,10 @@ public class Question implements Serializable {
     public Question(String question, Competency competency){
         this.question = question;
         this.competency = competency;
-        // this.score = 0;
+        
+    }
+    public int getId(){
+        return this.id;
     }
 
     public void setQuestion(String question) {
@@ -57,13 +60,7 @@ public class Question implements Serializable {
         return this.question;
     }
 
-    // public void setScore(int score) {
-    //     this.score = score;
-    // }
-
-    // public int getScore() {
-    //     return this.score;
-    // }
+    
 
     public void setCompetency(Competency competency) {
         this.competency = competency;

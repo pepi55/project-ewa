@@ -12,12 +12,14 @@ import com.ent3.servlet.model.Classroom;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
 import com.ent3.servlet.model.Question;
+import com.ent3.servlet.model.Result;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.ClassroomRepository;
 import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.QuestionRepository;
+import com.ent3.servlet.service.ResultRepository;
 import com.ent3.servlet.service.UserRepository;
 
 import org.hibernate.cfg.NotYetImplementedException;
@@ -27,7 +29,7 @@ import org.hibernate.cfg.NotYetImplementedException;
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, CompetencyRepository, AreaRepository, CourseRepository, QuestionRepository, ClassroomRepository {
+public class RepoImplementation implements UserRepository, CompetencyRepository, AreaRepository, CourseRepository, QuestionRepository, ResultRepository, ClassroomRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -335,8 +337,6 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
 
         Classroom result = em.find(Classroom.class, id);
 
-        em.close();
-
         return result;
     }
 
@@ -396,5 +396,42 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     @Override
     public void deleteClassroom(Classroom classroom) {
         throw new NotYetImplementedException();
+    }
+
+    public List<Result> getAllResults(User user) {
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("SELECT r FROM Result r WHERE r.user =:user");
+        query.setParameter("user", user);
+        List<Result> result = query.getResultList();
+        
+        em.close();
+
+        return result;
+    }
+
+    public void deleteAllResults(User user) {
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        Query query = em.createQuery("DELETE FROM Result r WHERE r.user = :user");
+        query.setParameter("user", user);
+        query.executeUpdate();
+        em.getTransaction().commit();
+
+        em.close();
+    }
+
+    @Override
+    public Result addResult(Result result) {
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.persist(result);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return result;
     }
 }
