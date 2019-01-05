@@ -45,8 +45,7 @@ export class App {
             let controller : TestController = new TestController();
         } else if (type == "result") {
             let controller : ResultController = new ResultController();
-        }  
-        } else if (type == "AdminSavedCoursesController") {
+        }  else if (type == "AdminSavedCoursesController") {
             let controller : AdminSavedCoursesController = new AdminSavedCoursesController();
         } else if (type == "adminEditTestController") {
             let controller : AdminEditTestController = new AdminEditTestController();

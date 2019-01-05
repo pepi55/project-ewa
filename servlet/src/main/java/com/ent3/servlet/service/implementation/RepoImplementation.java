@@ -332,9 +332,11 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     public void deleteAllResults(User user) {
         EntityManager em = getEntityManager();
 
+        em.getTransaction().begin();
         Query query = em.createQuery("DELETE FROM Result r WHERE r.user =:user");
         query.setParameter("user", user);
         query.executeUpdate();
+        em.getTransaction().commit();
         
         em.close();
     }

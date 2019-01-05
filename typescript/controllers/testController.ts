@@ -6,7 +6,7 @@ import { Result } from "../components/Result";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { API } from "../coursesAPIs/EnumRepo";
 import { LoginService } from "../components/LoginService";
-import { resultComparer } from "../components/resultComparer";
+import { ResultComparer } from "../components/ResultComparer";
 declare var componentHandler: any;
 
 export class TestController extends Controller {
@@ -15,45 +15,38 @@ export class TestController extends Controller {
     private currentScreen: number = 1;
     private newResults: Array<Result>;
     private oldResults: Array<Result>;
-    private comparer: resultComparer;
+    private comparer: ResultComparer;
 
     protected setup(): void {
-        let testButton: Button = new Button("getTest");
-
-        testButton.setOnClick((e: any) => {
-
-        });
-        // $("#test-button").append(testButton.getView());
-
         let backButton: Button = new Button("Back");
         let nextButton: Button = new Button("Next");
-        let completeButton: Button = new Button("Complete");
 
         backButton.setOnClick(() => this.updateScreen(this.currentScreen - 1));
         nextButton.setOnClick(() => this.updateScreen(this.currentScreen + 1));
-        completeButton.setOnClick(() => {
-            // this.getOldData();
-            // this.removeOldData();
-            this.getDataFromTest();
-        });
 
-        $("#back_button").append(backButton.getView());
-        $("#next_button").append(nextButton.getView());
-        $("#next_button").append(completeButton.getView());
-
-        /** temp button */
-        let tempButton: Button = new Button("temp");
-        tempButton.setOnClick(() => this.storeData());
-        $("#next_button").append(tempButton.getView());
+        $("#back_button").html(backButton.getView());
+        $("#button_area2").html(nextButton.getView());
     }
 
     private updateScreen(screen: number) {
-        console.log(screen);
-        console.log(this.questionHandler.getQuestionLength())
+        if (screen <= 0){
+            $("#back_button").addClass("disabled-button");
+        } else if (screen >= this.questionHandler.getQuestionLength()){
+            $("#next_button").addClass("disabled-button");
+            let completeButton: Button = new Button("Complete");
+            completeButton.setOnClick(() => this.getDataFromTest());
+            $("#button_area2").html(completeButton.getView());
+        } else{
+            let nextButton: Button = new Button("Next");
+            nextButton.setOnClick(() => this.updateScreen(this.currentScreen + 1));
+            $("#button_area2").html(nextButton.getView());
+        }
+        
         if (screen > 0 && screen < this.questionHandler.getQuestionLength()) {
             $("#screen-" + screen).css("display", "block");
             $("#screen-" + this.currentScreen).css("display", "none");
             this.currentScreen = screen;
+
             componentHandler.upgradeDom();
         }
     }
@@ -80,25 +73,20 @@ export class TestController extends Controller {
     }
 
     private storeData() {
+        this.removeOldData();
         for (let competentie of this.newResults) {
-            competentie.log();
-
             let DBOptions: any = {
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(competentie)
             };
-
             let DB = new ApiService(API.DB);
             DB.setPath("users/" + LoginService.getInstance().getUserName() + "/results");
             DB.setOptions(DBOptions);
             DB.post(<T>(object: any) => {
-                console.log("Posting result to backend...");
-                console.log(object);
-
                 if (object.statusCode == 201) {
-                    console.log("User added");
+                    console.log("Results added");
                 } else {
                     window.alert("Something went wronk");
                 }
@@ -127,14 +115,16 @@ export class TestController extends Controller {
             for (let score of json) {
                 this.oldResults.push(new Result(score.competencieId, score.competencieScore));
             }
-            console.log("firsts")
-            console.log(this.newResults)
-            console.log(this.oldResults)
 
-            console.log("second")
-            this.comparer = new resultComparer();
+            this.storeData();
+            this.comparer = new ResultComparer();
+            this.comparer.setCompetenties(this.questionHandler.getCompetenties());
             this.comparer.setNewResults(this.newResults);
             this.comparer.setOldResults(this.oldResults);
+
+            $(".container").html(this.comparer.getView());
+            componentHandler.upgradeDom();
+
         }.bind(this))
     }
 

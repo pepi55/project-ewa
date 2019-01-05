@@ -15,4 +15,8 @@ export class Result{
     public getCompetencieId(){
         return this.competencieId;
     }
+
+    public getCompetencieScore(){
+        return this.competencieScore;
+    }
 }

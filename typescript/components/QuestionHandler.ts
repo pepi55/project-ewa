@@ -29,7 +29,8 @@ export class QuestionHandler {
                             $("#test-area").append(questionScreen.getView(i));
                             i++;
                         }
-                    $("#loading_layer").remove()}));
+                    }));
+                    $(".disabled-button").removeClass("disabled-button")
                     componentHandler.upgradeDom();
             } else {
                 console.log("Something went wrong!");
