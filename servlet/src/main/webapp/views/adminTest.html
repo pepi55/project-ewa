@@ -32,10 +32,23 @@
         color: #fff;
     }
 
+    #mainSection {
+        max-width: none;
+        margin-left: unset; 
+        height: 1600px;
+    }
+    
+
     @media only screen and (min-width: 480px) {
         .demo-card-wide.mdl-card {
             width: 290px;
             min-height: 304;
+        }
+
+        #mainSection {
+            max-width: none;
+            margin-left: unset; 
+            height: 1200px;
         }
 
     }
@@ -45,12 +58,14 @@
             min-height: 304;
             width: 390px;
         }
+
+        #mainSection {
+            max-width: none;
+            margin-left: unset; 
+            height: 600px;
+        }
     }
 
-    .demo-list-control {
-      width: 300px;
-    }
-    
     .demo-list-radio {
       display: inline;
     }
@@ -63,6 +78,20 @@
       margin-right: 40px;
       margin-bottom: 40px;
       z-index: 900;
+    }
+    
+    #tableCardsButtons {
+        text-align: right;
+        padding: 3%;
+    }
+
+    #tableCardsButtons2 {
+        text-align: right;
+        padding: 3%;
+    }
+
+    .mdl-button {
+        margin-right: 3%;
     }
 </style>
 
@@ -95,14 +124,64 @@
             <div class="page-content">
                 <!-- Your content goes here -->
                 <a name="top"></a>
-                <div class="android-more-section">
-                        <div class="android-section-title mdl-typography--display-1-color-contrast">Edit the Test!!</div>
-                        <div class="android-card-container mdl-grid">
-                            <!--hier komen cards-->
+                <div class="android-more-section" id="mainSection">
+                    <!--first section-->
+                    <div class="mdl-cell mdl-cell--4-col" style="float: left;">
+                        <div class="android-section-title mdl-typography--display-1-color-contrast">2. Link the questions to competencies!</div>
+                        <div class="mdl-shadow--3dp">
+                            <div id="competencySelectorAndSelectAllRows" style="text-align: center;"></div>
+                            <div id="table4" style="overflow-y: scroll; height: 350px; margin-left: 2%;"></div>
+                            <div id="tableCardsButtons"></div>
                         </div>
-                        <div class="mdl-cell mdl-cell--12-col">
-                            <!--buttons-->
+                    </div>
+
+                    <!--middle section-->
+                    <div class="mdl-cell mdl-cell--4-col" style="float: left;">
+                        <div class="android-section-title mdl-typography--display-1-color-contrast">2. Link the competenties to areas!</div>
+                        <div class="mdl-shadow--3dp">
+                            <div id="competencySelectorAndSelectAllRows2" style="text-align: center;"></div>
+                            <div id="table5" style="overflow-y: scroll; height: 350px; margin-left: 2%;"></div>
+                            <div id="tableCardsButtons2"></div>
                         </div>
+                    </div>
+
+                    <!--last section-->
+                    <div class="mdl-cell mdl-cell--4-col" style="float: left;">
+                        <div class="android-section-title mdl-typography--display-1-color-contrast">1. Add some more to the test!!</div>
+                        <div class="mdl-shadow--3dp" id="cardsContainer" style="height: 490px;">
+
+                            <!--questions-->
+                            <div style="padding: 3%;">
+                                <!-- Textfield with Floating Label -->
+                                <form action="#">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 800px;">
+                                    <input class="mdl-textfield__input" type="text" id="questionInput">
+                                    <label class="mdl-textfield__label" for="questionLabel">Question</label>
+                                    </div>
+                                </form>
+                                <div id="questionButton"></div>
+                            </div>
+
+                            <br>
+                            <br>
+
+                            <!--competencies-->
+                            <div style="padding: 3%;">
+                                <!-- Textfield with Floating Label -->
+                                <form action="#">
+                                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" style="width: 800px;">
+                                    <input class="mdl-textfield__input" type="text" id="competencyInput">
+                                    <label class="mdl-textfield__label" for="competencyLabel">Competency</label>
+                                    </div>
+                                </form>
+                                <div id="competencyButton"></div>
+                            </div>
+
+                        </div>
+    
+                        
+                    </div>
+                    
                 </div>
                 
                 <footer class="mdl-mega-footer">
@@ -167,7 +246,7 @@
 
     <script>
         window.onload = function(e){
-            app("");
+            app("adminEditTestController");
         }
     </script>
 </body>

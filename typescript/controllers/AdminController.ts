@@ -7,8 +7,6 @@ import { AdminButton } from "../components/AdminButton";
 import { Button } from "../components/button/Button";
 import { TableRowCard } from "../components/TableRowCard";
 import { TableCards } from "../components/TableCards";
-import { TableCompetencies } from "../components/TableCompetencies";
-import { TableRowCompetency } from "../components/TableRowCompetency";
 import { Parent } from "../coursesAPIs/KAmodels/Parent";
 import { dropDownMenu } from "../components/dropDownmenu";
 declare var componentHandler : any;
@@ -24,6 +22,10 @@ export class AdminCourseController extends Controller {
     //competencies
     private competencyNames : string[] = [];
     private competencyIds : number[] = [];
+    //areas
+    private areaNames : string[] = [];
+    private areaIds : number[] = [];
+
     //parameters for API's
     private enumParameters : any = {};
     private tempParameters : string[] = ["1", "50", "Entrepreneurship", "price-free", "relevance"];
@@ -51,6 +53,10 @@ export class AdminCourseController extends Controller {
         
     }
 
+    private getEmptyTableView(text : string) {
+        return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
+    }
+
     private getCompetencies() : any {
         let DB = new ApiService(API.DB);
         DB.setPath("areas");
@@ -59,7 +65,10 @@ export class AdminCourseController extends Controller {
             //TODO: fix deze shit
             if (object.errorMessage == null) {
                 object.forEach(mainResponse => {
+                    let areaId = mainResponse.id;
+                    this.areaNames.push(mainResponse.name);
                     mainResponse.competencies.forEach(mainResponse => {
+                        this.areaIds.push(areaId);
                         console.log(mainResponse.name);
                         this.competencyNames.push(mainResponse.name);
                         this.competencyIds.push(mainResponse.id);                
@@ -220,7 +229,10 @@ export class AdminCourseController extends Controller {
         let competenciesMenu : dropDownMenu = new dropDownMenu("Competency", this.competencyNames);
         $("#competencySelectorAndSelectAllRows").append(competenciesMenu.getMenuView());
         componentHandler.upgradeDom();
-        getmdlSelect.init(".getmdl-select");   
+        getmdlSelect.init(".getmdl-select");  
+        
+        $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new Courses!!"));
+
         this.addContainerButtons(); 
 
     }
@@ -257,6 +269,7 @@ export class AdminCourseController extends Controller {
         //get selected competeny
         let competencyName : string = "";
         let competencyId : number = 0;
+        let areaId : number = 0;
         var inputs = document.getElementById("competencySelectorAndSelectAllRows").getElementsByTagName("input");
         //loop through inputs
         for(var i = 0; i < inputs.length; i++) {
@@ -273,6 +286,7 @@ export class AdminCourseController extends Controller {
         for(var i = 0; i < this.competencyNames.length; i++) {
             if(competencyName === this.competencyNames[i]) {
                 competencyId = this.competencyIds[i];
+                areaId = this.areaIds[i];
             }     
         }
 
@@ -286,7 +300,7 @@ export class AdminCourseController extends Controller {
                 atleastOneCardChecked = true;
                 this.tableRows[i] = deletedElement;
                 
-                let failedBool : boolean = this.sendCardToDB(competencyId, this.selectedCards[i]);
+                let failedBool : boolean = this.sendCardToDB(areaId, competencyId, this.selectedCards[i]);
                 
                 if (failedBool) {
                     failed++;
@@ -322,7 +336,12 @@ export class AdminCourseController extends Controller {
 
         let table = new TableCards(this.tableRows);
         $("#table4").empty();
-        $("#table4").append(table.getTableView());
+        if (this.tableRows.length === 0) {
+            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+
+        } else {
+            $("#table4").append(table.getTableView());
+        }
 
         componentHandler.upgradeDom();
 
@@ -363,13 +382,18 @@ export class AdminCourseController extends Controller {
 
         let table = new TableCards(this.tableRows);
         $("#table4").empty();
-        $("#table4").append(table.getTableView());
+        if (this.tableRows.length === 0) {
+            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+
+        } else {
+            $("#table4").append(table.getTableView());
+        }
 
         componentHandler.upgradeDom();
 
     }
 
-    private sendCardToDB(competencyId : number, selectedCard : Card) : any {
+    private sendCardToDB(areaId : number, competencyId : number, selectedCard : Card) : any {
             let data : any = {
                 "title" : selectedCard.getTitle(),
                 "description" : selectedCard.getDescription(),
@@ -386,7 +410,7 @@ export class AdminCourseController extends Controller {
             };
 
             let DB = new ApiService(API.DB);
-            DB.setPath("areas/1/competencies/" + competencyId + "/courses");
+            DB.setPath("areas/" + areaId + "/competencies/" + competencyId + "/courses");
             DB.setOptions(DBOptions);
             DB.post(<T>(object : any) => {
                 //check if POST is succeeded
