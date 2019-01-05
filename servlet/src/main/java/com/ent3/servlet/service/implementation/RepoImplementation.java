@@ -328,6 +328,17 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
+    public void deleteAllResults(User user) {
+        EntityManager em = getEntityManager();
+
+        Query query = em.createQuery("DELETE FROM Result r WHERE r.user =:user");
+        query.setParameter("user", user);
+        query.executeUpdate();
+        
+        em.close();
+    }
+
+    @Override
     public Result addResult(Result result) {
         EntityManager em = getEntityManager();
 

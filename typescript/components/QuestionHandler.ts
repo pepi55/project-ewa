@@ -45,6 +45,15 @@ export class QuestionHandler {
         return this.competenties[id];
     }
 
+    public getCompetentieByCompetentieId(id: number){
+        for (let competentie of this.competenties){
+            if (competentie.getCompetentieId() == id){
+                return competentie;
+            }
+        }
+        return null;
+    }
+
     public getQuestionLength(){
         let temp = 0
         for (let competencie of this.competenties){

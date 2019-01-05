@@ -11,4 +11,8 @@ export class Result{
         console.log(this.competencieId)
         console.log(this.competencieScore);
     }
+
+    public getCompetencieId(){
+        return this.competencieId;
+    }
 }

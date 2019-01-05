@@ -38,7 +38,7 @@ public class ResultResource {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getAllRsults(@PathParam("userId") String id) {
+    public Response getAllResults(@PathParam("userId") String id) {
         List<Result> result;
         UserRepository temprepo = RepoImplementation.getInstance();
 
@@ -69,9 +69,11 @@ public class ResultResource {
 
     @DELETE
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteScoresById(@PathParam("userId") String id) {
-        return null;
-        
+    public Response deleteAllResults(@PathParam("userId") String id) {
+        UserRepository userService = RepoImplementation.getInstance();
+        service.deleteAllResults(userService.getUserById(id));
+
+        return Response.status(Response.Status.OK).entity(new ClientMessage("User with ID: " + id + " deleted")).build();
     }
 
     /**
