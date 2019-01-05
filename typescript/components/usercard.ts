@@ -1,5 +1,4 @@
 import { User } from "./User";
-import { Button } from "./button/Button";
 
 export class UserCard {
     private user: User;

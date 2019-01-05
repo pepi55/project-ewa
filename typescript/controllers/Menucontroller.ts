@@ -6,6 +6,7 @@ import { UserCard } from "../components/UserCard";
 import { Button } from "../components/button/Button";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { API } from "../coursesAPIs/EnumRepo";
+import { UserRole } from "../components/UserRole";
 declare var componentHandler: any;
 
 export class MenuController extends Controller {
@@ -35,9 +36,9 @@ export class MenuController extends Controller {
             .append(logoutItem.getView())
             .append(profileItem.getView());
 
-        if (LoginService.getInstance().getUser().getRole() == 1) {
+        if (LoginService.getInstance().getUser().getRole() == UserRole.TEACHER) {
 
-        } else if (LoginService.getInstance().getUser().getRole() == 2) {
+        } else if (LoginService.getInstance().getUser().getRole() == UserRole.ADMIN) {
             console.log("in admin")
             let users: Array<User> = new Array();
             let url = "http://127.0.0.1:8080/servlet/services/rest/users?approve=not_approved";

@@ -8,6 +8,7 @@ import java.util.Map;
 import com.ent3.servlet.model.Area;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.User;
+import com.ent3.servlet.model.UserRole;
 import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.UserRepository;
@@ -147,8 +148,8 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
     ///// COMPETENCIES /////
 
     private void loadData() {
-        users.put("peter", new User("Peter", "Dimitrov", "peter", "password", "peter@gmail.com", 2));
-        users.put("admin", new User("Admin", "Admin", "admin", "password", "admin@servlet.com", 1));
+        users.put("peter", new User("Peter", "Dimitrov", "peter", "password", "peter@gmail.com", UserRole.USER));
+        users.put("admin", new User("Admin", "Admin", "admin", "password", "admin@servlet.com", UserRole.ADMIN));
 
         Area ideas = new Area("IDEAS_OPPORTUNITIES");
         Area resources = new Area("RESOURCES");

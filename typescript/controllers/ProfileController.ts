@@ -8,7 +8,6 @@ import { API } from "../coursesAPIs/EnumRepo";
 export class ProfileController extends Controller {
 
     protected setup(): void {
-        let menuController = new Menu("");
         let user = LoginService.getInstance().getUser();
 
         let cardButton = new CardButton();

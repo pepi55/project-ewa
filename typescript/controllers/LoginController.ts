@@ -6,6 +6,7 @@ import { User } from "../components/User";
 import { API } from "../coursesAPIs/EnumRepo";
 import { LoginService } from "../components/LoginService";
 import { Menu } from "./Menu";
+import { UserRole } from "../components/UserRole";
 
 export class LoginController extends Controller {
     private userHandler: UserHandler = new UserHandler();
@@ -31,19 +32,21 @@ export class LoginController extends Controller {
                 LoginService.getInstance().login(this.userHandler.getUserByUsername((document.getElementById("username") as HTMLInputElement).value));
                 let role : string = this.userHandler.getRoleByUsername((document.getElementById("username") as HTMLInputElement).value);
 
-                //for setting the homepage when user logs in
-                if(role === "Admin") {
-                    // admin homepage
-                    window.location.href = this.pathToViews + "newCourses.html";
-                    
-                } else if (role === "Teacher") {
-                    // teacher homepage
-                    window.location.href = this.pathToViews + "teacherClass.html";
+                switch (role) {
+                    case UserRole.ADMIN:
+                        window.location.href = this.pathToViews + "newCourses.html";
+                        break;
 
-                } else if (role === "Student") {
-                    // student homepage
-                    window.location.href = this.pathToViews + "studentCourses.html";
+                    case UserRole.TEACHER:
+                        window.location.href = this.pathToViews + "teacherClass.html";
+                        break;
 
+                    case UserRole.USER:
+                        window.location.href = this.pathToViews + "studentCourses.html";
+                        break;
+
+                    default:
+                        break;
                 }
 
             } else {
@@ -128,9 +131,9 @@ export class LoginController extends Controller {
                 // Set user role.
                 {
                     let element = (document.getElementById("signup_role") as HTMLSelectElement);
-                    let signup_role = Number(element.options[element.selectedIndex].value);
+                    let signup_role = UserRole[element.options[element.selectedIndex].value];
 
-                    //console.log(signup_role);
+                    console.log(signup_role);
                     user.setRole(signup_role);
                 }
 

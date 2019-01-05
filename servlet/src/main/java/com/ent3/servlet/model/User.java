@@ -25,21 +25,22 @@ public class User implements Serializable {
     private String lastname;
     private String password;
     private String email;
-    private int role;
+    private UserRole role;
     private boolean approved;
 
     public User() {
         // Required.
     }
 
-    public User(String firstName, String lastName, String username, String password, String email, int role) {
+    public User(String firstName, String lastName, String username, String password, String email, UserRole role) {
         this.firstname = firstName;
         this.lastname = lastName;
         this.username = username;
         this.password = password;
         this.email = email;
         this.role = role;
-        if (role == 0) {
+
+        if (role == UserRole.USER) {
             this.approved = true;
         } else {
             this.approved = false;
@@ -86,19 +87,17 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public int getRole() {
+    public UserRole getRole() {
         return this.role;
     }
 
-    public void setRole(int role) {
-        if (this.role == 0) {
-            if (role == 1 || role == 2) {
-                this.approved = false;
-            }
-        }
+    public void setRole(UserRole role) {
         this.role = role;
-        if (role == 0) {
+
+        if (this.role == UserRole.USER) {
             this.approved = true;
+        } else {
+            this.approved = false;
         }
     }
 

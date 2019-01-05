@@ -1,12 +1,14 @@
+import { UserRole } from "./UserRole";
+
 export class User {
     private firstName: string;
     private lastName: string;
     private username: string;
     private password: string;
     private email: string;
-    private role: number;
+    private role: UserRole;
 
-    public constructor(firstName:string, lastName:string, username:string, password:string, email:string, role: number) {
+    public constructor(firstName:string, lastName:string, username:string, password:string, email:string, role: UserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
@@ -31,14 +33,9 @@ export class User {
         return this.role;
     }
 
-    public getRoleName(){
-        if (this.role == 0){
-            return "Student";
-        } else if(this.role == 1){
-            return "Teacher";
-        } else{
-            return "Admin";
-        }
+    public getRoleName() {
+        let roleName : string = this.role;
+        return roleName;
     }
 
     public setFirstName(firstName : string) {
@@ -69,22 +66,12 @@ export class User {
         this.email = email;
     }
 
-    public setRole(role : number) {
+    public setRole(role : UserRole) {
         this.role = role;
     }
 
     public checkUserData() : boolean {
         let result : boolean = false;
-
-        /*
-        console.log("checking user data...");
-        console.log(this.username);
-        console.log(this.password);
-        console.log(this.firstName);
-        console.log(this.lastName);
-        console.log(this.email);
-        console.log(this.role);
-         */
 
         if (this.firstName != null && this.lastName != null && this.email != null && this.username != null && this.password != null && this.role != null) {
             result = true;

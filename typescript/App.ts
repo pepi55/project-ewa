@@ -5,6 +5,7 @@ import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
 import { ProfileController } from "./controllers/ProfileController";
 import { AdminSavedCoursesController } from "./controllers/AdminsavedCoursesController";
+import { UserRole } from "./components/UserRole";
 declare var componentHandler : any;
 
 export class App {
@@ -17,7 +18,7 @@ export class App {
             return
         } else {
             //setting menu by role        
-            let role : string = LoginService.getInstance().getUserRole();
+            let role : UserRole = UserRole[LoginService.getInstance().getUserRole()];
             console.log("setting menu for role: " + role + "...");
             let menu : Menu = new Menu(role);
             $("#onPage").append(menu.getOnPage());

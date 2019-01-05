@@ -60,7 +60,7 @@ export class LoginService{
         if (this.isLoggedIn()) {
             return this.user.getRoleName();
         }
+
         return null;
     }
-
 }
