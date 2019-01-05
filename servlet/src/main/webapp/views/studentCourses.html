@@ -95,14 +95,23 @@
             <div class="page-content">
                 <!-- Your content goes here -->
                 <a name="top"></a>
-                <div class="android-more-section">
+                <div class="android-more-section" id="mainDiv">
                         <div class="android-section-title mdl-typography--display-1-color-contrast">Your cards!!</div>
-                        <div class="android-card-container mdl-grid">
+                        <div>
+                        <!-- Simple MDL Progress Bar -->
+                        <p>The progress you've made:</p>
+                        <br>
+                        <div id="p1" class="mdl-progress mdl-js-progress"></div>
+                        <p id="extraText"></p>
+                        <div class="android-card-container mdl-grid" id="cardsContainer">
                             <!--hier komen cards-->
                         </div>
-                        <div class="mdl-cell mdl-cell--12-col">
-                            <!--buttons-->
-                        </div>
+                        
+                </div>
+                <div id="iframeDiv" style="display: none;">
+                    <iframe src="" id="iframeCourse">
+                        <p>Your browser does not support iframes.</p>
+                    </iframe>
                 </div>
                 
                 <footer class="mdl-mega-footer">
@@ -167,7 +176,7 @@
 
     <script>
         window.onload = function(e){
-            app("");
+            app("studentSavedCoursesController");
         }
     </script>
 </body>

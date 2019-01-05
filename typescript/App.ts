@@ -7,6 +7,7 @@ import { ProfileController } from "./controllers/ProfileController";
 import { AdminSavedCoursesController } from "./controllers/AdminsavedCoursesController";
 import { UserRole } from "./components/UserRole";
 import { AdminEditTestController } from "./controllers/AdminEditTestController";
+import { StudentSavedCoursesController } from "./controllers/StudentSavedCoursesController";
 
 declare var componentHandler : any;
 
@@ -42,6 +43,8 @@ export class App {
             let controller : AdminSavedCoursesController = new AdminSavedCoursesController();
         } else if (type == "adminEditTestController") {
             let controller : AdminEditTestController = new AdminEditTestController();
+        } else if (type == "studentSavedCoursesController") {
+            let controller : StudentSavedCoursesController = new StudentSavedCoursesController();
         }
     }
 }
