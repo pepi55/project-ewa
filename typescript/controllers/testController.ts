@@ -41,7 +41,7 @@ export class TestController extends Controller {
             nextButton.setOnClick(() => this.updateScreen(this.currentScreen + 1));
             $("#button_area2").html(nextButton.getView());
         }
-        
+
         if (screen > 0 && screen < this.questionHandler.getQuestionLength()) {
             $("#screen-" + screen).css("display", "block");
             $("#screen-" + this.currentScreen).css("display", "none");
@@ -61,7 +61,7 @@ export class TestController extends Controller {
                 z++;
                 x = this.questionHandler.getCompetentieById(z).getQuestionLength();
             }
-            let tempOptions = document.getElementsByName('options-1');
+            let tempOptions = document.getElementsByName('options-'+i);
             for (let y = 0; y < tempOptions.length; y++) {
                 if (tempOptions[y]["checked"] == true) {
                     this.questionHandler.getCompetentieById(z).addScore(tempOptions[y]["value"])
@@ -86,7 +86,7 @@ export class TestController extends Controller {
             DB.setOptions(DBOptions);
             DB.post(<T>(object: any) => {
                 if (object.statusCode == 201) {
-                    console.log("Results added");
+                    console.log("Result added");
                 } else {
                     window.alert("Something went wronk");
                 }
@@ -116,7 +116,6 @@ export class TestController extends Controller {
                 this.oldResults.push(new Result(score.competencieId, score.competencieScore));
             }
 
-            this.storeData();
             this.comparer = new ResultComparer();
             this.comparer.setCompetenties(this.questionHandler.getCompetenties());
             this.comparer.setNewResults(this.newResults);
@@ -126,6 +125,7 @@ export class TestController extends Controller {
             componentHandler.upgradeDom();
 
         }.bind(this))
+        this.storeData();
     }
 
 }

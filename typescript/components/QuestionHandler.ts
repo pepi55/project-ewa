@@ -30,7 +30,7 @@ export class QuestionHandler {
                             i++;
                         }
                     }));
-                    $(".disabled-button").removeClass("disabled-button")
+                    $(".disabled-button").removeClass("disabled-button");
                     componentHandler.upgradeDom();
             } else {
                 console.log("Something went wrong!");
@@ -61,9 +61,5 @@ export class QuestionHandler {
             temp += +competencie.getQuestions().length;
         }
         return temp;
-    }
-
-    public sendCompetentieScore(){
-        
     }
 }
