@@ -4,6 +4,7 @@ import { ApiService } from "../coursesAPIs/ApiService";
 import { Card } from "../components/Card";
 import { CardsScrollTable } from "../components/CardsScrollTable";
 import { Button } from "../components/button/Button";
+import { LoginService } from "../components/LoginService";
 declare var componentHandler : any;
 
 export class StudentSavedCoursesController extends Controller {
@@ -11,15 +12,18 @@ export class StudentSavedCoursesController extends Controller {
     private totalCompetencies : number = 0;
     private numberOfGoodCompetencies : number = 0;
 
+    //user results
+    private competencyIds : number[] = [];
+    private competencyScores : number[] = [];
+
     protected setup(): void {
-        this.setSavedCourses();
+        this.getUserScores();
 
     }
 
     private setSavedCourses() {
         let numberOfScrollTables : number = 10000;
         let DB = new ApiService(API.DB);
-        
     
         DB.setPath("areas");
         //getting the courses from DB
@@ -30,7 +34,7 @@ export class StudentSavedCoursesController extends Controller {
                 object.forEach(mainResponse => {
                     mainResponse.competencies.forEach(mainResponse => {
                         this.totalCompetencies++;
-                        console.log(mainResponse.name);
+                        //console.log(mainResponse.name);
                         let cards : Card[] = [];
                         //get all courses of specific competency
                         mainResponse.courses.forEach(mainResponse => {
@@ -39,8 +43,23 @@ export class StudentSavedCoursesController extends Controller {
                             cards.push(card);
                         });
 
+                        let maxScore : number = 0;
+                        //get all questions of specific competency
+                        mainResponse.questions.forEach(mainResponse => {
+                            //console.log(mainResponse.question);
+                            maxScore++;
+                        });
+
+                        let competencyScore : number = 0;
+                        for (let i = 0; i < this.competencyIds.length; i++) {
+                            if(this.competencyIds[i] === mainResponse.id) {
+                                competencyScore = this.competencyScores[i];
+                            }
+                            
+                        }
+ 
                         //nog extra check van of de totaal aantalpunten van de questions groter is dan die van wat behaald is bij de competency
-                        if (cards.length > 0) {
+                        if (cards.length > 0 && competencyScore != maxScore) {
                             let table = new CardsScrollTable(cards, mainResponse.name, numberOfScrollTables);
                             $("#cardsContainer").append(table.getCardsScrollTableView());
                             componentHandler.upgradeDom();
@@ -50,9 +69,7 @@ export class StudentSavedCoursesController extends Controller {
                                 let followCourseButton : Button = new Button("Follow!");
                                 //prevent errors
                                 followCourseButton.setOnClick((e: any) => {
-                                    document.getElementById("iframeCourse").setAttribute("src", element.getUrl());
-                                    $("#mainDiv").html("").css("display", "none");
-                                    $("#firstname_error").html("").css("display", "visible");
+                                    window.open(element.getUrl(), "_blank");
                                 });
                                 $("#" + element.getcardId()).append(followCourseButton.getView());
                                 componentHandler.upgradeDom();
@@ -62,14 +79,17 @@ export class StudentSavedCoursesController extends Controller {
                             numberOfScrollTables++;
 
                         } else {
+                            console.log("mastered competency: " + mainResponse.name);
                             this.numberOfGoodCompetencies++;
                         }    
 
                         
                            
                     });
-                    this.setProgressBar(this.calculateProgress());
+                    
                 });
+
+                this.setProgressBar(this.calculateProgress());
                 
                  
             } else {
@@ -80,14 +100,37 @@ export class StudentSavedCoursesController extends Controller {
         
     }
 
+    private getUserScores() {
+        
+        let DB = new ApiService(API.DB);
+        DB.setPath("users/" + LoginService.getInstance().getUserName() + "/results");
+        DB.getParent((object : any) => {
+
+            if (object.errorMessage == null) {
+                
+                object.forEach(mainResponse => {
+                    this.competencyIds.push(mainResponse.competencieId);
+                    this.competencyScores.push(mainResponse.competencieScore);
+                });
+                
+                this.setSavedCourses(); 
+            } else {
+                $("#progressDiv").css("display", "none");
+                $("#mainPageTitle").html("You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!");
+                $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "100%"});
+
+                console.log("Something went wrong!");
+            }
+            
+        }); 
+    }
+
     private calculateProgress() : number {
         return (100 / this.totalCompetencies) * this.numberOfGoodCompetencies;
     }
 
     private setProgressBar(progress : number) {
-        document.querySelector('#p1').addEventListener('mdl-componentupgraded', function() {
-            this.MaterialProgress.setProgress(progress);
-        });
+        $(".bar1").css("width", progress + "%");
 
         this.setExtraText(progress);
     }
@@ -102,6 +145,9 @@ export class StudentSavedCoursesController extends Controller {
             text = "You're making progress!";
         } else if (progress > 80) {
             text = "Wow you're a pro!";
+        } else if (progress > 100) {
+            $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "100%"});
+            text = "You're a master!";
         }
         $("#extraText").html(text);
     }
