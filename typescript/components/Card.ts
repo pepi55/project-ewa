@@ -17,6 +17,8 @@ export class Card {
         if (DBResponse != null) {
             this.setDBCard(DBResponse);
         }
+
+        this.shareButton = `<div class="mdl-card__menu"><a href="${this.url}"><button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="material-icons">play_arrow</i></button></a></div>`;
     }
 
     private setDBCard(DBResponse : any) {
@@ -55,7 +57,7 @@ export class Card {
     public getCardView() : string {
 
         if (this.description == null || this.description == "") {
-            this.description = "No description available for this course! Click on the pink arrow to get more information about this course!";
+            this.description = "No description available for this course! Click on the button to get more information about this course!";
         }
         if (this.picture == null || this.picture == "") {
             //picture setten hiero
@@ -66,8 +68,6 @@ export class Card {
         const title : string = `<div class="mdl-card__title" style="height: 176px; background: url(${this.picture}) no-repeat center; background-size: 100%; color: black;"> <h2 class="mdl-card__title-text">${this.title}</h2></div>`;
         const supportingText : string = `<div class="mdl-card__supporting-text">${this.description}</div>`;
         const button : string = `<div class="mdl-card__actions mdl-card--border" style="text-align: center;"id="${this.cardId}"></div>`;
-        //deze knop voor om de naar site te gaan
-        this.shareButton = `<div class="mdl-card__menu"><a href="${this.url}"><button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="material-icons">play_arrow</i></button></a></div>`;
         const mainEnd : string = `</div>`;
         return mainStart + title + supportingText + button + this.shareButton + mainEnd;
     }
