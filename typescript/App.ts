@@ -31,27 +31,48 @@ export class App {
             $("#onBar").append(menu.getOnBar());
             componentHandler.upgradeDom();
         }
-    
 
+        let controller : any;
 
-        if (type == "login") {
-            let controller: LoginController = new LoginController();
-        } else if (type == "adminCourses") {
-            let controller : AdminCourseController = new AdminCourseController();
-        } else if (type == "userCourses") {
-            let controller : UserCourseController = new UserCourseController();
-        } else if (type == "profile") {
-            let controller : ProfileController = new ProfileController();
-        } else if (type == "test") {
-            let controller : TestController = new TestController();
-        } else if (type == "result") {
-            let controller : ResultController = new ResultController();
-        }  else if (type == "AdminSavedCoursesController") {
-            let controller : AdminSavedCoursesController = new AdminSavedCoursesController();
-        } else if (type == "adminEditTestController") {
-            let controller : AdminEditTestController = new AdminEditTestController();
-        } else if (type == "studentSavedCoursesController") {
-            let controller : StudentSavedCoursesController = new StudentSavedCoursesController();
+        switch (type) {
+            case "login":
+                controller = new LoginController();
+                break;
+
+            case "adminCourses":
+                controller = new AdminCourseController();
+                break;
+
+            case "userCourses":
+                controller = new UserCourseController();
+                break;
+
+            case "profile":
+                controller = new ProfileController();
+                break;
+
+            case "test":
+                controller = new TestController();
+                break;
+
+            case "result":
+                controller = new ResultController();
+                break;
+
+            case "AdminSavedCoursesController":
+                controller = new AdminSavedCoursesController();
+                break;
+
+            case "adminEditTestController":
+                controller = new AdminEditTestController();
+                break;
+
+            case "studentSavedCoursesController":
+                controller = new StudentSavedCoursesController();
+                break;
+
+            default:
+                break;
         }
     }
 }
