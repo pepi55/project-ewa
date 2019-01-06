@@ -6,13 +6,14 @@ import { QuestionScreen } from "./QuestionScreen";
 declare var componentHandler: any;
 
 export class QuestionHandler {
-    private competenties: Array<Competentie> = new Array();
+    private competenties: Array<Competentie>;
 
     public constructor() {
-        this.getCompetentiesFromDatabase();
+        this.getCompetentiesFromDatabase()
     }
 
     private getCompetentiesFromDatabase() {
+        this.competenties = new Array()
         let DB = new ApiService(API.DB);
         let i = 0;
 
@@ -24,14 +25,14 @@ export class QuestionHandler {
                         let tempQuestions = new Array<Question>();
                         mainResponse.questions.map((mainResponse: any) => tempQuestions.push(new Question(mainResponse.id, mainResponse.question)))
                         this.competenties.push(new Competentie(mainResponse.id, mainResponse.name, tempQuestions))
-                        for (let question of tempQuestions){
+                        for (let question of tempQuestions) {
                             let questionScreen = new QuestionScreen(mainResponse.name, question.getId(), question.getQuestion());
                             $("#test-area").append(questionScreen.getView(i));
                             i++;
                         }
                     }));
-                    $("#button_area2").removeClass("disabled-button");
-                    componentHandler.upgradeDom();
+                $("#button_area2").removeClass("disabled-button");
+                componentHandler.upgradeDom();
             } else {
                 console.log("Something went wrong!");
             }
@@ -39,25 +40,26 @@ export class QuestionHandler {
     }
 
     public getCompetenties() {
+
         return this.competenties;
     }
 
-    public getCompetentieById(id: number){
+    public getCompetentieById(id: number) {
         return this.competenties[id];
     }
 
-    public getCompetentieByCompetentieId(id: number){
-        for (let competentie of this.competenties){
-            if (competentie.getCompetentieId() == id){
+    public getCompetentieByCompetentieId(id: number) {
+        for (let competentie of this.competenties) {
+            if (competentie.getCompetentieId() == id) {
                 return competentie;
             }
         }
         return null;
     }
 
-    public getQuestionLength(){
+    public getQuestionLength() {
         let temp = 0
-        for (let competencie of this.competenties){
+        for (let competencie of this.competenties) {
             temp += +competencie.getQuestions().length;
         }
         return temp;

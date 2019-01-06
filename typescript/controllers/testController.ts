@@ -15,7 +15,7 @@ export class TestController extends Controller {
     private currentScreen: number = 0;
     private newResults: Array<Result>;
     private oldResults: Array<Result>;
-    private comparer: ResultComparer;
+    private comparer: ResultComparer = new ResultComparer();
 
     protected setup(): void {
         let backButton: Button = new Button("Back");
@@ -27,10 +27,11 @@ export class TestController extends Controller {
         $("#back_button").html(backButton.getView());
         $("#button_area2").html(nextButton.getView());
 
-
         let testb: Button = new Button("test");
         testb.setOnClick(() => this.getDataFromTest());
         $("#back_button").append(testb.getView());
+
+        this.getOldData();
     }
 
     private updateScreen(screen: number) {
@@ -92,7 +93,11 @@ export class TestController extends Controller {
             }
         }
         if (missing == 0) {
-            this.getOldData();
+            this.comparer.setCompetenties(this.questionHandler.getCompetenties());
+            this.comparer.setNewResults(this.newResults);
+            $(".container").html(this.comparer.getView());
+
+            this.storeData();
         }
     }
 
@@ -130,10 +135,6 @@ export class TestController extends Controller {
     }
 
     private getOldData() {
-        this.comparer = new ResultComparer();
-        this.comparer.setCompetenties(this.questionHandler.getCompetenties());
-        this.comparer.setNewResults(this.newResults);
-
         this.oldResults = new Array();
         let url = "http://localhost:8080/servlet/services/rest/users/" + LoginService.getInstance().getUserName() + "/results";
         let promise = fetch(url);
@@ -144,12 +145,9 @@ export class TestController extends Controller {
                 this.oldResults.push(new Result(score.competencieId, score.competencieScore));
             }
             this.comparer.setOldResults(this.oldResults);
-
-            $(".container").html(this.comparer.getView());
             componentHandler.upgradeDom();
 
         }.bind(this))
-        this.storeData();
     }
 
 }
