@@ -34,22 +34,6 @@ public interface ClassroomRepository {
   public Classroom addClassroom(Classroom classroom);
 
   /**
-   * Get all students from of the classroom.
-   *
-   * @param classroom The classroom to get students from.
-   * @return List of students.
-   */
-  public List<User> getClassroomStudents(Classroom classroom);
-
-  /**
-   * Get the teacher of a classroom.
-   *
-   * @param classroom The classroom to get the teacher of.
-   * @return The teacher.
-   */
-  public User getClassroomTeacher(Classroom classroom);
-
-  /**
    * Add a student to a classroom.
    *
    * @param classroom The classroom to add the student to.
@@ -57,6 +41,24 @@ public interface ClassroomRepository {
    * @return The classroom with the student.
    */
   public Classroom addStudentToClassroom(Classroom classroom, User student);
+
+  /**
+   * Check if a student is registered in a classroom.
+   *
+   * @param classroom The classroom to check.
+   * @param student the student to check.
+   * @return Whether the student is registered in the classroom.
+   */
+  public boolean classroomContainsStudent(Classroom classroom, User student);
+
+  /**
+   * Remove a student from a classroom.
+   *
+   * @param classroom The classroom to remove the student from.
+   * @param student The student to remove from the classroom.
+   * @return The classroom without the student.
+   */
+  public Classroom removeStudentFromClassroom(Classroom classroom, User student);
 
   /**
    * Set the teacher of a classroom.

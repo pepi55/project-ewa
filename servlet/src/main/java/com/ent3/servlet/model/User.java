@@ -108,4 +108,23 @@ public class User implements Serializable {
     public void setApproved(boolean approved) {
         this.approved = approved;
     }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (o == null || o == this || !(o instanceof User)) {
+            return false;
+        }
+
+        User otherUser = (User)o;
+
+        if (!otherUser.username.equals(this.username)) return false;
+        if (!otherUser.firstname.equals(this.firstname)) return false;
+        if (!otherUser.lastname.equals(this.lastname)) return false;
+        if (!otherUser.email.equals(this.email)) return false;
+        if (!otherUser.approved == this.approved) return false;
+        if (!otherUser.role.equals(this.role)) return false;
+        if (!otherUser.password.equals(this.password)) return false;
+
+        return true;
+    }
 }

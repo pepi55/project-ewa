@@ -341,23 +341,13 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public List<User> getClassroomStudents(Classroom classroom) {
-        throw new NotYetImplementedException();
-    }
-
-    @Override
-    public User getClassroomTeacher(Classroom classroom) {
-        throw new NotYetImplementedException();
-    }
-
-    @Override
     public Classroom addStudentToClassroom(Classroom classroom, User student) {
         EntityManager em = getEntityManager();
 
         classroom.addStudent(student);
 
         em.getTransaction().begin();
-        em.persist(classroom);
+        em.merge(classroom);
         em.getTransaction().commit();
 
         em.close();
@@ -372,7 +362,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         classroom.setTeacher(teacher);
 
         em.getTransaction().begin();
-        em.persist(classroom);
+        em.merge(classroom);
         em.getTransaction().commit();
 
         em.close();
@@ -396,6 +386,26 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     @Override
     public void deleteClassroom(Classroom classroom) {
         throw new NotYetImplementedException();
+    }
+
+    @Override
+    public Classroom removeStudentFromClassroom(Classroom classroom, User student) {
+        EntityManager em = getEntityManager();
+
+        classroom.deleteStudent(student);
+
+        em.getTransaction().begin();
+        em.merge(classroom);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return classroom;
+    }
+
+    @Override
+    public boolean classroomContainsStudent(Classroom classroom, User student) {
+        return classroom.getStudents().contains(student);
     }
 
     @Override

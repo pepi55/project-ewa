@@ -62,7 +62,7 @@ public class Classroom implements Serializable {
     if (teacher.getRole() == UserRole.TEACHER) {
       this.teacher = teacher;
     } else {
-      // TODO: Throw error.
+      throw new IllegalArgumentException();
     }
   }
 
@@ -73,8 +73,7 @@ public class Classroom implements Serializable {
   public void setStudents(List<User> students) {
     for (User u : students) {
       if (u.getRole() != UserRole.USER) {
-        // TODO: Throw error.
-        return;
+        throw new IllegalArgumentException();
       }
     }
 
@@ -85,11 +84,11 @@ public class Classroom implements Serializable {
     if (student.getRole() == UserRole.USER) {
       students.add(student);
     } else {
-      // TODO: Throw error.
+      throw new IllegalArgumentException();
     }
   }
 
-  public void deleteStudent(int index) {
-    students.remove(index);
+  public void deleteStudent(User student) {
+    students.remove(student);
   }
 }
