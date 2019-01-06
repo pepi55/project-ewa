@@ -30,7 +30,7 @@ export class QuestionHandler {
                             i++;
                         }
                     }));
-                    $(".disabled-button").removeClass("disabled-button");
+                    $("#button_area2").removeClass("disabled-button");
                     componentHandler.upgradeDom();
             } else {
                 console.log("Something went wrong!");

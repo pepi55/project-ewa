@@ -22,6 +22,7 @@ export class ResultComparer {
 
     public setCompetenties(competenties: Array<Competentie>) {
         this.competenties = competenties;
+        console.log(this.competenties);
     }
 
     private getSortedArray(toSrot: Array<Result>) {

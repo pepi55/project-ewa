@@ -12,7 +12,7 @@ declare var componentHandler: any;
 export class TestController extends Controller {
     private questionHandler: QuestionHandler = new QuestionHandler;
     private menu: MenuController = new MenuController();
-    private currentScreen: number = 1;
+    private currentScreen: number = 0;
     private newResults: Array<Result>;
     private oldResults: Array<Result>;
     private comparer: ResultComparer;
@@ -26,23 +26,29 @@ export class TestController extends Controller {
 
         $("#back_button").html(backButton.getView());
         $("#button_area2").html(nextButton.getView());
+
+
+        let testb: Button = new Button("test");
+        testb.setOnClick(() => this.getDataFromTest());
+        $("#back_button").append(testb.getView());
     }
 
     private updateScreen(screen: number) {
         if (screen <= 0) {
             $("#back_button").addClass("disabled-button");
-        } else if (screen >= this.questionHandler.getQuestionLength()) {
+        } else if (screen >= this.questionHandler.getQuestionLength() - 1) {
             $("#next_button").addClass("disabled-button");
             let completeButton: Button = new Button("Complete");
             completeButton.setOnClick(() => this.getDataFromTest());
             $("#button_area2").html(completeButton.getView());
         } else {
+            $("#back_button").removeClass("disabled-button");
             let nextButton: Button = new Button("Next");
             nextButton.setOnClick(() => this.updateScreen(this.currentScreen + 1));
             $("#button_area2").html(nextButton.getView());
         }
 
-        if (screen > 0 && screen < this.questionHandler.getQuestionLength()) {
+        if (screen >= 0 && screen < this.questionHandler.getQuestionLength()) {
             $("#screen-" + screen).css("display", "block");
             $("#screen-" + this.currentScreen).css("display", "none");
             this.currentScreen = screen;
@@ -56,28 +62,32 @@ export class TestController extends Controller {
         this.newResults = new Array();
         let z = 0;
         let x = this.questionHandler.getCompetentieById(z).getQuestionLength();
-        for (let i = 0; i < this.questionHandler.getQuestionLength(); i++) {
+        for (let i = 0; i <= this.questionHandler.getQuestionLength(); i++) {
+            console.log("gotten data from " + this.questionHandler.getCompetentieById(z).getCompetentieText())
             if (x <= 0) {
                 this.newResults.push(new Result(this.questionHandler.getCompetentieById(z).getCompetentieId(), this.questionHandler.getCompetentieById(z).getScore()))
                 z++;
-                x = this.questionHandler.getCompetentieById(z).getQuestionLength();
-            }
-            let tempOptions = document.getElementsByName('options-' + i);
-            let y = 0;
-            for (;y < tempOptions.length;) {
-                if (tempOptions[y]["checked"] == true) {
-                    this.questionHandler.getCompetentieById(z).addScore(tempOptions[y]["value"])
-                    break;
+                if (i < this.questionHandler.getQuestionLength()) {
+                    x = this.questionHandler.getCompetentieById(z).getQuestionLength();
                 }
-                y++;
             }
-            x--;
-            if (y == 5){
-            window.alert("Not everything is filled in");
-                missing++;
-                break;
+            if (i < this.questionHandler.getQuestionLength()) {
+                missing = 0;
+                let tempOptions = document.getElementsByName('options-' + i);
+                for (let y = 0; y <= tempOptions.length; y++) {
+                    if (y == 5) {
+                        missing++;
+                        break;
+                    }
+                    if (tempOptions[y]["checked"] == true) {
+                        this.questionHandler.getCompetentieById(z).addScore(tempOptions[y]["value"])
+                        break;
+                    }
+                }
+                x--;
             }
             if (missing > 0) {
+                window.alert("Not everything is filled in");
                 break;
             }
         }
@@ -120,6 +130,10 @@ export class TestController extends Controller {
     }
 
     private getOldData() {
+        this.comparer = new ResultComparer();
+        this.comparer.setCompetenties(this.questionHandler.getCompetenties());
+        this.comparer.setNewResults(this.newResults);
+
         this.oldResults = new Array();
         let url = "http://localhost:8080/servlet/services/rest/users/" + LoginService.getInstance().getUserName() + "/results";
         let promise = fetch(url);
@@ -129,10 +143,6 @@ export class TestController extends Controller {
             for (let score of json) {
                 this.oldResults.push(new Result(score.competencieId, score.competencieScore));
             }
-
-            this.comparer = new ResultComparer();
-            this.comparer.setCompetenties(this.questionHandler.getCompetenties());
-            this.comparer.setNewResults(this.newResults);
             this.comparer.setOldResults(this.oldResults);
 
             $(".container").html(this.comparer.getView());
