@@ -43,7 +43,7 @@ Package with maven to compile.
     ~~~~
     <?xml version="1.0" encoding="UTF-8"?>
     <Context path="/servlet">
-        <Resource auth="Container" driverClassName="com.mysql.jdbc.Driver" name="jdbc/ent3" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ent3?serverTimezone=UTC" username="<username>" password="<password>" />
+        <Resource auth="Container" driverClassName="com.mysql.cj.jdbc.Driver" name="jdbc/ent3" type="javax.sql.DataSource" url="jdbc:mysql://localhost:3306/ent3?serverTimezone=UTC" username="<username>" password="<password>" />
     </Context>
     ~~~~
 
