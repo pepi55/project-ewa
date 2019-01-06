@@ -79,7 +79,7 @@ public class ClassroomResource {
           break;
 
         default:
-          return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Invalid teacher supplied")).build();
+          return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Invalid user supplied")).build();
       }
     }
 
