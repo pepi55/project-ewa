@@ -8,24 +8,28 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import com.ent3.servlet.model.Area;
+import com.ent3.servlet.model.Classroom;
 import com.ent3.servlet.model.Competency;
 import com.ent3.servlet.model.Course;
 import com.ent3.servlet.model.Question;
 import com.ent3.servlet.model.Result;
 import com.ent3.servlet.model.User;
 import com.ent3.servlet.service.AreaRepository;
+import com.ent3.servlet.service.ClassroomRepository;
 import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.CourseRepository;
 import com.ent3.servlet.service.QuestionRepository;
 import com.ent3.servlet.service.ResultRepository;
 import com.ent3.servlet.service.UserRepository;
 
+import org.hibernate.cfg.NotYetImplementedException;
+
 /**
  * Repository DB implementation
  *
  * @author Peter Dimitrov
  */
-public class RepoImplementation implements UserRepository, CompetencyRepository, AreaRepository, CourseRepository, QuestionRepository, ResultRepository {
+public class RepoImplementation implements UserRepository, CompetencyRepository, AreaRepository, CourseRepository, QuestionRepository, ResultRepository, ClassroomRepository {
     private static RepoImplementation instance;
 
     private EntityManagerFactory entityManagerFactory;
@@ -265,7 +269,7 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         EntityManager em = getEntityManager();
 
         competency.addQuestion(question);
-        
+
         em.getTransaction().begin();
         em.persist(question);
         em.getTransaction().commit();
@@ -316,6 +320,96 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
+    @SuppressWarnings("unchecked")
+    public List<Classroom> getAllClassrooms() {
+        EntityManager em = getEntityManager();
+
+        List<Classroom> result = em.createQuery("SELECT c FROM Classroom c").getResultList();
+
+        em.close();
+
+        return result;
+    }
+
+    @Override
+    public Classroom getClassroomById(int id) {
+        EntityManager em = getEntityManager();
+
+        Classroom result = em.find(Classroom.class, id);
+
+        return result;
+    }
+
+    @Override
+    public Classroom addStudentToClassroom(Classroom classroom, User student) {
+        EntityManager em = getEntityManager();
+
+        classroom.addStudent(student);
+
+        em.getTransaction().begin();
+        em.merge(classroom);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return classroom;
+    }
+
+    @Override
+    public Classroom setClassroomTeacher(Classroom classroom, User teacher) {
+        EntityManager em = getEntityManager();
+
+        classroom.setTeacher(teacher);
+
+        em.getTransaction().begin();
+        em.merge(classroom);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return classroom;
+    }
+
+    @Override
+    public Classroom addClassroom(Classroom classroom) {
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.persist(classroom);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return classroom;
+    }
+
+    @Override
+    public void deleteClassroom(Classroom classroom) {
+        throw new NotYetImplementedException();
+    }
+
+    @Override
+    public Classroom removeStudentFromClassroom(Classroom classroom, User student) {
+        EntityManager em = getEntityManager();
+
+        classroom.deleteStudent(student);
+
+        em.getTransaction().begin();
+        em.merge(classroom);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return classroom;
+    }
+
+    @Override
+    public boolean classroomContainsStudent(Classroom classroom, User student) {
+        return classroom.getStudents().contains(student);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public List<Result> getAllResults(User user) {
         EntityManager em = getEntityManager();
 
@@ -333,11 +427,11 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         EntityManager em = getEntityManager();
 
         em.getTransaction().begin();
-        Query query = em.createQuery("DELETE FROM Result r WHERE r.user =:user");
+        Query query = em.createQuery("DELETE FROM Result r WHERE r.user = :user");
         query.setParameter("user", user);
         query.executeUpdate();
         em.getTransaction().commit();
-        
+
         em.close();
     }
 
@@ -352,5 +446,5 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         em.close();
 
         return result;
-	}
+    }
 }

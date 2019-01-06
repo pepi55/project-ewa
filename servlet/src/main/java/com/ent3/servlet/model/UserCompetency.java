@@ -14,8 +14,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.omg.PortableInterceptor.USER_EXCEPTION;
-
 /**
  * Class representing a UserCompetency
  */
