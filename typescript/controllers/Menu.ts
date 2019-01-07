@@ -42,6 +42,10 @@ export class Menu {
         let teacherClassItem: MenuItem = new MenuItem("My Classes");
         teacherClassItem.setOnClick((e: any) => { window.location.href = "/servlet/views/teacherClass.html"; })
 
+        //admins
+        let adminApproveItem: MenuItem = new MenuItem("New Approvals");
+        adminApproveItem.setOnClick((e: any) => { window.location.href = "/servlet/views/adminApprove.html"; })
+
         let teacherEditClassItem: MenuItem = new MenuItem("Edit Classes");
         teacherEditClassItem.setOnClick((e: any) => { window.location.href = "/servlet/views/teacherEditClass.html"; })
 
@@ -52,11 +56,13 @@ export class Menu {
                 this.onBar.push(newCoursesItem.getView());
                 this.onBar.push(savedCoursesItem.getView());
                 this.onBar.push(AdminTestItem.getView());
+                this.onBar.push(adminApproveItem.getView());
 
                 //onpage
                 this.onPage.push(newCoursesItem.getView());
                 this.onPage.push(savedCoursesItem.getView());
                 this.onPage.push(AdminTestItem.getView());
+                this.onPage.push(adminApproveItem.getView());
                 break;
 
             case UserRole.USER:

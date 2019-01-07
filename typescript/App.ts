@@ -12,6 +12,7 @@ import { AdminEditTestController } from "./controllers/AdminEditTestController";
 import { StudentSavedCoursesController } from "./controllers/StudentSavedCoursesController";
 import { TeacherClassesController } from "./controllers/TeacherClassesController.";
 import { TeacherEditClassController } from "./controllers/TeacherEditClassController";
+import { AdminApprove } from "./controllers/AdminApprove";
 
 declare var componentHandler : any;
 
@@ -71,6 +72,10 @@ export class App {
 
             case "studentSavedCoursesController":
                 controller = new StudentSavedCoursesController();
+                break;
+
+            case "adminApprove":
+                controller = new AdminApprove();
                 break;
 
             case "teacherClassesController":
