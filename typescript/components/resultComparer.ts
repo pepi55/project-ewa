@@ -3,9 +3,9 @@ import { Competentie } from "./Competentie";
 import { ProgressBar } from "./ProgressBar";
 
 export class ResultComparer {
-    private competenties: Array<Competentie>
-    private newResults: Array<Result>
-    private oldResults: Array<Result>
+    private competenties: Array<Competentie>;
+    private newResults: Array<Result>;
+    private oldResults: Array<Result>;
 
     public constructor() {
         this.newResults = new Array();
@@ -23,8 +23,8 @@ export class ResultComparer {
     public setCompetenties(competenties: Array<Competentie>) {
         this.competenties = new Array();
         this.competenties = competenties;
-        
-        console.log( this.competenties)
+        console.log("lol1");
+        console.log(this.competenties);
     }
 
     private getSortedArray(toSrot: Array<Result>) {
@@ -55,11 +55,16 @@ export class ResultComparer {
     }
 
     private getCompetentieById(id: number) {
-        for (let competentie of this.competenties) {
-            if (competentie.getCompetentieId() == id) {
-                return competentie;
+        // console.log(this.competenties);
+        // console.log(this.competenties.length);
+        // console.log(this.competenties[0]);
+        for (let i = 0; i < this.competenties.length; i++) {
+            console.log(this.competenties[i].getCompetentieId());
+            if (this.competenties[i].getCompetentieId() == id) {
+                return this.competenties[i];
             }
         }
+        //return this.competenties[0];
     }
 
     private getResultList() {
@@ -97,8 +102,11 @@ export class ResultComparer {
         </div>
         <ul class="list-item mdl-list" style="padding: 0px;>
         `;
-        for (let result of this.newResults) {
-            string += this.getListItem(this.getCompetentieById(result.getCompetencieId()).getCompetentieText());
+        console.log(this.newResults);
+        for (let i = 0; i < this.newResults.length; i++) {
+        // for (let result of this.newResults) {
+            console.log(this.newResults[i]);
+            string += this.getListItem(this.getCompetentieById(this.newResults[i].getCompetencieId()).getCompetentieText());
         }
         string += `
         </ul>
@@ -106,7 +114,8 @@ export class ResultComparer {
         `;
         for (let i = 0; i < this.newResults.length; i++) {
             let tempBar = new ProgressBar(this.newResults[i].getCompetencieScore() - this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength(), this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength() * 4)
-            if (this.oldResults != null){
+            console.log(this.oldResults);
+            if (this.oldResults.length != 0){
                 tempBar.addOldProgress(this.oldResults[i].getCompetencieScore() - this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength())
             }
             string += this.getListItem(tempBar.getView());
