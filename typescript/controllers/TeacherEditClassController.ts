@@ -122,8 +122,10 @@ export class TeacherEditClassController extends Controller {
 
             if (failed) {
                 window.alert("New classroom could not be added to the database..");
+                location.reload();
             } else {
-                window.alert("New classroom is added to the database! (refresh page)");
+                window.alert("New classroom is added to the database!");
+                location.reload();
             }
         });
 
@@ -379,8 +381,10 @@ export class TeacherEditClassController extends Controller {
 
         if (failed > 0) {
             window.alert(failed + " have failed saving");
+            location.reload();
         } else {
-            window.alert("student(s) added to classroom succesfully!!(refresh page)");
+            window.alert("student(s) added to classroom succesfully!!");
+            location.reload();
         }
 
         let table = new TableCards(this.linkTableRowsStudents);
@@ -466,8 +470,10 @@ export class TeacherEditClassController extends Controller {
 
         if (failed > 0) {
             window.alert(failed + " have failed saving");
+            location.reload();
         } else {
-            window.alert("student(s) deleted from classroom succesfully!!(refresh page)");
+            window.alert("student(s) deleted from classroom succesfully!!");
+            location.reload();
         }
 
         let table = new TableCards(this.pickTableRowsStudents);
