@@ -41,7 +41,8 @@ export class TeacherEditClassController extends Controller {
     protected setup(): void {   
         this.addAddClassroomButton();
         this.getClassroomsAndStudents();
-        
+        $("#table5").append(this.getEmptyTableView("This box is empty. Go select a classroom in the dropdownmenu!!"));
+        $("#table4").append(this.getEmptyTableView("This box is empty. Go select a classroom in the dropdownmenu!!"));
     }
 
     //SETTING TABLES
@@ -54,12 +55,12 @@ export class TeacherEditClassController extends Controller {
         tempClassroom.push("All students with a classroom");
 
         let classroomMenu : dropDownMenu = new dropDownMenu("Classroom", tempClassroom);
+        $("#competencySelectorAndSelectAllRows2").empty();
+        $("#tableCardsButtons2").empty();
         $("#competencySelectorAndSelectAllRows2").append(classroomMenu.getMenuView());
         componentHandler.upgradeDom();
         getmdlSelect.init(".getmdl-select");
         
-        $("#table5").append(this.getEmptyTableView("This box is empty. Go select a classroom in the dropdownmenu!!"));
-
         this.addContainerButtonPick(); 
 
     }
@@ -71,11 +72,14 @@ export class TeacherEditClassController extends Controller {
         }
 
         let classroomMenu : dropDownMenu = new dropDownMenu("Classroom", tempClassroom);
+        $("#competencySelectorAndSelectAllRows").empty();
+        $("#tableCardsButtons").empty();
+
         $("#competencySelectorAndSelectAllRows").append(classroomMenu.getMenuView());
         componentHandler.upgradeDom();
         getmdlSelect.init(".getmdl-select");
         
-        $("#table4").append(this.getEmptyTableView("This box is empty. Go select a classroom in the dropdownmenu!!"));
+        
 
         this.addContainerButtonLink(); 
 
@@ -122,10 +126,8 @@ export class TeacherEditClassController extends Controller {
 
             if (failed) {
                 window.alert("New classroom could not be added to the database..");
-                location.reload();
             } else {
                 window.alert("New classroom is added to the database!");
-                location.reload();
             }
         });
 
@@ -248,7 +250,7 @@ export class TeacherEditClassController extends Controller {
 
         if (classroomId === -2) {
             //students without a classroom
-            
+
             for (let j = 0; j < this.studentsWithoutClassroom.length; j++) {
                 let tableStudent : any = {
                     "courseId" : this.studentsWithoutClassroom[j].getUsername(),
@@ -380,11 +382,9 @@ export class TeacherEditClassController extends Controller {
         }        
 
         if (failed > 0) {
-            window.alert(failed + " have failed saving");
-            location.reload();
+            window.alert(failed + " have failed saving (refresh page)");
         } else {
-            window.alert("student(s) added to classroom succesfully!!");
-            location.reload();
+            window.alert("student(s) added to classroom succesfully!! (refresh page)");
         }
 
         let table = new TableCards(this.linkTableRowsStudents);
@@ -439,7 +439,6 @@ export class TeacherEditClassController extends Controller {
             if(checkBoxes[i].classList.contains("is-checked")) {
                 atleastOneCardChecked = true;
                 this.pickTableRowsStudents[i] = deletedElement;
-                
                 let failedBool : boolean = this.addOrDeleteStudentToClassroom(classroomId, this.pickStudents[i]);
                 
                 if (failedBool) {
@@ -469,11 +468,9 @@ export class TeacherEditClassController extends Controller {
         }        
 
         if (failed > 0) {
-            window.alert(failed + " have failed saving");
-            location.reload();
+            window.alert(failed + " have failed deleting (refresh page)");
         } else {
-            window.alert("student(s) deleted from classroom succesfully!!");
-            location.reload();
+            window.alert("student(s) deleted from classroom succesfully!! (refresh page)");
         }
 
         let table = new TableCards(this.pickTableRowsStudents);
@@ -566,7 +563,6 @@ export class TeacherEditClassController extends Controller {
             //check if POST is succeeded
 
             let classroomId : number = JSON.parse(object.body).id;
-
             this.addOrDeleteStudentToClassroom(classroomId, LoginService.getInstance().getUser());
             
 
@@ -579,6 +575,7 @@ export class TeacherEditClassController extends Controller {
     }
 
     private getClassroomsAndStudents() : any {
+
         let DB = new ApiService(API.DB);
         DB.setPath("classrooms");
         //getting the courses from DB

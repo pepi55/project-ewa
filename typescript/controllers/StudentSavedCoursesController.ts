@@ -124,7 +124,7 @@ export class StudentSavedCoursesController extends Controller {
             } else {
                 $("#progressDiv").css("display", "none");
                 $("#mainPageTitle").html("You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!");
-                $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "100%"});
+                $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
 
                 console.log("Something went wrong!");
             }

@@ -67,7 +67,14 @@ export class TeacherClassesController extends Controller {
                     }
                     
                 });
+
+                if (numberOfScrollTables === 10000) {
+                    $("#mainPageTitle").html("You don't have any classrooms!!! Go make some new classrooms by clicking on the EDIT CLASSES-tab!");
+                    $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
+                }
             } else {
+                $("#mainPageTitle").html("There are no classrooms in the database!! Go make some new classrooms by clicking on the EDIT CLASSES-tab!");
+                $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
                 console.log("Something went wrong!");
             }
  
