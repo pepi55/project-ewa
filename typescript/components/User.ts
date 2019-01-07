@@ -8,7 +8,7 @@ export class User {
     private email: string;
     private role: UserRole;
 
-    public constructor(firstName:string, lastName:string, username:string, password:string, email:string, role: UserRole) {
+    public constructor(firstName:string, lastName:string, username:string, password:string, email:string, role?: UserRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;

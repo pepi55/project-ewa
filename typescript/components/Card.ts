@@ -4,9 +4,13 @@ export class Card {
     private url : string;
     private description? : string;
     private picture? : string;
+    
 
     //for students
     private shareButton : string = "";
+
+    //for teachers
+    private backgroundSize : number = 100;
 
     constructor(cardId? : number, title? : string, url? : string, description? : string, picture? : string, DBResponse? : any) {
         this.cardId = cardId;
@@ -27,6 +31,10 @@ export class Card {
         this.url = DBResponse.url;
         this.description = DBResponse.description;
         this.picture = DBResponse.image;
+    }
+
+    public setBackgroundSize(size : number) {
+        this.backgroundSize = size;
     }
 
     public getcardId() {
@@ -65,7 +73,7 @@ export class Card {
         }
         
         const mainStart : string = `<!--card--> <div class="mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">`;
-        const title : string = `<div class="mdl-card__title" style="height: 176px; background: url(${this.picture}) no-repeat center; background-size: 100%; color: black;"> <h2 class="mdl-card__title-text">${this.title}</h2></div>`;
+        const title : string = `<div class="mdl-card__title" style="height: 176px; background: url(${this.picture}) no-repeat center; background-size: ${this.backgroundSize}%; color: black;"> <h2 class="mdl-card__title-text">${this.title}</h2></div>`;
         const supportingText : string = `<div class="mdl-card__supporting-text">${this.description}</div>`;
         const button : string = `<div class="mdl-card__actions mdl-card--border" style="text-align: center;"id="${this.cardId}"></div>`;
         const mainEnd : string = `</div>`;

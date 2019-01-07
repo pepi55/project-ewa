@@ -39,8 +39,11 @@ export class Menu {
         StudentTestItem.setOnClick((e: any) => { window.location.href = "/servlet/views/studentTest.html"; })
 
         //teachers
-        let teacherClassItem: MenuItem = new MenuItem("My Class");
+        let teacherClassItem: MenuItem = new MenuItem("My Classes");
         teacherClassItem.setOnClick((e: any) => { window.location.href = "/servlet/views/teacherClass.html"; })
+
+        let teacherEditClassItem: MenuItem = new MenuItem("Edit Classes");
+        teacherEditClassItem.setOnClick((e: any) => { window.location.href = "/servlet/views/teacherEditClass.html"; })
 
         //setting buttons for the menu
         switch (role) {
@@ -71,11 +74,14 @@ export class Menu {
             case UserRole.TEACHER:
                 //onbar
                 this.onBar.push(teacherClassItem.getView());
+                this.onBar.push(teacherEditClassItem.getView());
                 this.onBar.push(newCoursesItem.getView());
                 this.onBar.push(savedCoursesItem.getView());
 
+
                 //onpage
                 this.onPage.push(teacherClassItem.getView());
+                this.onPage.push(teacherEditClassItem.getView());
                 this.onPage.push(newCoursesItem.getView());
                 this.onPage.push(savedCoursesItem.getView());
                 break;

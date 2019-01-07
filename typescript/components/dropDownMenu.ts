@@ -17,7 +17,7 @@ export class dropDownMenu {
             <input type="hidden" value="" name="${this.title}">
             <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
             <label for="sample4" class="mdl-textfield__label">${this.title}</label>
-            <ul for="sample4" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">`;
+            <ul for="sample4" class="mdl-menu mdl-menu--bottom-left mdl-js-menu" style="max-height: 300px; overflow-y: scroll;">`;
 
         
 

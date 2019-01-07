@@ -10,6 +10,8 @@ import { AdminSavedCoursesController } from "./controllers/AdminsavedCoursesCont
 import { UserRole } from "./components/UserRole";
 import { AdminEditTestController } from "./controllers/AdminEditTestController";
 import { StudentSavedCoursesController } from "./controllers/StudentSavedCoursesController";
+import { TeacherClassesController } from "./controllers/TeacherClassesController.";
+import { TeacherEditClassController } from "./controllers/TeacherEditClassController";
 
 declare var componentHandler : any;
 
@@ -69,6 +71,14 @@ export class App {
 
             case "studentSavedCoursesController":
                 controller = new StudentSavedCoursesController();
+                break;
+
+            case "teacherClassesController":
+                controller = new TeacherClassesController();
+                break;
+
+            case "teacherEditClassController":
+                controller = new TeacherEditClassController();
                 break;
 
             default:
