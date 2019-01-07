@@ -135,12 +135,12 @@ export class TestController extends Controller {
     }
 
     private getOldData() {
-        this.oldResults = new Array();
         let url = "http://localhost:8080/servlet/services/rest/users/" + LoginService.getInstance().getUserName() + "/results";
         let promise = fetch(url);
         promise.then(function (result) {
             return result.json();
         }).then(function (json: any) {
+            this.oldResults = new Array();
             for (let score of json) {
                 this.oldResults.push(new Result(score.competencieId, score.competencieScore));
             }
@@ -149,5 +149,4 @@ export class TestController extends Controller {
 
         }.bind(this))
     }
-
 }
