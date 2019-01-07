@@ -12,7 +12,7 @@ export class UserHandler {
             console.log(json);
             for (let user of json){
                 console.log(user)
-                let newuser = new User(user["email"],user["firstName"],user["lastName"],user["username"],user["password"],user["role"]); 
+                let newuser = new User(user["firstName"],user["lastName"],user["username"],user["password"],user["email"],user["role"]); 
                 //newuser.setId(user["id"]);
                 this.users.push(newuser);
             }
