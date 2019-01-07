@@ -337,6 +337,8 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
 
         Classroom result = em.find(Classroom.class, id);
 
+        em.close();
+
         return result;
     }
 
