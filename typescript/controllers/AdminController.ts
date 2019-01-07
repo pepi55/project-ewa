@@ -517,8 +517,8 @@ export class AdminCourseController extends Controller {
     }
 
     private setBackAndNextButtons() {
-        let backButton : Button = new Button("< Back");
-        let nextButton : Button = new Button("Next >");
+        let backButton : Button = new Button("Back");
+        let nextButton : Button = new Button("Next");
 
         nextButton.setOnClick((e : any) => {
             let page : number = parseInt(this.tempParameters[0]);

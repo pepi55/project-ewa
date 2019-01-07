@@ -79,8 +79,15 @@ export class StudentSavedCoursesController extends Controller {
                             numberOfScrollTables++;
 
                         } else {
-                            console.log("mastered competency: " + mainResponse.name);
-                            this.numberOfGoodCompetencies++;
+                            if (competencyScore === maxScore) {
+                                console.log("mastered competency : " + mainResponse.name);
+                                this.numberOfGoodCompetencies++;
+                                
+                            } 
+                            if (cards.length === 0) {
+                                console.log("there are no cards for competency: " + mainResponse.name);
+                            }
+                            
                         }    
 
                         
