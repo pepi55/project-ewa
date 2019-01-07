@@ -39,6 +39,7 @@ export class TeacherEditClassController extends Controller {
     
 
     protected setup(): void {   
+        this.addAddClassroomButton();
         this.getClassroomsAndStudents();
         
     }
@@ -111,8 +112,6 @@ export class TeacherEditClassController extends Controller {
         $("#tableCardsButtons2").append(addToLinkTableButton.getView());
         componentHandler.upgradeDom();
         
-        this.addAddClassroomButton();
-        
     }
 
     private addAddClassroomButton() {
@@ -124,7 +123,7 @@ export class TeacherEditClassController extends Controller {
             if (failed) {
                 window.alert("New classroom could not be added to the database..");
             } else {
-                window.alert("New classroom is added to the database!");
+                window.alert("New classroom is added to the database! (refresh page)");
             }
         });
 
@@ -158,6 +157,7 @@ export class TeacherEditClassController extends Controller {
         
     }
 
+    //TABLE UPDATES AND SWITCHES
     private addToLinkTable() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10);
         this.linkStudents = [];
@@ -592,6 +592,8 @@ export class TeacherEditClassController extends Controller {
                 this.setPickStudentTable();
                 this.setLinkStudentTable();
             } else {
+                $("#table5").append(this.getEmptyTableView("This box is empty. This means that there are NO classrooms!! Go make a classroom by doing step 1."));
+                $("#table4").append(this.getEmptyTableView("This box is empty. This means that there are NO classrooms!! Go make a classroom by doing step 1."));
                 console.log("Something went wrong!");
             }
  
