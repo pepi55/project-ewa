@@ -1,6 +1,6 @@
 import { Question } from "./Question";
 
-export class Competentie{
+export class Competencie{
     private id: number;
     private text: string;
     private questions: Array<Question>;
@@ -12,7 +12,7 @@ export class Competentie{
         this.questions = questions;
     }
 
-    public getCompetentieText(){
+    public getCompetencieText(){
         return this.text;
     }
 
@@ -32,7 +32,7 @@ export class Competentie{
         return this.questions.length;
     }
 
-    public getCompetentieId(){
+    public getCompetencieId(){
         return this.id;
     }
 }

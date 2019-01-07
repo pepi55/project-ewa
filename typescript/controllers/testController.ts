@@ -62,14 +62,14 @@ export class TestController extends Controller {
         let missing = 0;
         this.newResults = new Array();
         let z = 0;
-        let x = this.questionHandler.getCompetentieById(z).getQuestionLength();
+        let x = this.questionHandler.getCompetencieById(z).getQuestionLength();
         for (let i = 0; i <= this.questionHandler.getQuestionLength(); i++) {
-            console.log("gotten data from " + this.questionHandler.getCompetentieById(z).getCompetentieText())
+            console.log("gotten data from " + this.questionHandler.getCompetencieById(z).getCompetencieText())
             if (x <= 0) {
-                this.newResults.push(new Result(this.questionHandler.getCompetentieById(z).getCompetentieId(), this.questionHandler.getCompetentieById(z).getScore()))
+                this.newResults.push(new Result(this.questionHandler.getCompetencieById(z).getCompetencieId(), this.questionHandler.getCompetencieById(z).getScore()))
                 z++;
                 if (i < this.questionHandler.getQuestionLength()) {
-                    x = this.questionHandler.getCompetentieById(z).getQuestionLength();
+                    x = this.questionHandler.getCompetencieById(z).getQuestionLength();
                 }
             }
             if (i < this.questionHandler.getQuestionLength()) {
@@ -81,7 +81,7 @@ export class TestController extends Controller {
                         break;
                     }
                     if (tempOptions[y]["checked"] == true) {
-                        this.questionHandler.getCompetentieById(z).addScore(tempOptions[y]["value"])
+                        this.questionHandler.getCompetencieById(z).addScore(tempOptions[y]["value"])
                         break;
                     }
                 }
@@ -93,7 +93,7 @@ export class TestController extends Controller {
             }
         }
         if (missing == 0) {
-            this.comparer.setCompetenties(this.questionHandler.getCompetenties());
+            this.comparer.setCompetencies(this.questionHandler.getCompetencies());
             this.comparer.setNewResults(this.newResults);
             $(".container").html(this.comparer.getView());
 
@@ -103,12 +103,12 @@ export class TestController extends Controller {
 
     private storeData() {
         this.removeOldData();
-        for (let competentie of this.newResults) {
+        for (let competencie of this.newResults) {
             let DBOptions: any = {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(competentie)
+                body: JSON.stringify(competencie)
             };
             let DB = new ApiService(API.DB);
             DB.setPath("users/" + LoginService.getInstance().getUserName() + "/results");

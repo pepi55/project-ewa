@@ -1,19 +1,19 @@
 import { Question } from "./Question"
 import { ApiService } from "../coursesAPIs/ApiService";
 import { API } from "../coursesAPIs/EnumRepo";
-import { Competentie } from "./Competentie";
+import { Competencie } from "./Competencie";
 import { QuestionScreen } from "./QuestionScreen";
 declare var componentHandler: any;
 
 export class QuestionHandler {
-    private competenties: Array<Competentie>;
+    private competencies: Array<Competencie>;
 
     public constructor() {
-        this.getCompetentiesFromDatabase()
+        this.getCompetenciesFromDatabase()
     }
 
-    private getCompetentiesFromDatabase() {
-        this.competenties = new Array()
+    private getCompetenciesFromDatabase() {
+        this.competencies = new Array()
         let DB = new ApiService(API.DB);
         let i = 0;
 
@@ -24,7 +24,7 @@ export class QuestionHandler {
                     mainResponse.competencies.map((mainResponse: any) => {
                         let tempQuestions = new Array<Question>();
                         mainResponse.questions.map((mainResponse: any) => tempQuestions.push(new Question(mainResponse.id, mainResponse.question)))
-                        this.competenties.push(new Competentie(mainResponse.id, mainResponse.name, tempQuestions))
+                        this.competencies.push(new Competencie(mainResponse.id, mainResponse.name, tempQuestions))
                         for (let question of tempQuestions) {
                             let questionScreen = new QuestionScreen(mainResponse.name, question.getId(), question.getQuestion());
                             $("#test-area").append(questionScreen.getView(i));
@@ -39,19 +39,19 @@ export class QuestionHandler {
         });
     }
 
-    public getCompetenties() {
+    public getCompetencies() {
 
-        return this.competenties;
+        return this.competencies;
     }
 
-    public getCompetentieById(id: number) {
-        return this.competenties[id];
+    public getCompetencieById(id: number) {
+        return this.competencies[id];
     }
 
-    public getCompetentieByCompetentieId(id: number) {
-        for (let competentie of this.competenties) {
-            if (competentie.getCompetentieId() == id) {
-                return competentie;
+    public getCompetencieByCompetencieId(id: number) {
+        for (let competencie of this.competencies) {
+            if (competencie.getCompetencieId() == id) {
+                return competencie;
             }
         }
         return null;
@@ -59,7 +59,7 @@ export class QuestionHandler {
 
     public getQuestionLength() {
         let temp = 0
-        for (let competencie of this.competenties) {
+        for (let competencie of this.competencies) {
             temp += +competencie.getQuestions().length;
         }
         return temp;

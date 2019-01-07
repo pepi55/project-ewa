@@ -1,9 +1,9 @@
 import { Result } from "./Result";
-import { Competentie } from "./Competentie";
+import { Competencie } from "./Competencie";
 import { ProgressBar } from "./ProgressBar";
 
 export class ResultComparer {
-    private competenties: Array<Competentie>;
+    private competencies: Array<Competencie>;
     private newResults: Array<Result>;
     private oldResults: Array<Result>;
 
@@ -20,11 +20,11 @@ export class ResultComparer {
         this.oldResults = this.getSortedArray(oldResults)
     }
 
-    public setCompetenties(competenties: Array<Competentie>) {
-        this.competenties = new Array();
-        this.competenties = competenties;
+    public setCompetencies(competencies: Array<Competencie>) {
+        this.competencies = new Array();
+        this.competencies = competencies;
         console.log("lol1");
-        console.log(this.competenties);
+        console.log(this.competencies);
     }
 
     private getSortedArray(toSrot: Array<Result>) {
@@ -49,22 +49,21 @@ export class ResultComparer {
         <li class="mdl-list__item">
             <span class="mdl-list__item-primary-content">
                 ${text}
-            </span>
-        </li>`;
+            </span></li>`;
         return string;
     }
 
-    private getCompetentieById(id: number) {
-        // console.log(this.competenties);
-        // console.log(this.competenties.length);
-        // console.log(this.competenties[0]);
-        for (let i = 0; i < this.competenties.length; i++) {
-            console.log(this.competenties[i].getCompetentieId());
-            if (this.competenties[i].getCompetentieId() == id) {
-                return this.competenties[i];
+    private getCompetencieById(id: number) {
+        // console.log(this.competencies);
+        // console.log(this.competencies.length);
+        // console.log(this.competencies[0]);
+        for (let i = 0; i < this.competencies.length; i++) {
+            console.log(this.competencies[i].getCompetencieId());
+            if (this.competencies[i].getCompetencieId() == id) {
+                return this.competencies[i];
             }
         }
-        //return this.competenties[0];
+        //return this.competencies[0];
     }
 
     private getResultList() {
@@ -104,19 +103,18 @@ export class ResultComparer {
         `;
         console.log(this.newResults);
         for (let i = 0; i < this.newResults.length; i++) {
-        // for (let result of this.newResults) {
             console.log(this.newResults[i]);
-            string += this.getListItem(this.getCompetentieById(this.newResults[i].getCompetencieId()).getCompetentieText());
+            string += this.getListItem(this.getCompetencieById(this.newResults[i].getCompetencieId()).getCompetencieText());
         }
         string += `
         </ul>
         <ul class="list-item mdl-list" style="padding: 0px;>
         `;
         for (let i = 0; i < this.newResults.length; i++) {
-            let tempBar = new ProgressBar(this.newResults[i].getCompetencieScore() - this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength(), this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength() * 4)
+            let tempBar = new ProgressBar(this.newResults[i].getCompetencieScore() - this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength(), this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength() * 4)
             console.log(this.oldResults);
-            if (this.oldResults.length != 0){
-                tempBar.addOldProgress(this.oldResults[i].getCompetencieScore() - this.getCompetentieById(this.newResults[i].getCompetencieId()).getQuestionLength())
+            if (this.oldResults.length != 0 && i < this.oldResults.length){
+                tempBar.addOldProgress(this.oldResults[i].getCompetencieScore() - this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength())
             }
             string += this.getListItem(tempBar.getView());
         }
