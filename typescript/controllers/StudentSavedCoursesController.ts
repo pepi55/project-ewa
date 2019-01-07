@@ -47,7 +47,7 @@ export class StudentSavedCoursesController extends Controller {
                         //get all questions of specific competency
                         mainResponse.questions.forEach(mainResponse => {
                             //console.log(mainResponse.question);
-                            maxScore++;
+                            maxScore += 5;
                         });
 
                         let competencyScore : number = 0;
