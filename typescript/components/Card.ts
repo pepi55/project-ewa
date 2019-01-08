@@ -4,6 +4,7 @@ export class Card {
     private url : string;
     private description? : string;
     private picture? : string;
+    private userId : string;
     
 
     //for students
@@ -23,6 +24,14 @@ export class Card {
         }
 
         this.shareButton = `<div class="mdl-card__menu"><a href="${this.url}"><button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect"><i class="material-icons">play_arrow</i></button></a></div>`;
+    }
+
+    public setUserId(userId : string){
+        this.userId = userId;
+    }
+
+    public getUserId(){
+        return this.userId;
     }
 
     private setDBCard(DBResponse : any) {

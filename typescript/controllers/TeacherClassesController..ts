@@ -5,6 +5,7 @@ import { Card } from "../components/Card";
 import { CardsScrollTable } from "../components/CardsScrollTable";
 import { Button } from "../components/button/Button";
 import { LoginService } from "../components/LoginService";
+import { TeacherStorage } from "../components/TeacherStorage";
 declare var componentHandler : any;
 
 export class TeacherClassesController extends Controller {
@@ -36,6 +37,7 @@ export class TeacherClassesController extends Controller {
                         "<br/>Role: " + mainResponse.role, "https://png.pngtree.com/svg/20170602/avatar_107646.png");
                         card.removeShareButton();
                         card.setBackgroundSize(35);
+                        card.setUserId(mainResponse.username);
                         cards.push(card);
                         
                     });
@@ -56,6 +58,8 @@ export class TeacherClassesController extends Controller {
                             let acceptCourseButton : Button = new Button("Show results");
                             //prevent errors
                             acceptCourseButton.setOnClick((e: any) => {
+                                TeacherStorage.getInstance().setStudentId(element.getUserId());
+                                window.location.href = "studentResults.html";
                             });
                             $("#" + element.getcardId()).append(acceptCourseButton.getView());
                             componentHandler.upgradeDom();

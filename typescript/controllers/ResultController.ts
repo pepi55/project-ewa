@@ -8,6 +8,7 @@ import { API } from "../coursesAPIs/EnumRepo";
 import { Competencie } from "../components/Competencie";
 import { Question } from "../components/Question";
 import { Button } from "../components/button/Button";
+import { TeacherStorage } from "../components/TeacherStorage";
 declare var componentHandler: any;
 
 export class ResultController extends Controller {
@@ -52,7 +53,12 @@ export class ResultController extends Controller {
         this.comparer.setOldResults(tempArray);
 
         let DB = new ApiService(API.DB);
-        DB.setPath("users/" + LoginService.getInstance().getUserName() + "/results");
+        let username = LoginService.getInstance().getUserName();
+        console.log(TeacherStorage.getInstance().checkIfStored())
+        if (TeacherStorage.getInstance().checkIfStored()){
+            username = TeacherStorage.getInstance().getStudentId();
+        }
+        DB.setPath("users/" + username + "/results");
         DB.getParent((object: any) => {
             console.log(object)
             if (object.errorMessage == null) {
@@ -68,6 +74,15 @@ export class ResultController extends Controller {
 
                 console.log("Something went wrong!");
             };
+            if (TeacherStorage.getInstance().checkIfStored()){
+                let backButton = new Button("Back");
+                backButton.setOnClick(() => {
+                    window.location.href = "teacherClass.html";
+                });
+                $(".teacher-button").append(backButton.getView())
+                $(".mdl-card__title-text").html("Results of " + TeacherStorage.getInstance().getStudentId());
+                TeacherStorage.getInstance().emptyId();
+            }
         })
     }
 }
