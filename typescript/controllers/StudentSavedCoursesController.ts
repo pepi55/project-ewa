@@ -95,7 +95,9 @@ export class StudentSavedCoursesController extends Controller {
                     });
                     
                 });
-
+                if (numberOfScrollTables === 10000) {
+                    $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
+                }
                 this.setProgressBar(this.calculateProgress());
                 
                  

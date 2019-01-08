@@ -127,7 +127,7 @@ export class TeacherEditClassController extends Controller {
             if (failed) {
                 window.alert("New classroom could not be added to the database..");
             } else {
-                window.alert("New classroom is added to the database!");
+                window.alert("New classroom is added to the database! (refresh page)");
             }
         });
 
