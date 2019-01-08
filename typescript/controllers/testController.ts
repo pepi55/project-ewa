@@ -27,10 +27,6 @@ export class TestController extends Controller {
         $("#back_button").html(backButton.getView());
         $("#button_area2").html(nextButton.getView());
 
-        let testb: Button = new Button("test");
-        testb.setOnClick(() => this.getDataFromTest());
-        $("#back_button").append(testb.getView());
-
         this.getOldData();
     }
 

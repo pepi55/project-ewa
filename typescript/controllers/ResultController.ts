@@ -16,6 +16,7 @@ export class ResultController extends Controller {
     private competencies: Array<Competencie>;
     private comparer: ResultComparer;
     private questionHandler: QuestionHandler;
+    private timer: any;
 
     protected setup(): void {
         let loadButton = new Button("Load results");
@@ -44,6 +45,15 @@ export class ResultController extends Controller {
             }
         });
 
+        this.timer = setInterval(function(){
+            // let loadButton = new Button("Load results");
+        // loadButton.setOnClick(() => {
+            this.comparer.setCompetencies(this.competencies);
+            this.getData();
+            $(".android-card-container").remove();
+        // });
+        },3000);
+
         $(".android-card-container").append(loadButton.getView());
     }
 
@@ -51,7 +61,7 @@ export class ResultController extends Controller {
         this.results = new Array();
         let tempArray: Array<Result> = new Array();
         this.comparer.setOldResults(tempArray);
-
+    
         let DB = new ApiService(API.DB);
         let username = LoginService.getInstance().getUserName();
         console.log(TeacherStorage.getInstance().checkIfStored())
@@ -69,10 +79,26 @@ export class ResultController extends Controller {
             this.comparer.setNewResults(this.results);
             $(".container").html(this.comparer.getView());
             componentHandler.upgradeDom();
+            this.timer = null;
             if (object.errorMessage == "No results found") {
-                $(".container").html("You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!");
-
-                console.log("Something went wrong!");
+                this.comparer.setNewResults(this.results);
+                $(".container").html(this.comparer.getView());
+                componentHandler.upgradeDom();
+                this.timer = null;
+                if (object.errorMessage == "No results found") {
+                    $("#mainPageTitle").html(`<div class="android-more-section"><div class="android-section-title mdl-typography--display-1-color-contrast" id="mainPageTitle">You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!</div></div>`);
+                    $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
+                    $(".page-content").css({"background-color":"white"});
+                };
+                if (TeacherStorage.getInstance().checkIfStored()){
+                let backButton = new Button("Back");
+                backButton.setOnClick(() => {
+                    window.location.href = "teacherClass.html";
+                });
+                $(".teacher-button").append(backButton.getView())
+                $(".mdl-card__title-text").html("Results of " + TeacherStorage.getInstance().getStudentId());
+                TeacherStorage.getInstance().emptyId();
+            }
             };
             if (TeacherStorage.getInstance().checkIfStored()){
                 let backButton = new Button("Back");

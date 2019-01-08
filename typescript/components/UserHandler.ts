@@ -4,7 +4,7 @@ export class UserHandler {
     private users: Array<User> = new Array();
 
     public constructor() {
-        let url = "http://127.0.0.1:8080/servlet/services/rest/users/";
+        let url = "http://127.0.0.1:8080/servlet/services/rest/users?approve=approved";
         let promise = fetch(url);
         promise.then(function(result){
             return result.json();

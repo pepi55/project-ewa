@@ -120,7 +120,7 @@ export class ResultComparer {
 
     public getView() {
         const string = `
-        <div class="mdl-grid">
+        <div class="mdl-grid" id="mainPageTitle">
             <div class="mdl-cell mdl-cell--2-col teacher-button">
             </div>
             <div class="mdl-cell mdl-cell--8-col" id="result-area" style="position: relative; height: 700px;">
