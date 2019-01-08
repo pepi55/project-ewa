@@ -42,7 +42,7 @@ export class LoginController extends Controller {
                         break;
 
                     case UserRole.USER:
-                        window.location.href = this.pathToViews + "studentCourses.html";
+                        window.location.href = this.pathToViews + "studentResults.html";
                         break;
 
                     default:
