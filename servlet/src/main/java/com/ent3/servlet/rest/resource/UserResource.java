@@ -77,7 +77,8 @@ public class UserResource {
         }
 
         if (approve) {
-            service.setApproved(result, approve);
+            result.setApproved(approve);
+            service.saveUser(result);
         }
 
         return Response.status(Response.Status.OK).entity(result).build();
@@ -112,11 +113,6 @@ public class UserResource {
     public Response addUser(User user) {
         return Response.status(Response.Status.CREATED).entity(service.addUser(user)).build();
     }
-
-    // @Path("/{userId}/score")
-    // public UserCompetencyResource getUserCompetencyResource() {
-    //     return new UserCompetencyResource();
-    // }
 
     @Path("/{userId}/results")
     public ResultResource getResultResource() {

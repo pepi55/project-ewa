@@ -36,4 +36,12 @@ public interface CompetencyRepository {
      * @return Added competency.
      */
     public Competency addCompetency(Area area, Competency competency);
+
+    /**
+     * Update an existing competency in the database.
+     *
+     * @param competency The competency to update.
+     * @return Updated competency.
+     */
+    public Competency saveCompetency(Competency competency);
 }

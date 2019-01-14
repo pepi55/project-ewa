@@ -13,6 +13,8 @@ import com.ent3.servlet.service.AreaRepository;
 import com.ent3.servlet.service.CompetencyRepository;
 import com.ent3.servlet.service.UserRepository;
 
+import org.hibernate.cfg.NotYetImplementedException;
+
 /**
  * RepoServiceRawImpl
  *
@@ -88,13 +90,13 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
     }
 
     @Override
-    public User setApproved(User user, boolean approve) {
-        return null;
+    public List<User> getApprovedUsers(boolean approved) {
+        throw new NotYetImplementedException();
     }
 
     @Override
-    public List<User> getApprovedUsers(boolean approved) {
-        return null;
+    public User saveUser(User user) {
+        throw new NotYetImplementedException();
     }
     ///// USERS /////
 
@@ -144,6 +146,11 @@ public class RawRepoImplementation implements UserRepository, AreaRepository, Co
 
     public List<Competency> getAllCompetencies() {
         return new ArrayList<>(competencies.values());
+    }
+
+    @Override
+    public Competency saveCompetency(Competency competency) {
+        throw new NotYetImplementedException();
     }
     ///// COMPETENCIES /////
 

@@ -67,20 +67,22 @@ public class ClassroomResource {
 
       switch (user.getRole()) {
         case USER:
-          if (service.classroomContainsStudent(result, user)) {
-            service.removeStudentFromClassroom(result, user);
+          if (result.getStudents().contains(user)) {
+            result.deleteStudent(user);
           } else {
-            service.addStudentToClassroom(result, user);
+            result.addStudent(user);
           }
           break;
 
         case TEACHER:
-          service.setClassroomTeacher(result, user);
+          result.setTeacher(user);
           break;
 
         default:
           return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Invalid user supplied")).build();
       }
+
+      service.saveClassroom(result);
     }
 
     return Response.status(Response.Status.OK).entity(result).build();

@@ -3,7 +3,6 @@ package com.ent3.servlet.service;
 import java.util.List;
 
 import com.ent3.servlet.model.Classroom;
-import com.ent3.servlet.model.User;
 
 /**
  * ClassroomRepository
@@ -34,13 +33,21 @@ public interface ClassroomRepository {
   public Classroom addClassroom(Classroom classroom);
 
   /**
+   * Update a classroom in the database.
+   *
+   * @param classroom The classroom to save.
+   * @return The updated classroom.
+   */
+  public Classroom saveClassroom(Classroom classroom);
+
+  /**
    * Add a student to a classroom.
    *
    * @param classroom The classroom to add the student to.
    * @param student The student to add to the classroom.
    * @return The classroom with the student.
    */
-  public Classroom addStudentToClassroom(Classroom classroom, User student);
+  //public Classroom addStudentToClassroom(Classroom classroom, User student);
 
   /**
    * Check if a student is registered in a classroom.
@@ -49,7 +56,7 @@ public interface ClassroomRepository {
    * @param student the student to check.
    * @return Whether the student is registered in the classroom.
    */
-  public boolean classroomContainsStudent(Classroom classroom, User student);
+  //public boolean classroomContainsStudent(Classroom classroom, User student);
 
   /**
    * Remove a student from a classroom.
@@ -58,7 +65,7 @@ public interface ClassroomRepository {
    * @param student The student to remove from the classroom.
    * @return The classroom without the student.
    */
-  public Classroom removeStudentFromClassroom(Classroom classroom, User student);
+  //public Classroom removeStudentFromClassroom(Classroom classroom, User student);
 
   /**
    * Set the teacher of a classroom.
@@ -67,7 +74,7 @@ public interface ClassroomRepository {
    * @param teacher The teacher to assign to the classroom.
    * @return Classroom with the new teacher.
    */
-  public Classroom setClassroomTeacher(Classroom classroom, User teacher);
+  //public Classroom setClassroomTeacher(Classroom classroom, User teacher);
 
   /**
    * Delete a classroom.

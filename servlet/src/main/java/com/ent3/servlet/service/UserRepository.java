@@ -26,6 +26,14 @@ public interface UserRepository {
     public User getUserById(String id);
 
     /**
+     * Get all approved or unapproved users from the database.
+     *
+     * @param approved The approved state of the users to get.
+     * @return List of approved users.
+     */
+    public List<User> getApprovedUsers(boolean approved);
+
+    /**
      * Get a list of users with specific name.
      *
      * @param firstname The first name of the user to filter.
@@ -57,11 +65,10 @@ public interface UserRepository {
     public void deleteUser(User user);
 
     /**
-     * Approve new teacher / admin
+     * Update user in the database.
      * 
-     * @param approve
+     * @param user The user to save.
+     * @return The saved user.
      */
-    public User setApproved(User user, boolean approve);
-
-    public List<User> getApprovedUsers(boolean approved);
+    public User saveUser(User user);
 }

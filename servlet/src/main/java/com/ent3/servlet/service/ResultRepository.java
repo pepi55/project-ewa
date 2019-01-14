@@ -25,7 +25,6 @@ public interface ResultRepository {
      */
     public void deleteAllResults(User user);
 
-
     /**
      * Add a user.
      *

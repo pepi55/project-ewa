@@ -108,10 +108,6 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     public User addUser(User user) {
         EntityManager em = getEntityManager();
 
-        // if (user.getRole() == UserRole.USER){
-        //     user.setApproved(true);
-        // }
-
         em.getTransaction().begin();
         em.persist(user);
         em.getTransaction().commit();
@@ -184,8 +180,6 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     public Course addCourse(Competency competency, Course course) {
         EntityManager em = getEntityManager();
 
-        competency.addCourse(course);
-
         em.getTransaction().begin();
         em.persist(course);
         em.getTransaction().commit();
@@ -230,6 +224,19 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
 
         em.getTransaction().begin();
         em.persist(competency);
+        em.getTransaction().commit();
+
+        em.close();
+
+        return competency;
+    }
+
+    @Override
+    public Competency saveCompetency(Competency competency) {
+        EntityManager em = getEntityManager();
+
+        em.getTransaction().begin();
+        em.merge(competency);
         em.getTransaction().commit();
 
         em.close();
@@ -291,10 +298,8 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public User setApproved(User user, boolean approve) {
+    public User saveUser(User user) {
         EntityManager em = getEntityManager();
-
-        user.setApproved(approve);
 
         em.getTransaction().begin();
         em.merge(user);
@@ -343,33 +348,17 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public Classroom addStudentToClassroom(Classroom classroom, User student) {
+    @SuppressWarnings("unchecked")
+    public List<Result> getAllResults(User user) {
         EntityManager em = getEntityManager();
 
-        classroom.addStudent(student);
-
-        em.getTransaction().begin();
-        em.merge(classroom);
-        em.getTransaction().commit();
-
+        Query query = em.createQuery("SELECT r FROM Result r WHERE r.user = :user");
+        query.setParameter("user", user);
+        List<Result> result = query.getResultList();
+        
         em.close();
 
-        return classroom;
-    }
-
-    @Override
-    public Classroom setClassroomTeacher(Classroom classroom, User teacher) {
-        EntityManager em = getEntityManager();
-
-        classroom.setTeacher(teacher);
-
-        em.getTransaction().begin();
-        em.merge(classroom);
-        em.getTransaction().commit();
-
-        em.close();
-
-        return classroom;
+        return result;
     }
 
     @Override
@@ -391,10 +380,8 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
     }
 
     @Override
-    public Classroom removeStudentFromClassroom(Classroom classroom, User student) {
+    public Classroom saveClassroom(Classroom classroom) {
         EntityManager em = getEntityManager();
-
-        classroom.deleteStudent(student);
 
         em.getTransaction().begin();
         em.merge(classroom);
@@ -403,25 +390,6 @@ public class RepoImplementation implements UserRepository, CompetencyRepository,
         em.close();
 
         return classroom;
-    }
-
-    @Override
-    public boolean classroomContainsStudent(Classroom classroom, User student) {
-        return classroom.getStudents().contains(student);
-    }
-
-    @Override
-    @SuppressWarnings("unchecked")
-    public List<Result> getAllResults(User user) {
-        EntityManager em = getEntityManager();
-
-        Query query = em.createQuery("SELECT r FROM Result r WHERE r.user =:user");
-        query.setParameter("user", user);
-        List<Result> result = query.getResultList();
-        
-        em.close();
-
-        return result;
     }
 
     @Override

@@ -61,17 +61,18 @@ public class CourseResource {
     public Response addCourse(@PathParam("competencyId")int competencyId, Course course) {
         Competency competency = null;
 
-        {
-            // XXX: Repo implementation use here.
-            CompetencyRepository competencyService = RepoImplementation.getInstance();
+        // XXX: Repo implementation use here.
+        CompetencyRepository competencyService = RepoImplementation.getInstance();
 
-            competency = competencyService.getCompetencyById(competencyId);
-        }
+        competency = competencyService.getCompetencyById(competencyId);
 
         if (competency == null) {
             return Response.status(Response.Status.NOT_FOUND).entity(new ClientError("Competency with ID: " + competencyId + " not found")).build();
         } else {
             // TODO: Add duplication check.
+            competency.addCourse(course);
+            competencyService.saveCompetency(competency);
+
             return Response.status(Response.Status.CREATED).entity(service.addCourse(competency, course)).build();
             //return Response.status(Response.Status.BAD_REQUEST).entity(new ClientError("Area with ID: " + areaId + " already contains this competency")).build();
         }
