@@ -1,10 +1,14 @@
 import { Controller } from "./Controller";
-import { Menu } from "./Menu";
 import { LoginService } from "../components/loginService";
 import { CardButton } from "../components/CardButton";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { API } from "../coursesAPIs/EnumRepo";
 
+/**
+ * @author Luc Maerten
+ * 
+ * class for the profile page, used for seeing your own stored information
+ */
 export class ProfileController extends Controller {
 
     protected setup(): void {

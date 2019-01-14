@@ -5,6 +5,13 @@ import { Competencie } from "./Competencie";
 import { QuestionScreen } from "./QuestionScreen";
 declare var componentHandler: any;
 
+/**
+* @author Luc Maerten
+* 
+* class for getting the competenties and the questions in it
+* also sets the screen for the questions in the test class
+*/
+
 export class QuestionHandler {
     private competencies: Array<Competencie>;
 
@@ -12,6 +19,9 @@ export class QuestionHandler {
         this.getCompetenciesFromDatabase()
     }
 
+    /**
+     * gets the competenties from the database and punts them in the Array<Competencie>
+     */
     private getCompetenciesFromDatabase() {
         this.competencies = new Array()
         let DB = new ApiService(API.DB);
@@ -40,7 +50,6 @@ export class QuestionHandler {
     }
 
     public getCompetencies() {
-
         return this.competencies;
     }
 
@@ -48,6 +57,10 @@ export class QuestionHandler {
         return this.competencies[id];
     }
 
+    /**
+     * gets the competencie with a simular id as given.
+     * @param id of the compentcie
+     */
     public getCompetencieByCompetencieId(id: number) {
         for (let competencie of this.competencies) {
             if (competencie.getCompetencieId() == id) {
@@ -57,6 +70,9 @@ export class QuestionHandler {
         return null;
     }
 
+    /**
+     * gets the total length of all the questions
+     */
     public getQuestionLength() {
         let temp = 0
         for (let competencie of this.competencies) {

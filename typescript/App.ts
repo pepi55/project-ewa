@@ -16,10 +16,11 @@ import { AdminApprove } from "./controllers/AdminApprove";
 
 declare var componentHandler : any;
 
-
+/**
+ * class that gives the html pages the correct controllers 
+ * based on what is filled in the script tags at the bottom of those pages
+ */
 export class App {
-
-    //private menu : Menu;
 
     public main(type: any): void {
         if (!LoginService.getInstance().isLoggedIn() && type != "login") {

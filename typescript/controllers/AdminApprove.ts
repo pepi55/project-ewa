@@ -6,9 +6,13 @@ import { API } from "../coursesAPIs/EnumRepo";
 import { Controller } from "./Controller";
 declare var componentHandler: any;
 
+/**
+ * class for approving new admins / teachers
+ */
 export class AdminApprove extends Controller {
 
     protected setup(): void {
+        // get all the unapproved users
         console.log("hallo?")
         let url = "http://127.0.0.1:8080/servlet/services/rest/users?approve=not_approved";
         let promise = fetch(url);
@@ -19,7 +23,7 @@ export class AdminApprove extends Controller {
             for (let user of json) {
                 let newuser = new User(user["email"], user["firstName"], user["lastName"], user["username"], user["password"], user["role"]);
                 $("#admin_approve").append(new UserCard(newuser, i).getView());
-                componentHandler.upgradeDom();
+
                 let acceptButton = new Button("Accept");
                 acceptButton.setOnClick((e: any) => {
                     console.log("clicked")
@@ -32,11 +36,11 @@ export class AdminApprove extends Controller {
                     }.bind(this))
                     $("#newUser" + i).remove();
                     console.log("removed #newUser" + i)
-                    componentHandler.upgradeDom();
 
-                    // Ghetto fix
+                    //to fix
                     location.reload();
                 })
+
                 let denyButton = new Button("Deny");
                 denyButton.setOnClick((e: any) => {
                     let DB = new ApiService(API.DB);
@@ -47,9 +51,8 @@ export class AdminApprove extends Controller {
                             console.log("denied")
                             $("#newUser" + i).remove();
                             console.log("removed #newUser" + i)
-                            componentHandler.upgradeDom();
 
-                            // Ghetto fix
+                            //to fix
                             this.location.reload();
                         }
                     })

@@ -68,21 +68,6 @@ public class ResultResource {
         UserRepository userService = RepoImplementation.getInstance();
         service.deleteAllResults(userService.getUserById(id));
 
-        return Response.status(Response.Status.OK).entity(new ClientMessage("User with ID: " + id + " deleted")).build();
+        return Response.status(Response.Status.OK).entity(new ClientMessage("Results from user with ID: " + id + " deleted")).build();
     }
-
-    /**
-     * Add a new user. Use
-     * <code>Invoke-WebRequest -UseBasicParsing *URL* -ContentType "application/json" -Method POST -Body '*JSON*'</code>
-     * to add a new user.
-     *
-     * @param user User to be added.
-     * @return HTTP request response.
-     */
-    // @POST
-    // @Produces(MediaType.APPLICATION_JSON)
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // public Response addResult(Result result) {
-    //     return Response.status(Response.Status.CREATED).entity(service.addUser(result)).build();
-    // }
 }

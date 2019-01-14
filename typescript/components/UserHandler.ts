@@ -1,5 +1,8 @@
 import { User } from "./User";
 
+/**
+ * class for getting all the approved usesr for the login
+ */
 export class UserHandler {
     private users: Array<User> = new Array();
 
@@ -16,6 +19,9 @@ export class UserHandler {
         }.bind(this))
     }
 
+    /**
+     if the username exust get the password 
+     */
     public getPasswordByUsername(username: string) {
         for (let user of this.users){
             if (user.getUsername() == username){
