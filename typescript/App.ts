@@ -1,7 +1,6 @@
 import { Menu } from "./controllers/Menu";
 import { LoginController } from "./controllers/Logincontroller";
 import { AdminCourseController } from "./controllers/AdminController";
-import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
 import { ProfileController } from "./controllers/ProfileController";
 import { TestController } from "./controllers/testController";
@@ -45,10 +44,6 @@ export class App {
 
             case "adminCourses":
                 controller = new AdminCourseController();
-                break;
-
-            case "userCourses":
-                controller = new UserCourseController();
                 break;
 
             case "profile":

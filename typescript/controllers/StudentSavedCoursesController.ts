@@ -21,6 +21,7 @@ export class StudentSavedCoursesController extends Controller {
 
     }
 
+    //sets the courses that the user needs to work on
     private setSavedCourses() {
         let numberOfScrollTables : number = 10000;
         let DB = new ApiService(API.DB);
@@ -28,13 +29,12 @@ export class StudentSavedCoursesController extends Controller {
         DB.setPath("areas");
         //getting the courses from DB
         DB.getParent((object : any) => {
-            //mapping all courses to tableRows   
+            //mapping all courses to tables   
             if (object.errorMessage == null) {
                 
                 object.forEach(mainResponse => {
                     mainResponse.competencies.forEach(mainResponse => {
                         this.totalCompetencies++;
-                        //console.log(mainResponse.name);
                         let cards : Card[] = [];
                         //get all courses of specific competency
                         mainResponse.courses.forEach(mainResponse => {
@@ -46,10 +46,11 @@ export class StudentSavedCoursesController extends Controller {
                         let maxScore : number = 0;
                         //get all questions of specific competency
                         mainResponse.questions.forEach(mainResponse => {
-                            //console.log(mainResponse.question);
+                            //increase maxscore by 5 because each question max value is 5 points
                             maxScore += 5;
                         });
 
+                        //get the competencyscore that is linked to the competency
                         let competencyScore : number = 0;
                         for (let i = 0; i < this.competencyIds.length; i++) {
                             if(this.competencyIds[i] === mainResponse.id) {
@@ -58,16 +59,16 @@ export class StudentSavedCoursesController extends Controller {
                             
                         }
  
-                        //nog extra check van of de totaal aantalpunten van de questions groter is dan die van wat behaald is bij de competency
+                        //if the user score is not the same as the max score, he will get this competency to work on it
                         if (cards.length > 0 && competencyScore != maxScore) {
+                            // add the cards to a table
                             let table = new CardsScrollTable(cards, mainResponse.name, numberOfScrollTables);
                             $("#cardsContainer").append(table.getCardsScrollTableView());
                             componentHandler.upgradeDom();
 
-                            //adding checkbutton
+                            //adding checkbuttons to each card
                             cards.forEach(element => {
                                 let followCourseButton : Button = new Button("Follow!");
-                                //prevent errors
                                 followCourseButton.setOnClick((e: any) => {
                                     window.open(element.getUrl(), "_blank");
                                 });
@@ -95,6 +96,7 @@ export class StudentSavedCoursesController extends Controller {
                     });
                     
                 });
+                //if there are no tables set to the page, the view gets adjusted
                 if (numberOfScrollTables === 10000) {
                     $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
                 }
@@ -109,21 +111,25 @@ export class StudentSavedCoursesController extends Controller {
         
     }
 
+    //gets the user score per competency
     private getUserScores() {
         
         let DB = new ApiService(API.DB);
+        //sets path by username
         DB.setPath("users/" + LoginService.getInstance().getUserName() + "/results");
         DB.getParent((object : any) => {
 
             if (object.errorMessage == null) {
                 
                 object.forEach(mainResponse => {
+                    //sets each competencyid and competencyscore
                     this.competencyIds.push(mainResponse.competencieId);
                     this.competencyScores.push(mainResponse.competencieScore);
                 });
                 
                 this.setSavedCourses(); 
             } else {
+                //when there is no progress saved in the DB, the view gets adjusted
                 $("#progressDiv").css("display", "none");
                 $("#mainPageTitle").html("You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!");
                 $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
@@ -134,16 +140,19 @@ export class StudentSavedCoursesController extends Controller {
         }); 
     }
 
+    //for calculating progress
     private calculateProgress() : number {
         return (100 / this.totalCompetencies) * this.numberOfGoodCompetencies;
     }
 
+    //sets the progressbar
     private setProgressBar(progress : number) {
         $(".bar1").css("width", progress + "%");
 
         this.setExtraText(progress);
     }
 
+    //sets motivational text that reflects the progress
     private setExtraText(progress : number) {
         let text : string = "";
         if (progress < 30) {

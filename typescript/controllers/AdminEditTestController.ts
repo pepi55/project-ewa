@@ -44,19 +44,18 @@ export class AdminEditTestController extends Controller {
 
     //FOR BOTH ADDING COMPETENCIES AND QUESTIONS
 
+    //gets all competencies and areas from DB
     private getCompetencies() : any {
         let DB = new ApiService(API.DB);
         DB.setPath("areas");
-        //getting the courses from DB
         DB.getParent((object : any) => {
-            //TODO: fix deze shit
             if (object.errorMessage == null) {
                 object.forEach(mainResponse => {
                     let areaId = mainResponse.id;
                     this.areaNames.push(mainResponse.name);
                     mainResponse.competencies.forEach(mainResponse => { 
+                        //set for each competency in DB
                         this.areaIds.push(areaId);
-                        console.log(mainResponse.name);
                         this.competencyNames.push(mainResponse.name);
                         this.competencyIds.push(mainResponse.id);                
                     });
@@ -72,6 +71,7 @@ export class AdminEditTestController extends Controller {
         
     }
 
+    //selects all selectbuttons in the specified table
     private selectAllSelectButtons(ownCheckBox : string, element : number, checkboxesList : string) {
         var OwnCheckbox = document.getElementById(ownCheckBox).getElementsByTagName("label");
         var checkBoxes = document.getElementById(checkboxesList).getElementsByTagName("label");
@@ -95,23 +95,22 @@ export class AdminEditTestController extends Controller {
         componentHandler.upgradeDom();
     }
 
+    //text for in tables when the table is empty
     private getEmptyTableView(text : string) {
         return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
     }
 
     //ADDING QUESTIONS 
 
+    //sets the add button to add questions to the list
     private addNewQuestionsButton() {
         let addButton : Button = new Button("Add");
 
         addButton.setOnClick((e : any) => {
-            let atleastOneFieldIsFilld : boolean = false;
-
             var questionInput = (document.getElementById("questionInput") as HTMLInputElement).value;      
 
             //question input check
             if (questionInput != null && questionInput != "" && questionInput.length > 5) {
-                atleastOneFieldIsFilld = true;
                 let tableQuestionCard : any = {
                     "courseId" : this.selectedQuestionsId,
                     "title" : questionInput
@@ -120,16 +119,15 @@ export class AdminEditTestController extends Controller {
                 this.tableRows.push(tableRow);
                 this.selectedQuestions.push(questionInput);
             
-            }
-
-            if (!atleastOneFieldIsFilld) {
+            } else {
+                //when question is invalid
                 window.alert("Please fill in a question or competency..");
                 return;
             }
 
-            let tableQuest = new TableCards(this.tableRows);
+            let tableQuestions = new TableCards(this.tableRows);
             $("#table4").empty();
-            $("#table4").append(tableQuest.getTableView());
+            $("#table4").append(tableQuestions.getTableView());
             componentHandler.upgradeDom();
             
         });
@@ -139,6 +137,7 @@ export class AdminEditTestController extends Controller {
 
     }
 
+    //sets the dropdown menu with all competencynames
     private setSelectQuestionsWithCompetencyTable() {
         let competenciesMenu : dropDownMenu = new dropDownMenu("Competency", this.competencyNames);
         $("#competencySelectorAndSelectAllRows").append(competenciesMenu.getMenuView());
@@ -151,6 +150,7 @@ export class AdminEditTestController extends Controller {
 
     }
     
+    //butons for navigating the list
     private addContainerButtons() {
         let saveButton : Button = new Button("Save");
         let deleteButton : Button = new Button("Delete");
@@ -164,6 +164,7 @@ export class AdminEditTestController extends Controller {
             this.deleteButton();
         });
 
+        //select all select buttons
         button.setOnClick((e : any) => {
             this.selectAllSelectButtons("competencySelectorAndSelectAllRows", 1, "table4");
         });
@@ -177,6 +178,8 @@ export class AdminEditTestController extends Controller {
         
     }
 
+
+    //adds the selected rows to the DB
     private saveButton() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
@@ -198,6 +201,7 @@ export class AdminEditTestController extends Controller {
             }     
         }
 
+        //set competencyid and areaid
         for(var i = 0; i < this.competencyNames.length; i++) {
             if(competencyName === this.competencyNames[i]) {
                 competencyId = this.competencyIds[i];
@@ -205,7 +209,7 @@ export class AdminEditTestController extends Controller {
             }     
         }
 
-        //get selected courses
+        //get selected questions
         let failed : number = 0;
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
@@ -225,9 +229,23 @@ export class AdminEditTestController extends Controller {
         }
 
         if (!atleastOneCardChecked) {
-            window.alert("Please select a card..");
+            window.alert("Please select a question..");
             return;
         }
+
+        //feedback
+        if (failed > 0) {
+            window.alert(failed + " have failed saving");
+        } else {
+            window.alert("Question(s) added succesfully!!");
+        }
+
+        this.resetQuestionTable(deletedElement);
+
+    }
+
+    //resets the questionTable
+    private resetQuestionTable(deletedElement : TableRowCard) {
 
         for( var i = 0; i < this.tableRows.length; i++) {
             if (this.tableRows[i] === deletedElement) {
@@ -241,14 +259,8 @@ export class AdminEditTestController extends Controller {
                 this.tableRows.splice(i, 1); 
                 this.selectedQuestions.splice(i, 1);
             }         
-        }        
-
-        if (failed > 0) {
-            window.alert(failed + " have failed saving");
-        } else {
-            window.alert("Course(s) added succesfully!!");
-        }
-
+        }   
+        
         let table = new TableCards(this.tableRows);
         $("#table4").empty();
         if (this.tableRows.length === 0) {
@@ -263,10 +275,11 @@ export class AdminEditTestController extends Controller {
 
     }
 
+    //deletes the selected rows from the list
     private deleteButton() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
-        //get selected courses
+        //get selected questions
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
         //loop through checkboxes
@@ -282,33 +295,11 @@ export class AdminEditTestController extends Controller {
             return;
         }
 
-        for( var i = 0; i < this.tableRows.length; i++) {
-            if (this.tableRows[i] === deletedElement) {
-                this.tableRows.splice(i, 1); 
-                this.selectedQuestions.splice(i, 1);
-            }
-        }
-
-        for( var i = this.tableRows.length-1; i >= 0 ; i--) {
-            if (this.tableRows[i] === deletedElement) {
-                this.tableRows.splice(i, 1); 
-                this.selectedQuestions.splice(i, 1);
-            }         
-        }
-
-        let table = new TableCards(this.tableRows);
-        $("#table4").empty();
-        if (this.tableRows.length === 0) {
-            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
-
-        } else {
-            $("#table4").append(table.getTableView());
-        }
-
-        componentHandler.upgradeDom();
+        this.resetQuestionTable(deletedElement);
 
     }
 
+    //adds question to DB
     private sendQuestionToDB(areaId : number, competencyId : number, question : string) : any {
             let data : any = {
                 "question" : question
@@ -336,17 +327,15 @@ export class AdminEditTestController extends Controller {
 
     //ADDING COMPETENCIES
 
+    //sets the add button to add competencies to the list
     private addNewCompetenciesButton() {
         let addButton : Button = new Button("Add");
 
         addButton.setOnClick((e : any) => {
-            let atleastOneFieldIsFilld : boolean = false;
-  
             var competencyInput = (document.getElementById("competencyInput") as HTMLInputElement).value;      
 
             //competency input check
             if (competencyInput != null && competencyInput != "" && competencyInput.length > 5) {
-                atleastOneFieldIsFilld = true;
                 let tableCompetencyCard : any = {
                     "courseId" : this.selectedCompetenciesId,
                     "title" : competencyInput
@@ -355,17 +344,14 @@ export class AdminEditTestController extends Controller {
                 this.tableRowsComp.push(tableRow);
                 this.selectedCompetencies.push(competencyInput);
             
-            }
-
-
-            if (!atleastOneFieldIsFilld) {
+            } else {
                 window.alert("Please fill in a question or competency..");
                 return;
             }
 
-            let tableComp = new TableCards(this.tableRowsComp);
+            let tableCompetency = new TableCards(this.tableRowsComp);
             $("#table5").empty();
-            $("#table5").append(tableComp.getTableView());
+            $("#table5").append(tableCompetency.getTableView());
             componentHandler.upgradeDom();
             
         });
@@ -375,6 +361,7 @@ export class AdminEditTestController extends Controller {
 
     }
 
+    //sets the dropdown menu with all areanames
     private setSelectCompetenciesWithAreaTable() {
         let areasMenu : dropDownMenu = new dropDownMenu("Area", this.areaNames);
         $("#competencySelectorAndSelectAllRows2").append(areasMenu.getMenuView());
@@ -387,6 +374,7 @@ export class AdminEditTestController extends Controller {
 
     }
 
+    //butons for navigating the list
     private addContainerButtonsComp() {
         let saveButton : Button = new Button("Save");
         let deleteButton : Button = new Button("Delete");
@@ -400,6 +388,7 @@ export class AdminEditTestController extends Controller {
             this.deleteButtonComp();
         });
 
+        //select all select buttons
         button.setOnClick((e : any) => {
             this.selectAllSelectButtons("competencySelectorAndSelectAllRows2", 1, "table5");
         });
@@ -413,6 +402,7 @@ export class AdminEditTestController extends Controller {
         
     }
 
+    //adds the selected rows to the DB
     private saveButtonComp() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
@@ -439,7 +429,7 @@ export class AdminEditTestController extends Controller {
             }     
         }
 
-        //get selected courses
+        //get selected competencies
         let failed : number = 0;
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table5").getElementsByTagName("label");
@@ -459,10 +449,22 @@ export class AdminEditTestController extends Controller {
         }
 
         if (!atleastOneCardChecked) {
-            window.alert("Please select a card..");
+            window.alert("Please select a competency..");
             return;
+        }        
+
+        //feedback
+        if (failed > 0) {
+            window.alert(failed + " have failed saving");
+        } else {
+            window.alert("competency(s) added succesfully!!");
         }
 
+        this.resetCompetencyTable(deletedElement);
+    }
+
+    //resets the competencyTable
+    private resetCompetencyTable(deletedElement : TableRowCard) {
         for( var i = 0; i < this.tableRowsComp.length; i++) {
             if (this.tableRowsComp[i] === deletedElement) {
                 this.tableRowsComp.splice(i, 1); 
@@ -475,16 +477,11 @@ export class AdminEditTestController extends Controller {
                 this.tableRowsComp.splice(i, 1); 
                 this.selectedCompetencies.splice(i, 1);
             }         
-        }        
-
-        if (failed > 0) {
-            window.alert(failed + " have failed saving");
-        } else {
-            window.alert("Course(s) added succesfully!!");
         }
 
         let table = new TableCards(this.tableRowsComp);
         $("#table5").empty();
+
         if (this.tableRowsComp.length === 0) {
             $("#table5").append(this.getEmptyTableView("This box is empty. Go fill it with some new competencies!!"));
 
@@ -493,13 +490,13 @@ export class AdminEditTestController extends Controller {
         }
 
         componentHandler.upgradeDom();
-
     }
 
+    //deletes the selected rows from the list
     private deleteButtonComp() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
-        //get selected courses
+        //get selected competencies
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table5").getElementsByTagName("label");
         //loop through checkboxes
@@ -511,38 +508,15 @@ export class AdminEditTestController extends Controller {
         }
 
         if (!atleastOneCardChecked) {
-            window.alert("Please select a question..");
+            window.alert("Please select a competency..");
             return;
         }
 
-        for( var i = 0; i < this.tableRowsComp.length; i++) {
-            if (this.tableRowsComp[i] === deletedElement) {
-                this.tableRowsComp.splice(i, 1); 
-                this.selectedCompetencies.splice(i, 1);
-            }
-        }
-
-        for( var i = this.tableRowsComp.length-1; i >= 0 ; i--) {
-            if (this.tableRowsComp[i] === deletedElement) {
-                this.tableRowsComp.splice(i, 1); 
-                this.selectedCompetencies.splice(i, 1);
-            }         
-        }
-
-        let table = new TableCards(this.tableRowsComp);
-        $("#table5").empty();
-
-        if (this.tableRowsComp.length === 0) {
-            $("#table5").append(this.getEmptyTableView("This box is empty. Go fill it with some new competencies!!"));
-
-        } else {
-            $("#table5").append(table.getTableView());
-        }
-
-        componentHandler.upgradeDom();
+        this.resetCompetencyTable(deletedElement);
 
     }
 
+    //adds competency to DB
     private sendCompetencyToDB(areaId : number, competency : string) : any {
         let data : any = {
             "name" : competency

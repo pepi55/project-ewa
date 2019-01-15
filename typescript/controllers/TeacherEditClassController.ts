@@ -26,7 +26,9 @@ export class TeacherEditClassController extends Controller {
     //FROM DB
     //classrooms
     private classroomIds : number[] = [];
+    //with the word "class" in front of the id
     private classRoomIdsForView : string[] = [];
+    //just the id
     private classroomIdsForAddingToDB : number[] = [];
 
     //students
@@ -46,7 +48,9 @@ export class TeacherEditClassController extends Controller {
     }
 
     //SETTING TABLES
+
     private setPickStudentTable() {
+        //sets dropdownmenu for picking students
         let tempClassroom : string[] = [];
         for (let i = 0; i < this.classRoomIdsForView.length; i++) {
             tempClassroom.push(this.classRoomIdsForView[i]);
@@ -66,6 +70,7 @@ export class TeacherEditClassController extends Controller {
     }
 
     private setLinkStudentTable() {
+        //sets dropdownmenu for linking students
         let tempClassroom : string[] = [];
         for (let i = 0; i < this.classRoomIdsForView.length; i++) {
             tempClassroom.push(this.classRoomIdsForView[i]);
@@ -79,13 +84,12 @@ export class TeacherEditClassController extends Controller {
         componentHandler.upgradeDom();
         getmdlSelect.init(".getmdl-select");
         
-        
-
         this.addContainerButtonLink(); 
-
     }
     
     //ADD BUTTONS TO TABLEVIEWS
+
+    //sets buttons for picking students table
     private addContainerButtonPick() {
         let updateTableButton : Button = new Button("Show");
         let addToLinkTableButton : Button = new Button("Link student(s)");
@@ -118,6 +122,7 @@ export class TeacherEditClassController extends Controller {
         
     }
 
+    //adds Add classroom button
     private addAddClassroomButton() {
         let addClassroomButton : Button = new Button("Add classroom");
 
@@ -135,6 +140,7 @@ export class TeacherEditClassController extends Controller {
         componentHandler.upgradeDom();
     }
 
+    //sets buttons for linking students table
     private addContainerButtonLink() {
         let saveButton : Button = new Button("Link student(s)");
         let deleteButton : Button = new Button("Delete");
@@ -162,6 +168,7 @@ export class TeacherEditClassController extends Controller {
     }
 
     //TABLE UPDATES AND SWITCHES
+    //adds students from pick students table to link studentstable
     private addToLinkTable() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10);
         this.linkStudents = [];
@@ -170,7 +177,7 @@ export class TeacherEditClassController extends Controller {
 
         var checkBoxes = document.getElementById("table5").getElementsByTagName("label");
 
-        //loop through checkboxes
+        //loop through checkboxes and get all students that are checked
         for(var i = 0; i < checkBoxes.length; i++) {
             if(checkBoxes[i].classList.contains("is-checked")) {
                 atleastOneCardChecked = true;
@@ -185,6 +192,7 @@ export class TeacherEditClassController extends Controller {
             return;
         }
 
+        //remove students from list
         for( var i = 0; i < this.pickTableRowsStudents.length; i++) {
             if (this.pickTableRowsStudents[i] === deletedElement) {
                 this.pickTableRowsStudents.splice(i, 1); 
@@ -199,6 +207,7 @@ export class TeacherEditClassController extends Controller {
             }         
         }  
 
+        //reseting pick students table
         let table2 = new TableCards(this.pickTableRowsStudents);
         $("#table5").empty();
         if (this.pickTableRowsStudents.length === 0) {
@@ -217,13 +226,14 @@ export class TeacherEditClassController extends Controller {
 
     }
 
+    //updates the pick students table
     private updatePickTable() {
         this.pickStudents = [];
         this.pickTableRowsStudents = [];
 
-        //
         let classroomId : number = 0;
 
+        //get the input from dropdownmenu
         var inputs = document.getElementById("competencySelectorAndSelectAllRows2").getElementsByTagName("input");
         //loop through inputs
         for(var i = 0; i < inputs.length; i++) {
@@ -250,7 +260,6 @@ export class TeacherEditClassController extends Controller {
 
         if (classroomId === -2) {
             //students without a classroom
-
             for (let j = 0; j < this.studentsWithoutClassroom.length; j++) {
                 let tableStudent : any = {
                     "courseId" : this.studentsWithoutClassroom[j].getUsername(),
@@ -269,6 +278,7 @@ export class TeacherEditClassController extends Controller {
                     "title" : this.students[i].getFirstName() + " " + this.students[i].getLastName(),
                 };
                 if(this.classroomIds[i] === classroomId) {
+                    //students with this classroomid
                     let tableRow = new TableRowCard(tableStudent, this.selectedStudentId++);
                     this.pickStudents.push(this.students[i]);
                     this.pickTableRowsStudents.push(tableRow);
@@ -276,7 +286,6 @@ export class TeacherEditClassController extends Controller {
 
                 } else if (classroomId == -1) {
                     //all students with a classroom
-
                     let tableRow = new TableRowCard(tableStudent, this.selectedStudentId++);
                     this.pickStudents.push(this.students[i]);
                     this.pickTableRowsStudents.push(tableRow);
@@ -297,10 +306,11 @@ export class TeacherEditClassController extends Controller {
     }
 
     //SAVE AND DELETE BUTTONS
+    //link students to a classroom and save in DB
     private saveButton() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
-        //get selected competeny
+        //get selected classroomid
         let classroomId : number = 0;
  
         var inputs = document.getElementById("competencySelectorAndSelectAllRows").getElementsByTagName("input");
@@ -322,7 +332,7 @@ export class TeacherEditClassController extends Controller {
             }     
         }
 
-        //get selected courses
+        //get selected students
         let failed : number = 0;
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
@@ -331,28 +341,7 @@ export class TeacherEditClassController extends Controller {
             if(checkBoxes[i].classList.contains("is-checked")) {
                 atleastOneCardChecked = true;
                 this.linkTableRowsStudents[i] = deletedElement;
-                // let oldClassroomId : number = 0;
-                // let studentWithoutClassroom : boolean = false;
-                // for (let k = 0; k < this.studentsWithoutClassroom.length; k++) {
-                //     if (this.studentsWithoutClassroom[k].getUsername() === this.linkStudents[i].getUsername()) {
-                //         studentWithoutClassroom = true;
-                //         console.log("STUDENT WITHOUT CLASSROOM");
-                //     }    
-                // }
-
-                // let failedBool1 : boolean = false;
-                // if (!studentWithoutClassroom) {
-                //     for (let j = 0; j < this.students.length; j++) {
-                //         if (this.students[j].getUsername() === this.linkStudents[i].getUsername()) {
-                //             console.log("OLD CLASSROOM ID SET");
-                //             oldClassroomId = this.classroomIds[j];
-                //         }
-                        
-                //     }
-                //     failedBool1 = this.addOrDeleteStudentToClassroom(oldClassroomId, this.linkStudents[i]);
-
-                // }
-                
+                //link the student to the classroom
                 let failedBool2 : boolean = this.addOrDeleteStudentToClassroom(classroomId, this.linkStudents[i]);
 
                 if (failedBool2) {
@@ -367,6 +356,7 @@ export class TeacherEditClassController extends Controller {
             return;
         }
 
+        //remove the students from list
         for( var i = 0; i < this.linkTableRowsStudents.length; i++) {
             if (this.linkTableRowsStudents[i] === deletedElement) {
                 this.linkTableRowsStudents.splice(i, 1); 
@@ -381,11 +371,13 @@ export class TeacherEditClassController extends Controller {
             }         
         }        
 
+        //feedback
         if (failed > 0) {
             window.alert(failed + " have failed saving (refresh page)");
         } else {
             window.alert("student(s) added to classroom succesfully!! (refresh page)");
         }
+
 
         let table = new TableCards(this.linkTableRowsStudents);
         $("#table4").empty();
@@ -400,10 +392,11 @@ export class TeacherEditClassController extends Controller {
 
     }
 
+    //delete the link from students to a classroom and save in DB
     private deleteLinkStudentToClassroom() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
-        //get selected competeny
+        //get selected classroomid
         let classroomId : number = 0;
     
         var inputs = document.getElementById("competencySelectorAndSelectAllRows2").getElementsByTagName("input");
@@ -430,7 +423,7 @@ export class TeacherEditClassController extends Controller {
             }     
         }
 
-        //get selected courses
+        //get selected students
         let failed : number = 0;
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table5").getElementsByTagName("label");
@@ -439,6 +432,7 @@ export class TeacherEditClassController extends Controller {
             if(checkBoxes[i].classList.contains("is-checked")) {
                 atleastOneCardChecked = true;
                 this.pickTableRowsStudents[i] = deletedElement;
+                //deletes the student that is linked to a classroom
                 let failedBool : boolean = this.addOrDeleteStudentToClassroom(classroomId, this.pickStudents[i]);
                 
                 if (failedBool) {
@@ -453,6 +447,7 @@ export class TeacherEditClassController extends Controller {
             return;
         }
 
+        //remove the deleted students from list
         for( var i = 0; i < this.pickTableRowsStudents.length; i++) {
             if (this.pickTableRowsStudents[i] === deletedElement) {
                 this.pickTableRowsStudents.splice(i, 1); 
@@ -467,6 +462,7 @@ export class TeacherEditClassController extends Controller {
             }         
         }        
 
+        //feedback
         if (failed > 0) {
             window.alert(failed + " have failed deleting (refresh page)");
         } else {
@@ -476,7 +472,7 @@ export class TeacherEditClassController extends Controller {
         let table = new TableCards(this.pickTableRowsStudents);
         $("#table5").empty();
         if (this.pickTableRowsStudents.length === 0) {
-            $("#table5").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+            $("#table5").append(this.getEmptyTableView("This box is empty. Go fill it with some new students!!"));
 
         } else {
             $("#table5").append(table.getTableView());
@@ -486,10 +482,11 @@ export class TeacherEditClassController extends Controller {
 
     }
 
+    //deletes the student from list
     private deleteButton() {
         let deletedElement : TableRowCard = new TableRowCard("DeletedElement", -10); 
 
-        //get selected courses
+        //get selected students
         let atleastOneCardChecked : boolean = false;
         var checkBoxes = document.getElementById("table4").getElementsByTagName("label");
         //loop through checkboxes
@@ -505,6 +502,8 @@ export class TeacherEditClassController extends Controller {
             return;
         }
 
+
+        //remove the deleted students from list
         for( var i = 0; i < this.linkTableRowsStudents.length; i++) {
             if (this.linkTableRowsStudents[i] === deletedElement) {
                 this.linkTableRowsStudents.splice(i, 1); 
@@ -522,7 +521,7 @@ export class TeacherEditClassController extends Controller {
         let table = new TableCards(this.linkTableRowsStudents);
         $("#table4").empty();
         if (this.linkTableRowsStudents.length === 0) {
-            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new questions!!"));
+            $("#table4").append(this.getEmptyTableView("This box is empty. Go fill it with some new students!!"));
 
         } else {
             $("#table4").append(table.getTableView());
@@ -533,6 +532,7 @@ export class TeacherEditClassController extends Controller {
     }
 
     //DB CALLS
+    //adds the student to a classroom or removes it from a classroom
     private addOrDeleteStudentToClassroom(classroomId : number, student : User) : any {
         let DB = new ApiService(API.DB);
         DB.setPath("classrooms/" + classroomId + "?userid=" + student.getUsername());
@@ -545,6 +545,7 @@ export class TeacherEditClassController extends Controller {
         });
     }
 
+    //adds classroom with this teacher as a teacher
     private addClassroom() : any {
         let data : any = {};
 
@@ -560,12 +561,11 @@ export class TeacherEditClassController extends Controller {
         DB.setPath("classrooms");
         DB.setOptions(DBOptions);
         DB.post(<T>(object : any) => {
-            //check if POST is succeeded
-
+            //adds the teacher to this classroom
             let classroomId : number = JSON.parse(object.body).id;
             this.addOrDeleteStudentToClassroom(classroomId, LoginService.getInstance().getUser());
             
-
+            //check if POST is succeeded
             if (object.statusCode != 201) {
                 return true;
             }
@@ -574,15 +574,16 @@ export class TeacherEditClassController extends Controller {
 
     }
 
+    //gets and sets the students with the classroomids
     private getClassroomsAndStudents() : any {
 
         let DB = new ApiService(API.DB);
         DB.setPath("classrooms");
-        //getting the courses from DB
+        //getting the classrooms from DB
         DB.getParent((object : any) => {
-            //TODO: fix deze shit
             if (object.errorMessage == null) {
                 object.forEach(mainResponse => {
+                    //setting the ids and students
                     this.classRoomIdsForView.push("Class " + mainResponse.id);
                     this.classroomIdsForAddingToDB.push(mainResponse.id);
                     let classroomId : number = mainResponse.id;
@@ -605,18 +606,19 @@ export class TeacherEditClassController extends Controller {
         
     }
 
+    //gets and sets students that dont have a classroom
     private getAllStudents() {
         let DB = new ApiService(API.DB);
         DB.setPath("users");
-        //getting the courses from DB
+        //getting the users from DB
         DB.getParent((object : any) => {
-            //TODO: fix deze shit
             if (object.errorMessage == null) {
                 object.forEach(mainResponse => {
                     let role : string = mainResponse.role;
                     if (role === "USER") {
                         let student = new User(mainResponse.firstName, mainResponse.lastName, mainResponse.username, mainResponse.password, mainResponse.email);
                         let hasClassroom : boolean = false;
+                        //check if student has a classroom
                         for (let i = 0; i < this.students.length; i++) {
                            if (this.students[i].getUsername() === student.getUsername()) {
                                hasClassroom = true;
@@ -626,6 +628,7 @@ export class TeacherEditClassController extends Controller {
 
                         if (!hasClassroom) {
                             console.log("added user without classroom");
+                            //add to exceptional list
                             this.studentsWithoutClassroom.push(student);
                         }
                     }
@@ -639,6 +642,8 @@ export class TeacherEditClassController extends Controller {
     }
 
     //GENERAL CODE
+
+    //selects all selectbuttons in the specified table
     private selectAllSelectButtons(ownCheckBox : string, element : number, checkboxesList : string) {
         var OwnCheckbox = document.getElementById(ownCheckBox).getElementsByTagName("label");
         var checkBoxes = document.getElementById(checkboxesList).getElementsByTagName("label");
@@ -662,6 +667,7 @@ export class TeacherEditClassController extends Controller {
         componentHandler.upgradeDom();
     }
 
+    //text for in tables when the table is empty
     private getEmptyTableView(text : string) {
         return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
     }
