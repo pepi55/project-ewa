@@ -10,7 +10,7 @@ export class dropDownMenu {
     }
 
     public getMenuView() : string {
-
+        //setting the view with data and returning it
         const mainStart : string = `<!-- Select with floating label and arrow -->
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label getmdl-select">
             <input type="text" value="" class="mdl-textfield__input" id="${this.title}" readonly>

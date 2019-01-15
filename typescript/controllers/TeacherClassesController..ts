@@ -14,6 +14,7 @@ export class TeacherClassesController extends Controller {
         this.setSavedClassrooms();
     }
 
+    //sets the classrooms that are from this teacher
     private setSavedClassrooms() : any {
         let cardId = 0;
         let numberOfScrollTables : number = 10000;
@@ -22,16 +23,15 @@ export class TeacherClassesController extends Controller {
 
         let DB = new ApiService(API.DB);
         DB.setPath("classrooms");
-        //getting the courses from DB
+        //gets all classrooms from DB
         DB.getParent((object : any) => {
-            //TODO: fix deze shit
             if (object.errorMessage == null) {
                 object.forEach(mainResponse => {
                     let cards : Card[] = [];
-                    //get all courses of specific competency
 
                     mainResponse.students.forEach(mainResponse => {
 
+                        //for each student set a new card
                         let card = new Card(cardId++, mainResponse.firstName + " " + mainResponse.lastName, undefined, 
                         "Firstname: " + mainResponse.firstName + "<br/>Lastname: " + mainResponse.lastName + "<br/>Username: " + mainResponse.username + "<br/>E-mail: " + mainResponse.email + 
                         "<br/>Role: " + mainResponse.role, "https://png.pngtree.com/svg/20170602/avatar_107646.png");
@@ -43,6 +43,8 @@ export class TeacherClassesController extends Controller {
                     });
                     
                     let tempTeacher : any = mainResponse.teacher;
+
+                    //if this classroom is this teachers classroom, this classroom will be set
                     if (tempTeacher != null && teacherName === tempTeacher.username) {
                         let table = new CardsScrollTable(cards, "Class " + mainResponse.id, numberOfScrollTables);
 
@@ -53,10 +55,9 @@ export class TeacherClassesController extends Controller {
                         $("#cardsContainer").append(table.getCardsScrollTableView());
                         componentHandler.upgradeDom();
 
-                        //adding checkbutton
+                        //adding show results buttons for each student
                         cards.forEach(element => {
                             let acceptCourseButton : Button = new Button("Show results");
-                            //prevent errors
                             acceptCourseButton.setOnClick((e: any) => {
                                 TeacherStorage.getInstance().setStudentId(element.getUserId());
                                 window.location.href = "studentResults.html";
@@ -72,11 +73,13 @@ export class TeacherClassesController extends Controller {
                     
                 });
 
+                //if no classrooms have been set, the view gets adjusted
                 if (numberOfScrollTables === 10000) {
                     $("#mainPageTitle").html("You don't have any classrooms!!! Go make some new classrooms by clicking on the EDIT CLASSES-tab!");
                     $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
                 }
             } else {
+                //if no classrooms have been set, the view gets adjusted
                 $("#mainPageTitle").html("There are no classrooms in the database!! Go make some new classrooms by clicking on the EDIT CLASSES-tab!");
                 $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
                 console.log("Something went wrong!");
@@ -87,6 +90,7 @@ export class TeacherClassesController extends Controller {
         
     }
 
+    //text for in tables when the table is empty
     private getEmptyTableView(text : string) {
         return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
     }

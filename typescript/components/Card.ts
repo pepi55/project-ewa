@@ -72,12 +72,11 @@ export class Card {
 
 
     public getCardView() : string {
-
+        //setting the view with data and returning it
         if (this.description == null || this.description == "") {
             this.description = "No description available for this course! Click on the button to get more information about this course!";
         }
         if (this.picture == null || this.picture == "") {
-            //picture setten hiero
             this.picture = "";
         }
         

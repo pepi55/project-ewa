@@ -20,10 +20,10 @@ export class TableCards {
     }
 
     public getTableView() : string {
-
-    const table : string = `<ul class="demo-list-control mdl-list">${this.bodyHTML}</ul>`;
+        //setting the view with data and returning it
+        const table : string = `<ul class="demo-list-control mdl-list">${this.bodyHTML}</ul>`;
     
-    return table;
+        return table;
     }
 
 }
