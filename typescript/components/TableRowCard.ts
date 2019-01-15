@@ -11,7 +11,7 @@ export class TableRowCard {
     }
 
     public getRowView() : string {
-
+        //setting the view with data and returning it
         if (this.title == null) {
             this.title = "no title for you!";
         }

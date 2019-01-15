@@ -19,17 +19,15 @@ public interface ResultRepository {
     public List<Result> getAllResults(User user);
 
     /**
-     * Gets all available results from user.
-     *
-     * @return List containing all results from user.
+     * Deletes all available results from user.
      */
     public void deleteAllResults(User user);
 
     /**
-     * Add a user.
+     * Add a result.
      *
-     * @param user The user to add.
-     * @return The added user.
+     * @param result The result to add.
+     * @return The added result.
      */
     public Result addResult(Result result);
 }

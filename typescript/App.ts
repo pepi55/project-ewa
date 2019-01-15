@@ -1,7 +1,6 @@
 import { Menu } from "./controllers/Menu";
 import { LoginController } from "./controllers/Logincontroller";
 import { AdminCourseController } from "./controllers/AdminController";
-import { UserCourseController } from "./controllers/UserCourseController";
 import { LoginService } from "./components/LoginService";
 import { ProfileController } from "./controllers/ProfileController";
 import { TestController } from "./controllers/testController";
@@ -16,10 +15,11 @@ import { AdminApprove } from "./controllers/AdminApprove";
 
 declare var componentHandler : any;
 
-
+/**
+ * class that gives the html pages the correct controllers 
+ * based on what is filled in the script tags at the bottom of those pages
+ */
 export class App {
-
-    //private menu : Menu;
 
     public main(type: any): void {
         if (!LoginService.getInstance().isLoggedIn() && type != "login") {
@@ -44,10 +44,6 @@ export class App {
 
             case "adminCourses":
                 controller = new AdminCourseController();
-                break;
-
-            case "userCourses":
-                controller = new UserCourseController();
                 break;
 
             case "profile":

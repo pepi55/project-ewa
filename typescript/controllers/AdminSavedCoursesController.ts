@@ -3,7 +3,6 @@ import { API } from "../coursesAPIs/EnumRepo";
 import { ApiService } from "../coursesAPIs/ApiService";
 import { Card } from "../components/Card";
 import { AdminButton } from "../components/AdminButton";
-import { TableRowCompetency } from "../components/TableRowCompetency";
 import { CardsScrollTable } from "../components/CardsScrollTable";
 import { Button } from "../components/button/Button";
 declare var componentHandler : any;
@@ -16,6 +15,7 @@ export class AdminSavedCoursesController extends Controller {
         this.addSavedCoursesButtons();
     }
 
+    //adds buttons for editing the saved courses
     private addSavedCoursesButtons() {
         let editButton : Button = new Button("Edit");
         let deleteButton : Button = new Button("Delete");
@@ -40,12 +40,12 @@ export class AdminSavedCoursesController extends Controller {
         componentHandler.upgradeDom();
     }
 
+    //sets the tables with all the cards and competencies
     private setSavedCourses() {
         let selectedButtonId = 0;
         let numberOfScrollTables : number = 10000;
+
         let DB = new ApiService(API.DB);
-        
-    
         DB.setPath("areas");
         //getting the courses from DB
         DB.getParent((object : any) => {
@@ -54,7 +54,6 @@ export class AdminSavedCoursesController extends Controller {
                 
                 object.forEach(mainResponse => {
                     mainResponse.competencies.forEach(mainResponse => {
-                        console.log(mainResponse.name);
                         let cards : Card[] = [];
                         //get all courses of specific competency
                         mainResponse.courses.forEach(mainResponse => {
@@ -63,9 +62,9 @@ export class AdminSavedCoursesController extends Controller {
 
                         let table = new CardsScrollTable(cards, mainResponse.name, numberOfScrollTables);
                         let checkButton : AdminButton = new AdminButton("accept", numberOfScrollTables);
+                        //checkbutton for selecting all selectbuttons in table
                         checkButton.setOnClick((e : any) => {
                             let numberOfTables : number = checkButton.getId();
-                            console.log("checkBoxSelectAll" + numberOfTables);
                             this.selectAllSelectButtons("checkBoxSelectAll" + numberOfTables, 0, "tableCards" + numberOfTables);
                         });
 
@@ -73,16 +72,16 @@ export class AdminSavedCoursesController extends Controller {
                             table.addEmptyScrollTable(this.getEmptyTableView("This box is empty. Go fill it with some new courses!!"));
                         }
 
+                        //append the table and the corresponding checkbox
                         $("#cardsContainer").append(table.getCardsScrollTableView());
                         $("#checkBoxSelectAll" + numberOfScrollTables).append(checkButton.getView());
                         componentHandler.upgradeDom();
 
-                        //adding checkbutton
+                        //adding checkbuttons for each card
                         cards.forEach(element => {
                             let acceptCourseButton : AdminButton = new AdminButton("accept", selectedButtonId++);
                             //prevent errors
-                            acceptCourseButton.setOnClick((e: any) => {
-                            });
+                            acceptCourseButton.setOnClick((e: any) => {});
                             $("#" + element.getcardId()).append(acceptCourseButton.getView());
                             componentHandler.upgradeDom();
                         });
@@ -102,6 +101,7 @@ export class AdminSavedCoursesController extends Controller {
         
     }
 
+    //selects all selectbuttons in the specified table
     private selectAllSelectButtons(ownCheckBox : string, element : number, checkboxesList : string) {
         var OwnCheckbox = document.getElementById(ownCheckBox).getElementsByTagName("label");
         var checkBoxes = document.getElementById(checkboxesList).getElementsByTagName("label");
@@ -124,6 +124,7 @@ export class AdminSavedCoursesController extends Controller {
         }
     }
 
+    //text for in tables when the table is empty
     private getEmptyTableView(text : string) {
         return `<br><br><br><div class="mdl-typography--display-1-color-contrast" style="font-size: 150%; text-align: center;">${text}</div>`;
     }

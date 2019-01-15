@@ -2,6 +2,11 @@ import { Result } from "./Result";
 import { Competencie } from "./Competencie";
 import { ProgressBar } from "./ProgressBar";
 
+/**
+ * @author Luc Maerten
+ * 
+ * class for making the list of results on the result and test page
+ */
 export class ResultComparer {
     private competencies: Array<Competencie>;
     private newResults: Array<Result>;
@@ -25,6 +30,10 @@ export class ResultComparer {
         this.competencies = competencies;
     }
 
+    /**
+     * Sorts the given array in order of competencie id
+     * @param toSrot the array it has to sort
+     */
     private getSortedArray(toSrot: Array<Result>) {
         let temparray: Array<Result> = new Array;
         for (let result of toSrot) {
@@ -42,8 +51,13 @@ export class ResultComparer {
         return temparray;
     }
 
+    /**
+     * creates item for the competencie to be placed in the list
+     * @param text name of the competencie
+     * @param progressbar the progressbar 
+     */
     private getListItem(text: string, progressbar: string) {
-        const string = `
+        const template = `
         <div class="mdl-grid">
             <div class="mdl-cell mdl-cell--6-col">
                 <span class="mdl-list__item-primary-content spanthing" >
@@ -54,9 +68,13 @@ export class ResultComparer {
                 ${progressbar}
             </div>
         </div>`;
-        return string;
+        return template;
     }
 
+    /**
+     * gets the competencie a simular id as given.
+     * @param id of the compentcie
+     */
     private getCompetencieById(id: number) {
         for (let i = 0; i < this.competencies.length; i++) {
             console.log(this.competencies[i].getCompetencieId());
@@ -66,8 +84,12 @@ export class ResultComparer {
         }
     }
 
+    /**
+     * creates the list for displaying the competencies
+     */
     private getResultList() {
-        let string = `
+        // legend for progress bars
+        let template = `
         <div class="mdl-card__supporting-text">
             <div style="margin:auto; width: 500px;" class="mdl-grid">
                 <div style="display: inline-block;" class="mdl-cell mdl-cell--4-col">
@@ -100,26 +122,25 @@ export class ResultComparer {
             </div>
         <div class="mdl-grid">
         `;
-        console.log(this.newResults);
+        // generating all the competencies and the results
         for (let i = 0; i < this.newResults.length; i++) {
             let tempBar = new ProgressBar(this.newResults[i].getCompetencieScore() - this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength(), this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength() * 4)
 
+            // this is only used if old data is available 
             if (this.oldResults.length != 0 && i < this.oldResults.length){
-                tempBar.addOldProgress(this.oldResults[i].getCompetencieScore() - this.getCompetencieById(this.newResults[i].getCompetencieId()).getQuestionLength())
+                tempBar.addOldProgress(this.oldResults[i].getCompetencieScore() - this.getCompetencieById(this.oldResults[i].getCompetencieId()).getQuestionLength())
             }
 
-            string += this.getListItem(
-                this.getCompetencieById(this.newResults[i].getCompetencieId()).getCompetencieText()
-                ,tempBar.getView());
+            template += this.getListItem(this.getCompetencieById(this.newResults[i].getCompetencieId()).getCompetencieText(),tempBar.getView());
         }
-        string += `
+        template += `
         </div>
         `;
-        return string;
+        return template;
     }
 
     public getView() {
-        const string = `
+        const template = `
         <div class="mdl-grid" id="mainPageTitle">
             <div class="mdl-cell mdl-cell--2-col teacher-button">
             </div>
@@ -136,6 +157,6 @@ export class ResultComparer {
             <div class="mdl-cell mdl-cell--2-col">
             </div>
         </div>`
-    return string;
+    return template;
     }
 }

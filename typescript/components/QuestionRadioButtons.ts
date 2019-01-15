@@ -1,9 +1,18 @@
+/**
+* @author Luc Maerten
+* 
+* Class for setting up the radio buttons in the test
+*/
 export class QuestionRadioButtos {
 
     public constructor() {
 
     }
 
+    /**
+     * Gets al the radio buttons with correct ids
+     * @param screenNumber id of the radiobuttons.
+     */
     public getView(screenNumber: number) {
         const view = `
         <p>

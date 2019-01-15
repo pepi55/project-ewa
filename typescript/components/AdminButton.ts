@@ -17,6 +17,7 @@ export class AdminButton {
     }
 
     public getView(): string {
+        //setting the view with data and returning it
         let template : string = "";
 
         if (this.type == "accept") {

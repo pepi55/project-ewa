@@ -15,7 +15,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 /**
- * Area of a competency
+ * Results of a user
  *
  * @author Luc Maerten 
  */
@@ -39,7 +39,7 @@ public class Result implements Serializable {
     private int competencieScore;
 
     public Result() {
-        // Default constructor is required.
+        
     }
 
     public Result(int competencieId, int competencieScore) {
