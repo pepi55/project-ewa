@@ -19,13 +19,6 @@ export class ResultController extends Controller {
     private timer: any;
 
     protected setup(): void {
-        let loadButton = new Button("Load results");
-        loadButton.setOnClick(() => {
-            this.comparer.setCompetencies(this.competencies);
-            this.getData();
-            $(".android-card-container").remove();
-        });
-
         this.comparer = new ResultComparer();
         this.competencies = new Array()
         let DB = new ApiService(API.DB);
@@ -40,32 +33,26 @@ export class ResultController extends Controller {
                         mainResponse.questions.map((mainResponse: any) => tempQuestions.push(new Question(mainResponse.id, mainResponse.question)))
                         this.competencies.push(new Competencie(mainResponse.id, mainResponse.name, tempQuestions))
                     }));
+                this.comparer.setCompetencies(this.competencies);
+                this.getData();
+                $(".android-card-container").remove();
             } else {
                 console.log("Something went wrong!");
             }
         });
-
-        this.timer = setInterval(function(){
-            // let loadButton = new Button("Load results");
-        // loadButton.setOnClick(() => {
-            this.comparer.setCompetencies(this.competencies);
-            this.getData();
-            $(".android-card-container").remove();
-        // });
-        },3000);
-
-        $(".android-card-container").append(loadButton.getView());
     }
 
     private getData() {
         this.results = new Array();
         let tempArray: Array<Result> = new Array();
         this.comparer.setOldResults(tempArray);
-    
+
         let DB = new ApiService(API.DB);
         let username = LoginService.getInstance().getUserName();
         console.log(TeacherStorage.getInstance().checkIfStored())
-        if (TeacherStorage.getInstance().checkIfStored()){
+
+        // override username if teacher is viewing a student
+        if (TeacherStorage.getInstance().checkIfStored()) {
             username = TeacherStorage.getInstance().getStudentId();
         }
         DB.setPath("users/" + username + "/results");
@@ -75,32 +62,32 @@ export class ResultController extends Controller {
                 object.map((mainResponse: any) => {
                     this.results.push(new Result(mainResponse.competencieId, mainResponse.competencieScore));
                 })
-            } 
+            }
             this.comparer.setNewResults(this.results);
             $(".container").html(this.comparer.getView());
             componentHandler.upgradeDom();
-            this.timer = null;
+
             if (object.errorMessage == "No results found") {
                 this.comparer.setNewResults(this.results);
                 $(".container").html(this.comparer.getView());
                 componentHandler.upgradeDom();
                 this.timer = null;
+
                 if (object.errorMessage == "No results found") {
-                    $("#mainPageTitle").html(`<div class="android-more-section"><div class="android-section-title mdl-typography--display-1-color-contrast" id="mainPageTitle">You haven't made the test yet!! Go make the test by clicking on the TEST-tab, so you'll see what you're capable of!</div></div>`);
-                    $("#footerForSmallPage").css({"position" : "absolute", "bottom" : "0", "width" : "-webkit-fill-available"});
-                    $(".page-content").css({"background-color":"white"});
+                    $("#mainPageTitle").html(`<div class="android-more-section"><div class="android-section-title mdl-typography--display-1-color-contrast" id="mainPageTitle">You haven't made the test yet. Go make the test by clicking on the TEST-tab, so you'll see what you're capable of.</div></div>`);
+                    $("#footerForSmallPage").css({ "position": "absolute", "bottom": "0", "width": "-webkit-fill-available" });
+                    $(".page-content").css({ "background-color": "white" });
                 };
-                if (TeacherStorage.getInstance().checkIfStored()){
-                let backButton = new Button("Back");
-                backButton.setOnClick(() => {
-                    window.location.href = "teacherClass.html";
-                });
-                $(".teacher-button").append(backButton.getView())
-                $(".mdl-card__title-text").html("Results of " + TeacherStorage.getInstance().getStudentId());
-                TeacherStorage.getInstance().emptyId();
-            }
+
+                if (TeacherStorage.getInstance().checkIfStored()) {
+                    $("#mainPageTitle").html(`<div class="android-more-section teacher-button"><div class="android-section-title mdl-typography--display-1-color-contrast" id="mainPageTitle">This student hasn't made the test yet</div></div>`);
+                    $("#footerForSmallPage").css({ "position": "absolute", "bottom": "0", "width": "-webkit-fill-available" });
+                    $(".page-content").css({ "background-color": "white" });
+                }
             };
-            if (TeacherStorage.getInstance().checkIfStored()){
+
+            /* if a teacher is viewing student results display a back button to return*/
+            if (TeacherStorage.getInstance().checkIfStored()) {
                 let backButton = new Button("Back");
                 backButton.setOnClick(() => {
                     window.location.href = "teacherClass.html";

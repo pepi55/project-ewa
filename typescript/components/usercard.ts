@@ -1,5 +1,9 @@
 import { User } from "./User";
 
+/**
+ * class for displaying users in a small card
+ * mainly used for the admin approve page
+ */
 export class UserCard {
     private user: User;
     private amount: number;
@@ -10,7 +14,6 @@ export class UserCard {
     }
 
     public getView(): string {
-
         const template: string = `<div class="mdl-cell mdl-card mdl-shadow--4dp portfolio-card" id="newUser${this.amount}">
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">New ${this.user.getRoleName()}</h2>
