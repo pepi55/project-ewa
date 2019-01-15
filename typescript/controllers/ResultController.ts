@@ -11,6 +11,11 @@ import { Button } from "../components/button/Button";
 import { TeacherStorage } from "../components/TeacherStorage";
 declare var componentHandler: any;
 
+/**
+ * @author Luc Maerten
+ * 
+ * class for controlling the results
+ */
 export class ResultController extends Controller {
     private results: Array<Result>;
     private competencies: Array<Competencie>;

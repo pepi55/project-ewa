@@ -8,6 +8,11 @@ import { LoginService } from "../components/LoginService";
 import { ResultComparer } from "../components/ResultComparer";
 declare var componentHandler: any;
 
+/**
+ * @author Luc Maerten
+ * 
+ * class for controlling the test screen and showing the results in the end
+ */
 export class TestController extends Controller {
     private questionHandler: QuestionHandler = new QuestionHandler;
     private currentScreen: number = 0;
